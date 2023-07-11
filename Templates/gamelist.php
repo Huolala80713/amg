@@ -129,7 +129,12 @@
     });
     $('.game-box').on('click',function () {
         var gmid=$(this).data('gid');
-        window.location.href='/action.php?do=room&game='+gmid;
+        if(gmid == 9){
+            window.location.href='/lhc.html';
+        }else{
+            window.location.href='/action.php?do=room&game='+gmid;
+        }
+
 
 
     });

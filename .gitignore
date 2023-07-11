@@ -1,3 +1,4 @@
 /Public/config.php
 sql_error
 logdata
+/Public/db.config.php

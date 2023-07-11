@@ -423,7 +423,7 @@ function getWanfaList(){
 //获取赔率信息
 function getUserLhcPeilv($userid,$roomid='666777'){
 
-    $peilv = get_query_vals('fn_lottery9',"*",['roomid'=>'666777']);
+    $peilv = get_query_vals('fn_lottery9',"*",['roomid'=>$roomid]);
     $user_fandian = userFanDian($userid,$roomid,9);
     $levels = ($peilv['fandian'] - $user_fandian) / 0.01;//返点基点数
 //    var_dump($user_fandian);

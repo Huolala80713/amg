@@ -1,0 +1,180 @@
+<?php
+include_once "../Public/db.class.php";
+$db = new db(array($db['host'] ,'DB_USER'=>$db['user'],'DB_PWD'=>$db['pass'],'DB_NAME'=>$db['name']));
+?>
+<link rel="stylesheet" href="plugins/datepicker/datepicker3.css">
+<link rel="stylesheet" href="plugins/datatables/dataTables.bootstrap.css">
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      预设开奖
+      <small></small>
+    </h1>
+    <ol class="breadcrumb">
+      <li><a href="#"><i class="fa fa-dashboard"></i> 预设开奖</a></li>
+      <li class="active">列表</li>
+    </ol>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="box box-default">
+      <div class="box-header with-border">
+        <h3 class="box-title">预设列表</h3>
+
+        <div class="box-tools pull-right">
+          <button onclick="btstext()" class="btn btn-danger btn-sm">添加预设</button>
+        </div>
+      </div>
+      <div class="box-body">
+        <table id="userList" class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>彩种</th>
+              <th>预设期号</th>
+              <th>预设号码</th>
+              <th>开奖时间</th>
+              <th>下期开奖期号</th>
+              <th>下期开奖时间</th>
+              <th>创建时间</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php
+            	$map = array();
+            	$map['type'] = 12;
+              $data = $db->table('fn_open')->where($map)->order('id Desc')->select();
+            ?>
+            <?php foreach($data as $k=>$v):?>
+            <?php if($v['change']>0){?>
+              <tr>
+              	<td><?php echo $v['id']?></td>
+                <td>分分彩</td>
+                <td><?php echo $v['term']?></td>
+                <td><?php echo $v['code']?></td>
+                <td><?php echo $v['time']?></td>
+                 <td><?php echo $v['next_term']?></td>
+                  <td><?php echo $v['next_time']?></td>
+                <td><?php echo date('Y-m-d H:i:s',$v['create_time'])?></td>
+              </tr>
+              <?php }?>
+			<?php endforeach;?>
+          </tbody>
+        </table>
+      </div>
+      <div class="overlay" id="loading">
+        <i class="fa fa-refresh fa-spin"></i>
+      </div>
+    </div>
+  </section>
+  <!-- /.content -->
+</div>
+<!-- 分数操作 -->
+<div class="modal fade" id="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span></button>
+                <h4 class="modal-title">添加预设</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>选择彩种</label>
+                    <select onchange="func()"; id="cat_id" class="form-control select2" style="width: 100%;">
+                        <option value="1">澳洲幸运10</option>
+                        <option value="2">官方幸运飞艇</option>
+                        <option value="3">极速飞艇</option>
+                        <option value="4">极速赛车</option>
+                        <!--option value="5">摩纳哥飞艇</option>
+                        <option value="6">摩纳哥番摊</option>
+                        <option value="7">丹麦赛马</option>
+                        <option value="8">赛马番摊</option>
+                        <option value="9">加拿大28</option>
+                        <option value="10">加拿大番摊</option-->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>期号</label>
+                    <input id="term" type="text" class="form-control" style="width:97%" placeholder="期号" value="" readonly="readonly">
+                </div>
+                <div class="form-group">
+                    <label>预置号码</label>
+                    <input id="res_code" type="text" class="form-control" style="width:97%" placeholder="请用,分隔多个数字">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">关闭</button>
+                <button onclick="add()" type="button" class="btn btn-primary">立即添加</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.分数操作 -->
+
+<!-- DataTables -->
+<script src="plugins/datepicker/bootstrap-datepicker.js"></script>
+<script src="plugins/datepicker/locales/bootstrap-datepicker.zh-CN.js"></script>
+<script src="plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="plugins/datatables/dataTables.bootstrap.min.js"></script>
+<script>
+ $(function () {
+   $("#loading").remove();
+ });
+ function btstext() {
+     $('#dialog').modal('toggle');
+     var term = "<?php echo get_query_val('fn_open', '`term`', 'type = 1 order by term desc limit 1')+1;?>";
+     $('#term').val(term);
+ }
+ function func(){
+     var vs = $('select  option:selected').val();
+     if(vs==1){
+         var term = "<?php echo get_query_val('fn_open', '`term`', 'type = 1 order by term desc limit 1')+1;?>";
+     }else if(vs==2){
+         var term = "<?php echo get_query_val('fn_open', '`term`', 'type = 2 order by term desc limit 1')+1;?>";
+     }else if(vs==3){
+         var term = "<?php echo get_query_val('fn_open', '`term`', 'type = 3 order by term desc limit 1')+1;?>";
+     }else if(vs==4){
+         var term = "<?php echo get_query_val('fn_open', '`term`', 'type = 4 order by term desc limit 1')+1;?>";
+     }else if(vs==5){
+         var term = "<?php echo get_query_val('fn_open', '`term`', 'type = 5 order by term desc limit 1')+1;?>";
+     }else if(vs==6){
+         var term = "<?php echo get_query_val('fn_open', '`term`', 'type = 6 order by term desc limit 1')+1;?>";
+     }else if(vs==7){
+         var term = "<?php echo get_query_val('fn_open', '`term`', 'type = 7 order by term desc limit 1')+1;?>";
+     }else if(vs==8){
+         var term = "<?php echo get_query_val('fn_open', '`term`', 'type = 8 order by term desc limit 1')+1;?>";
+     }else if(vs==9){
+         var term = "<?php echo get_query_val('fn_open', '`term`', 'type = 9 order by term desc limit 1')+1;?>";
+     }else if(vs==10){
+         var term = "<?php echo get_query_val('fn_open', '`term`', 'type = 10 order by term desc limit 1')+1;?>";
+     }
+     $('#term').val(term);
+ }
+function add(){
+   var cat_id = $('#cat_id option:selected').val();
+   var res_code = $('#res_code').val();
+   var term = $('#term').val();
+   var res_time = $('#res_time').val();
+   $.ajax({
+       url: 'Application/ajax_resffc_open.php',
+       type: 'post',
+       dataType: 'json',
+       data: {cat_id: cat_id,res_code:res_code,res_time:res_time,term:term,action:'add'},
+       success: function(data){
+           if(data.success){
+               //alert('添加预设成功!');
+               window.location.reload(true);
+           }else{
+               alert(data.msg);
+           }
+       },
+       error: function() { }
+   })
+}
+</script>

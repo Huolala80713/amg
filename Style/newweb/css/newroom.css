@@ -1,0 +1,44 @@
+.user_info{
+    height: 1.5rem;
+    top: 5rem;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    background:#31322A;
+}
+.user_info .img{
+    width: 20%;
+    display: inline-block;
+    height: 1.5rem;
+    float: left;
+}
+.user_info .auth_img{
+    background: #ccc;
+    display:block;
+    height: 1rem;
+    width: 1rem;
+    border-radius: 10px;
+    margin: 0.25rem auto;
+}
+.user_info .botton{
+    width: 80%;
+    height: 1.5rem;
+    display:inline-block;
+    float: right;
+}
+.user_info .botton span{
+    height: 0.75rem;
+    width: 100%;
+    display: block;
+}
+.user_info .botton span img{
+    display: block;
+    margin-top: 0.15rem;
+}
+.user_info .info{
+    height: 0.75rem;
+    font-size: 0.23rem;
+    line-height: 0.75rem;
+    color: #aaa;
+
+}

@@ -1,0 +1,86 @@
+{
+  "id": "4033875",
+  "name": "123",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "21905653",
+      "name": "申请记录-2",
+      "font_class": "shenqingjilu-2",
+      "unicode": "e64f",
+      "unicode_decimal": 58959
+    },
+    {
+      "icon_id": "6882976",
+      "name": "用户开户",
+      "font_class": "yonghukaihu",
+      "unicode": "e612",
+      "unicode_decimal": 58898
+    },
+    {
+      "icon_id": "4954944",
+      "name": "皇冠",
+      "font_class": "huangguan",
+      "unicode": "e65b",
+      "unicode_decimal": 58971
+    },
+    {
+      "icon_id": "18635062",
+      "name": "爱心02-面",
+      "font_class": "aixin02-mian",
+      "unicode": "e611",
+      "unicode_decimal": 58897
+    },
+    {
+      "icon_id": "33987170",
+      "name": "下拉",
+      "font_class": "xiala",
+      "unicode": "e621",
+      "unicode_decimal": 58913
+    },
+    {
+      "icon_id": "3061711",
+      "name": "游戏记录-hover",
+      "font_class": "youxijilu-hover",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "3061713",
+      "name": "个人报表-hover",
+      "font_class": "gerenbaobiao-hover",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "10268569",
+      "name": "交易记录",
+      "font_class": "jiaoyijilu",
+      "unicode": "e67f",
+      "unicode_decimal": 59007
+    },
+    {
+      "icon_id": "17445602",
+      "name": "代理中心-T4",
+      "font_class": "dailizhongxin-T4",
+      "unicode": "e610",
+      "unicode_decimal": 58896
+    },
+    {
+      "icon_id": "21472475",
+      "name": "退出登录",
+      "font_class": "tuichudenglu",
+      "unicode": "e64c",
+      "unicode_decimal": 58956
+    },
+    {
+      "icon_id": "34208841",
+      "name": "个人信息",
+      "font_class": "gerenxinxi",
+      "unicode": "e62b",
+      "unicode_decimal": 58923
+    }
+  ]
+}

@@ -1,0 +1,3 @@
+syntax error at scan.pl line 1, near ""count":"
+Execution of scan.pl aborted due to compilation errors.
+Could not open input file: /home/www/wwwroot/amg/xyft.php

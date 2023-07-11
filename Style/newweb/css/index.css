@@ -1,0 +1,279 @@
+  body{
+    background: #e8e8e8;
+  }
+  li{
+    list-style: none;
+  }
+
+
+   .tc{
+  
+  width: 85%;
+  height: 6.5rem;
+  margin-left: 7.5%;
+  position: fixed;
+  top: 25%;
+  display: none;
+  background: url('__PUBLIC__/common/img/kf.png') no-repeat #3b3b3b;
+  background-size: 100% 100%;
+  opacity: 1;
+  border-radius: 8px;
+  z-index: 99;
+}
+.tc img{
+  width: 40%;
+  top:30%;
+  left:30%;
+  position: absolute;
+}
+.tc li{
+  width: 100%;
+  display: block;
+  list-style: none;
+}
+.tc1{
+  border-top-right-radius: 8px;
+  border-top-left-radius: 8px;
+  height: 0.8rem;
+  background: #fff;
+  text-align: center;
+  line-height: 0.8rem;
+  color: red;
+  font-weight: bold;
+  font-size: 0.3rem;
+}
+.tc2{
+  height: 1.7rem;
+  text-align: center;
+  line-height: 1.7rem;
+  color: gold;
+  font-size: 0.35rem;
+}
+.tc3{
+  height: 1rem;
+}
+.tc3 span{
+  display: block;
+  width: 45%;
+  height: 0.8rem;
+  border-radius: 6px;
+  border:1px solid #fff;
+  text-align: center;
+  line-height: 0.8rem;
+  /*float: left;*/
+  margin-left: 1.8rem;
+  color: #fff;
+  font-size: 0.3rem;
+}
+.tc_erweima{
+  display: none;
+  width: 4rem;
+  height: 8.5rem;
+  position: fixed;
+  top: 1rem;
+  margin-left: 25%;
+  z-index: 99;
+}
+.tc_erweima1{
+  width: 100%;
+  height: 4rem;
+}
+.tc_erweima1 img{
+  width: 100%;
+  height: 4rem;
+}
+.tc_erweima2{
+  width: 100%;
+  height: 0.5rem;
+}
+.tc_erweima2 span{
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 0.5rem;
+  text-align: center;
+  line-height: 0.5rem;
+  color: #fff;
+  margin:0 auto;
+  display: block;
+  background: #000;
+}
+.line{
+  background: #efeef4;
+  width: 100%;
+  height: 0.1rem;
+}
+.ad{
+  background: #fff;
+  color:red;
+  height: 0.4rem;
+  line-height: 0.4rem;
+  padding-left:0.4rem;
+  display: block;
+}
+.ad img{
+  position: absolute;
+  left:0;
+  height: 0.35rem;
+}
+.ad .content{
+  height: 0.4rem;
+  line-height: 0.4rem;
+}
+.pagetitle{
+  width:100%;
+  height: 1.5rem;
+  line-height: 1.5rem;
+  font-size: 0.25rem;
+  background: url(/Public/Home/common/img/b.jpg);
+  background-size: 100% 100%;
+  /*background: #009fe8;*/
+
+  text-align: center;
+  color:#fff;
+  /*background-image: -webkit-gradient(linear,left bottom,left top,color-start(0, #009fe8),color-stop(1, #6495ed));/* Safari & Chrome*/*/
+}
+.author{
+  width: 30%;
+  height: 1.3rem;
+  float: left;
+  margin:0.1rem 0;
+}
+.author img{
+  width: 1.3rem;
+  height: 1.3rem;
+  margin: 0 0.5rem;
+  border:0.01rem solid #91d3e3;
+  box-shadow: 0.02rem 0.02rem 0.02rem #91d3e3;
+  border-radius: 0.1rem;
+}
+.info{
+  width: 70%;
+  height: 0.5rem;
+  float: left;
+  line-height: 0.5rem;
+  color: #fff;
+  text-align: left;
+  border-bottom: 0.01rem solid #ccc;
+}
+.info span{
+  width: 30%;
+  display: block;
+  float: left;
+}
+.playlist{
+  width:100%;
+  border:0.01rem solid #ccc;
+  background:#fff;
+
+}
+.playlist li{
+  box-sizing: border-box;
+  width:49%;
+  display: inline-block;
+  margin:0.1rem 0.1%;
+  background: #fff;
+  border:1px solid #ccc;
+
+/*  margin:0.2rem;*/
+}
+.playlist li img{
+  width: 40%;
+  margin:  5%;
+  height: auto;
+  position: relative;
+  left:0;
+  float: left;
+}
+.playlist li .gameinfo{
+  color:#fff;
+/*  float: left;*/
+  width:50%;
+  display: inline-block;
+  border:1px solid #ddd;
+  box-sizing: border-box;
+}
+.playlist li .gameinfo .gametitle{
+  text-align: center;
+  font-size: 0.25rem;
+  height: 1.3rem;
+  line-height: 1.3rem;
+  color:red;
+  font-weight: 800;
+}
+.lianghang{
+  height: .7rem;
+  line-height: .7rem;
+  width: 100%;
+  display: block;
+}
+.lianghang1{
+  height: .4rem;
+  line-height: .4rem;
+  width: 100%;
+  display: block;
+}
+.playlist li .gameinfo .gametime{
+  font-size: 0.25rem;
+  text-align: center;
+  background: #009fe8;
+  height: 0.5rem;
+  line-height: 0.5rem;
+  position: relative;
+  bottom: 0px;
+
+}
+.userdata-set{
+  top:4rem;
+  display: block;
+  z-index: 1;
+  position: absolute;
+  width: 80%;
+  margin-left:10%;
+  background: #000;
+  color:#fff;
+  border:1px solid #fff;
+  border-radius: 5px 5px;
+}
+.userdata-set .title{
+  text-align: center;
+  height: 0.7rem;
+  line-height: 0.7rem;
+  font-size: 0.3rem;
+  background: #4c341c;
+  color:#f5c33e;
+  border-radius: 5px 5px 0px 0px;
+
+}
+.userdata-set .data-input li{
+  list-style-type: none;
+  font-size:0.3rem;
+  height: 0.9rem;
+  line-height: 0.9rem;
+  text-align: center;
+}
+.userdata-set .data-input li input{
+  border:1px solid #a2a1a1;
+  color:#fff;
+  font-size: 0.2rem;
+  height: 0.8rem;
+  line-height: 0.8rem;
+  width: 70%;
+  padding: 0.1rem;
+}
+.userdata-set .data-btn{
+  text-align: center;
+  padding: 0.2rem;
+}
+.userdata-set .data-btn button{
+  color:#ebff03;
+  height: 0.8rem;
+  width: 3rem;
+  border-radius: 5px 5px;
+  border:2px solid #bcd659;
+  background: #399801;
+}
+.userdata-set .data-btn p{
+  text-align: left;
+  margin-top: 0.1rem;
+}
+.yx_dt{width:33.3%;float:left;display: block;}

@@ -1,0 +1,712 @@
+<html style="font-size: 25px;">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport"
+			content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui">
+		<meta name="apple-touch-fullscreen" content="yes">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="format-detection" content="email=no">
+		<meta name="renderer" content="webkit">
+		<meta name="HandheldFriendly" content="true">
+		<meta name="MobileOptimized" content="320">
+		<meta name="screen-orientation" content="portrait">
+		<meta name="x5-orientation" content="portrait">
+		<meta name="full-screen" content="yes">
+		<meta name="x5-fullscreen" content="true">
+		<meta name="browsermode" content="application">
+		<meta name="x5-page-mode" content="app">
+		<meta name="msapplication-tap-highlight" content="no">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link href="https://gt188.cc/mobile/v1/static/img/apple-touch-icon-120x120-590.png" sizes="120x120"
+			rel="apple-touch-icon-precomposed">
+		<script src="/static/layer_mobile/layer.js"></script>
+		<link href="/static/layer_mobile/need/layer.css?2.0" type="text/css" rel="styleSheet" id="layermcss">
+		<!-- <script src="https://gt188.cc/mobile/v1/static/js/cdn.js?v=1.1"></script> -->
+		<link href="https://gt188.cc/mobile/v1/static/img/apple-touch-icon-120x120.png" sizes="120x120"
+			rel="apple-touch-icon-precomposed">
+		<title>双盈 - 彩票中心</title>
+		<link type="text/css" rel="stylesheet" href="/static/layui.css">
+		<link type="text/css" rel="stylesheet" href="/static/style/app.css?v=12">
+		<link type="text/css" rel="stylesheet" href="/static/style/index.css?v=2">
+
+		<!-- <script type="text/javascript" src="https://gt188.cc/mobile/v1/static/js/manifest.dee5983400ddab883501.js"></script>
+		<script type="text/javascript" src="https://gt188.cc/mobile/v1/static/js/vendor.6e90662e069bb743fa68.js"></script>
+		<script type="text/javascript" src="https://gt188.cc/mobile/v1/static/js/app.1eaabc0a42b557d462a1.js"></script> -->
+		<script type="text/javascript" src="/static/vue.min.js"></script>
+		<!-- <script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script> -->
+		<script src="/static/axios.min.js"></script>
+
+		<style type="text/css">
+
+		</style>
+	</head>
+	<body style="font-size: 22.1213px;">
+		<div data-v-5f2608b6="" id="app" style="">
+			<header data-v-5f2608b6="" class="top"><span data-v-5f2608b6="">香港六合彩</span>
+				<div data-v-5f2608b6="" class="iconfont back" style="display: none;"></div> <a data-v-5f2608b6=""
+					href="/lottery/SIX/1" class="iconfont back on" style="display: none;"></a> <a data-v-5f2608b6=""
+					href="https://te398r.9zf.xyz" target="_blank" class="right" style="display: none;">客服</a>
+				<div data-v-5f2608b6="" class="dataTypeL dataTypeL" style="display: none;"><em data-v-5f2608b6="">APP <i
+							data-v-5f2608b6="" class="iconfont"></i></em></div>
+			</header>
+			<nav class="kd-toolbar" style="display: none;"><a data-v-5f2608b6="" id="toggle-to-hide-toolbar"
+					class="icon"></a>
+				<ul data-v-5f2608b6="" class="kd-toolbar-inner">
+					<li data-v-5f2608b6="" class="kd-toolbar-item nav_sel"><a data-v-5f2608b6="" href="/index"
+							class=""><i data-v-5f2608b6="" class="iconfont home"></i>首页</a></li>
+					<li data-v-5f2608b6="" class="kd-toolbar-item"><a data-v-5f2608b6="" href="/activity" class=""><i
+								data-v-5f2608b6="" class="iconfont activity"></i>优惠活动</a></li>
+					<li data-v-5f2608b6="" class="kd-toolbar-item"><a data-v-5f2608b6="" href="/rechargeWay" class=""><i
+								data-v-5f2608b6="" class="iconfont money-in"></i>充值</a></li>
+					<li data-v-5f2608b6="" class="kd-toolbar-item"><a data-v-5f2608b6="" href="/newWinners" class=""><i
+								data-v-5f2608b6="" class="iconfont find"></i>发现</a></li>
+					<li data-v-5f2608b6="" class="kd-toolbar-item"><a data-v-5f2608b6="" href="/userCenter" class=""><i
+								data-v-5f2608b6=""
+								class="iconfont icon-online-service-toolbar animated infinite bounce"></i>我的</a></li>
+				</ul>
+			</nav>
+
+			<div data-v-367accfc="" data-v-5f2608b6="" class="lotteryOutCon" style="display: block;">
+				<div data-v-367accfc="" class="lottery_sscCon">
+					<div data-v-367accfc="" class="lottery_ssc">
+						<div data-v-367accfc="" class="DontSelect sscActive">
+							<header data-v-4cb2415a="" data-v-367accfc="" class="sscHeader fix CTbg"><a
+									data-v-4cb2415a="" href="/" class="iconfont back"></a>
+								<div data-v-4cb2415a="" class="playSort active">
+									<p data-v-4cb2415a="">玩 <br data-v-4cb2415a="">法</p> <span data-v-4cb2415a="">
+										<div @click="wanfaBoxFun()"><em>{{wanfa}}</em> <i class="iconfont"
+												style="color: #fff000;">▲</i></div>
+										<div v-if="wanfaBox == true" @click="wanfaBoxFun()">
+											<div data-v-4cb2415a="" class="playSortMore">
+												<div data-v-4cb2415a="" class="playSortMoreCon">
+													<ul data-v-4cb2415a="" class="betFilter fix">
+
+														<li data-v-4cb2415a="" @click="choseWanfa(key,wanfa)"
+															v-bind:class="{ 'curr': key == curWanfaId }"
+															v-for="(wanfa, key) in wanfaList" :key="key">{{wanfa}}</li>
+
+													</ul>
+													<!-- <ul data-v-4cb2415a="" class="betFilterAnd"
+														style="padding: 0.2rem;">
+														<div data-v-4cb2415a="" class="choosePlayType">
+															<div data-v-4cb2415a="">玩法选择</div>
+														</div>
+														<li data-v-4cb2415a="" class="fix"><span data-v-4cb2415a=""
+																style="display: none;"></span>
+															<div data-v-4cb2415a="" class="lhc fix"><a
+																	data-v-4cb2415a="" class="curr">特码</a><a
+																	data-v-4cb2415a="" class="">特码双面</a></div>
+														</li>
+													</ul> -->
+												</div>
+											</div>
+										</div>
+									</span>
+								</div>
+								<div data-v-4cb2415a="" class="lotterySort">
+									<div @click="rightBoxFun()"><em>六合彩</em> <i class="iconfont"
+											v-if="rightBox==false">▼</i>
+										<i class="iconfont" v-if="rightBox==true">▲</i>
+									</div>
+									<div data-v-4cb2415a="" class="sc-1pmraqt-0 dzcbBD" style="padding-top: 0px;display: none"
+										v-show="rightBox==true" @click="rightBoxFun()">
+										<div data-v-4cb2415a="" class="game-div">
+											<h3 data-v-4cb2415a="" class="game-title">快3系列</h3>
+											<div data-v-4cb2415a="" class="game-item-wrapper"><span data-v-4cb2415a=""
+													class="game-item">极速快3</span></div>
+											<h3 data-v-4cb2415a="" class="game-title">PK10系列</h3>
+											<div data-v-4cb2415a="" class="game-item-wrapper"><span data-v-4cb2415a=""
+													class="game-item">极速赛车</span><span data-v-4cb2415a=""
+													class="game-item">澳洲赛马</span><span data-v-4cb2415a=""
+													class="game-item">澳洲赛车</span><span data-v-4cb2415a=""
+													class="game-item">幸运赛车</span>
+											</div>
+										</div>
+									</div>
+							</header>
+							<div data-v-db6848ac="" data-v-367accfc="" class="isLotteryCon line-white-before-"
+								v-if="kj_info.id">
+								<div data-v-db6848ac="" class="result"><span data-v-db6848ac="" class="text-small"
+										@click="kjListBoxFun()">{{kj_info.term}}期 <i class="iconfont"
+											v-if="!kjListBox">▼</i>
+										<i class="iconfont" v-if="kjListBox">▲</i><i data-v-db6848ac=""
+											style="float: right; font-weight: bold; margin-right: 5px;">余额:<i
+												data-v-db6848ac="" style="color: red;">{{user_info.money}}</i></i></span>
+									<div data-v-db6848ac="" class="openNumber">
+
+										<div data-v-db6848ac="" class="number-box"
+											v-for="(kj_num,key) in kj_info.code_list" v-if="key < 6">
+											<em data-v-db6848ac="" :class="kj_num.bo">{{kj_num.number}}</em>
+											<span data-v-db6848ac="" class="number-box-text">{{kj_num.sx_name}}</span>
+										</div>
+
+										<div data-v-db6848ac="" class="number-box plus"><em data-v-db6848ac=""
+												class="symbol">+</em></div>
+
+										<div data-v-db6848ac="" class="number-box"
+											v-for="(kj_num,key) in kj_info.code_list" v-if="key == 6">
+											<em data-v-db6848ac="" :class="kj_num.bo">{{kj_num.number}}</em>
+											<span data-v-db6848ac="" class="number-box-text">{{kj_num.sx_name}}</span>
+										</div>
+									</div> <!----> <!---->
+								</div>
+								<div data-v-db6848ac="" class="timebar">
+									<div data-v-db6848ac="" style="" class="timebar-issue">
+										<p data-v-db6848ac="">{{kj_info.next_term}}期</p>
+										<p data-v-db6848ac="">投注截止</p><!---->
+									</div>
+									<h4 data-v-db6848ac="">{{next_kj_text}}</h4>
+								</div>
+								<div data-v-db6848ac="" class="past-open line-white-before-" v-if="kjListBox">
+									<table data-v-db6848ac="" class="past-open-table">
+										<thead data-v-db6848ac="">
+											<tr data-v-db6848ac="">
+												<th data-v-db6848ac="" class="line-white-after-">期号</th>
+												<th data-v-db6848ac="">开奖号码</th>
+												<th data-v-db6848ac="">开奖日期</th>
+											</tr>
+										</thead>
+										<tbody data-v-db6848ac="" @click="kjListBoxFun()">
+
+											<tr data-v-db6848ac="" v-for="(kj,index) in kjList">
+												<td data-v-db6848ac="">{{kj.term}}</td>
+												<td data-v-db6848ac="" class="past-open-result line-white-after1">
+													<!---->
+													<div data-v-db6848ac="" class="past-open-result-box"
+														v-for="(kj_num,key) in kj.code_list" v-if="key < 6"><em
+															data-v-db6848ac="" :class="kj_num.bo">{{kj_num.number}}</em>
+														<span data-v-db6848ac="">{{kj_num.sx_name}}</span>
+													</div><!---->
+
+													<div data-v-db6848ac="" class="past-open-result-box"><span
+															data-v-db6848ac="" class="symbol">+</span></div>
+
+													<div data-v-db6848ac="" class="past-open-result-box"
+														v-for="(kj_num,key) in kj.code_list" v-if="key == 6"><em
+															data-v-db6848ac="" :class="kj_num.bo">{{kj_num.number}}</em>
+														<span data-v-db6848ac="">{{kj_num.sx_name}}</span>
+													</div><!---->
+												</td>
+												<td data-v-db6848ac="">{{kj.kj_date}}</td>
+											</tr>
+
+										</tbody>
+									</table>
+									<div data-v-db6848ac="" class="normal-trendchart-btn-c">
+										<div data-v-db6848ac="" class="normal-trendchart-btn"><em
+												data-v-db6848ac="">查看更多走势</em></div>
+									</div>
+								</div>
+								<div class="betrecord-icon">◀</div>
+							</div>
+							<div data-v-01736910="" data-v-367accfc="" class="sscMain">
+								<div data-v-01736910="" class="sscTips" style="display: none;">
+									<div data-v-01736910="" class="menuBtn"><span data-v-01736910=""
+											class="triangle"></span></div>
+									<p data-v-01736910="">从1-49中任选1个或多个号码，每个号码为一注，所选号码中包含特码，即为中奖。
+										<!----> <!----> <!----> <!---->
+									</p>
+								</div> <!---->
+								<div data-v-01736910="" class="lottery lottery-wrap-1" style="margin-top: 0px;">
+									<div data-v-01736910="" class="lt-wrapper lt-wrapper-21">
+										<div data-v-01736910="" class="selectConentView">
+											<div data-v-01736910="" class="tab-over-lay-right show"
+												style="height: 400px;">
+												<div data-v-01736910="" id="methods-wrap" class="methods-wrap"
+													style="top: 0px; overflow: hidden auto; position: relative; left: 0px;">
+													<ul data-v-01736910="" jroll-id="jroll_26675627"
+														style="min-height: 100%;"><!---->
+
+														<li data-v-01736910="" @click="choseWanfa(key,wanfa)"
+															v-bind:class="{ 'cur': key == curWanfaId }"
+															v-for="(wanfa, key) in wanfaList" :key="key">
+															{{wanfa}}
+														</li>
+
+													</ul>
+												</div>
+											</div>
+											<div data-v-01736910="" id="select-area" class="ch_chart_wrap x"
+												style="position: relative; top: 0px; left: 0px;">
+												<div data-v-01736910="" jroll-id="jroll_68843880"
+													style="min-height: 150%; margin-bottom: 20px;"><!---->
+													<div data-v-01736910="">
+
+														<div data-v-27b8df53="" class="o5sf9p-0 dPltvU" v-if="wanfaSonList.length">
+															
+															<div data-v-27b8df53="" class="o5sf9p-1 kMbOHB" :class="{ 'box_checked': wanfa.posi == curWanfaSonId }"
+															v-for="(wanfa, key) in wanfaSonList" :key="key" @click="choseSonWanfa(wanfa)">
+															<label data-v-27b8df53="" class="o5sf9p-2 iisbZM"   >
+																{{wanfa.name}}
+															</label></div>
+															
+														</div>
+
+														<div data-v-01736910="" class="ch_chart_x"><!---->
+
+															<div data-v-01736910="" class="ch_num_box">
+																<ul data-v-01736910="" class="normal-x">
+																	<li data-v-01736910="" class="cell3"
+																		v-for="(item,key) in wanfaItemList"
+																		v-if="wanfaType=='haoma'"
+																		v-bind:class="{ 'haoma_on on': item.check == 1 }"
+																		@click="checkWanfaItem(key,item)">
+																		<div data-v-01736910="" class="lhc-ball"
+																			v-bind:class="item.class">{{item.name}}
+																		</div> <span
+																			data-v-01736910="">{{item.rate}}</span>
+																	</li>
+
+																	<li @click="checkWanfaItem(key,item)"
+																		data-v-01736910=""
+																		v-bind:class="{ 'on': item.check == 1 }"
+																		v-for="(item,key) in wanfaItemList"
+																		v-if="wanfaType=='shengxiao' || wanfaType=='shuangmian'">
+																		<div data-v-01736910="" class="lhc-red">
+																			{{item.name}}
+																		</div>
+																		<span data-v-01736910="">{{item.rate}}</span>
+																	</li>
+																</ul>
+															</div> <!----> <!----> <!----> <!----> <!----> <!---->
+
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+							<div data-v-3ff97372="" data-v-367accfc="" class="sscFooterCt">
+								<div data-v-3ff97372="" class="bet-money" v-if="numberChecked.length > 0">
+									<em data-v-3ff97372="">当前选号</em> <span data-v-3ff97372=""
+										class="text-ellipsis">{{ numberChecked.join(' ')}}</span>
+								</div>
+								<div data-v-3ff97372="" class="confirmNote" v-if="numberChecked.length > 0">
+									<span data-v-3ff97372="" v-bind:class="{ 'on': item == curMoney }"
+										@click="checkMoney(item)" v-for="(item,key) in moneyList">{{item}}</span>
+
+									<span data-v-3ff97372="" @click="curMoney = ''">清空</span>
+								</div>
+
+								<div data-v-3ff97372="" class="bet-money" v-if="numberChecked.length > 0">每注金额
+									<input data-v-3ff97372="" type="tel" maxlength="7" v-model="curMoney">请输入要投注的金额
+								</div>
+								<div data-v-3ff97372="" class="bet-info fix">
+									<div data-v-3ff97372="" class="bet-info-left"><a data-v-3ff97372=""
+											class="bet-info-clear" @click="delWanfaItem()"><i data-v-3ff97372=""
+												class="iconfont"></i>清空</a>
+										<span data-v-3ff97372="" class="bet-info-count"
+											v-if="numberChecked.length > 0">共{{numberChecked.length}}注<span
+												data-v-3ff97372="" v-if="curMoney>0 && numberChecked.length > 0">,
+												总计：{{numberChecked.length * curMoney}}</span></span>
+									</div>
+									<div data-v-3ff97372="" class="bet-info-right"><button data-v-3ff97372=""
+											class="bet-info-confirm" id="bet-btn" @click="betbtn()">马上投注</button></div>
+									<!-- <div data-v-3ff97372="" class="bet-info-right"><button data-v-3ff97372=""
+											class="bet-info-confirm">返水开</button></div> -->
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+					<div data-v-5f1a0a18="" data-v-367accfc="" class="cart" style="display: none;">
+						<header data-v-5f1a0a18="" class="top sscHeader fix"><a data-v-5f1a0a18=""
+								class="iconfont back"></a>
+							<div data-v-5f1a0a18="" class="playSort">号码篮</div>
+						</header>
+						<div data-v-5f1a0a18="" class="cartMainCt">
+							<div data-v-5f1a0a18="" class="cartContent">
+								<ul data-v-5f1a0a18="" class="numberboxCt"></ul>
+								<div data-v-5f1a0a18="" class="moreOption fix" style="display: none;">
+									<div data-v-5f1a0a18="" class="stop" style="display: none;"><input
+											data-v-5f1a0a18="" type="checkbox" id="1_has_track"> <label
+											data-v-5f1a0a18="" for="1_has_track">追号</label></div>
+									<div data-v-5f1a0a18="" class="clear clearall">清空</div>
+								</div>
+							</div>
+						</div>
+						<div data-v-5f1a0a18="" class="cartTotal">
+							<div data-v-5f1a0a18="" class="change" style="display: none;"><label
+									data-v-5f1a0a18="">投<input data-v-5f1a0a18="" type="tel">倍</label> <label
+									data-v-5f1a0a18="">追<input data-v-5f1a0a18="" type="tel">期</label>
+								<div data-v-5f1a0a18="" class="stopBtn"><input data-v-5f1a0a18="" type="checkbox"
+										id="0_track_is_stop"> <label data-v-5f1a0a18=""
+										for="0_track_is_stop">中奖即停</label></div>
+							</div>
+							<div data-v-5f1a0a18="" class="result fix">
+								<div data-v-5f1a0a18="" class="left"><span data-v-5f1a0a18="">方案0注, 0.00元</span> <em
+										data-v-5f1a0a18="">普通投注</em></div>
+								<div data-v-5f1a0a18="" class="right"><i data-v-5f1a0a18="">立即投注</i></div>
+							</div>
+						</div>
+					</div>
+
+
+					<!---右侧菜单--->
+					<div data-v-2dc764b8="" data-v-367accfc="" class="betandchase" style="display: none;">
+						<div data-v-2dc764b8="" class="b-a-c">
+							<div data-v-2dc764b8="" class="b-a-c-top fix"><a data-v-2dc764b8="" class="back"><em
+										data-v-2dc764b8="" class="iconfont"></em></a>
+								<div data-v-2dc764b8="" class="mybet curr"><em data-v-2dc764b8="">我的投注</em></div>
+								<div data-v-2dc764b8="" class="mychase"><em data-v-2dc764b8="">我的追号</em></div>
+							</div>
+							<div data-v-2dc764b8="" class="betboxlist">
+								<div data-v-2dc764b8="" class="betbox"></div> <!---->
+								<div data-v-2dc764b8="" class="historyBlance">余额&nbsp;<ins data-v-2dc764b8=""
+										style="color: red;">￥0</ins>元&nbsp;今日盈亏&nbsp;<ins data-v-2dc764b8=""
+										style="color: red;">￥0</ins>元&nbsp;<i data-v-2dc764b8="" class="iconfont"></i>
+								</div> <br data-v-2dc764b8=""><br data-v-2dc764b8=""><br data-v-2dc764b8="">
+								<div data-v-2dc764b8="" class="msg noMore historyMore">更多记录请到"
+									<a data-v-2dc764b8="" href="/betCenter/betRecord" class="" style="">投注记录</a> <a
+										data-v-2dc764b8="" href="/betCenter/trackRecord" class=""
+										style="display: none;">追号记录</a>"查看
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+					<div style="display: none" v-show="betBox == true">
+						<div id="layui-m-layer6" class="layui-m-layer layui-m-layer0" index="5">
+							<div class="layui-m-layershade"></div>
+							<div class="layui-m-layermain">
+								<div class="layui-m-layersection">
+									<div class="layui-m-layerchild layui-m-layer1 layui-m-anim-scale">
+										<h3 style="border-bottom: solid 1px #ddd;">投注确认</h3>
+										<div class="layui-m-layercont" style="padding: 20px;">
+											极速六合彩: {{kj_info.next_term}}期<br>
+											投注方案: <span style="color:red">{{numberChecked.length}}注</span><br>
+											投注总额: <span style="color:red">{{numberChecked.length * curMoney}}</span><br>
+											投注内容: 
+											[{{wanfa}}]
+											<block v-if="curWanfaSonName">[{{curWanfaSonName}}]</block>
+											{{ numberChecked.join(' ')}}</div>
+										<div class="layui-m-layerbtn">
+											<span no="" type="0" @click="betBoxFun()">取消</span>
+											<span yes="" type="1" @click="betFun()">确定</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!--弹出层-->
+					<div v-show="is_popup" style="display: none" >
+
+						<div id="layui-m-layer5" class="layui-m-layer layui-m-layer0" index="5">
+							<div class="layui-m-layershade"></div>
+							<div class="layui-m-layermain">
+								<div class="layui-m-layersection">
+									<div class="layui-m-layerchild layui-m-layer1 layui-m-anim-scale">
+										<h3 style="border-bottom: solid 1px #ddd;">温馨提示</h3>
+										<div class="layui-m-layercont" style="padding: 20px;text-align: center;">
+											{{ popup_txt }}
+										</div>
+										<div class="layui-m-layerbtn">
+											<span no="" type="0" @click="close_popup_btn()">取消</span>
+											<span yes="" type="1" @click="close_popup_btn()">确定</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+				</div> <!----> <!---->
+
+			</div>
+		</div>
+		<script type="text/javascript" src="/Style/pop/js/jquery.min.js"></script>
+		<script type="text/javascript" src="/Style/pop/js/popups.js"></script>
+		<script>
+			// 创建一个新的 Vue 实例
+			var App = new Vue({
+				// DOM 元素，挂载视图模型
+				el: '#app',
+
+				// 定义属性，并设置初始值
+				data: {
+					active: 'home',
+					wanfaBox: false,
+					wanfa: '特码',
+					betBox: false,
+					rightBox: false,
+					kjListBox: false,
+					kjList: [{
+							id: 1
+						},
+						{
+							id: 2
+						}
+					],
+					wanfaList: [],
+					curWanfaId: 'tema',
+					wanfaItemList: [],
+					wanfaType: 'haoma',
+					numberChecked: [],
+					moneyList: [],
+					curMoney: '', //单注金额
+					kj_info: {},
+					next_kj_seconds: 0, //下棋开奖倒计时
+					next_kj_text: '',
+					is_popup: false,
+					popup_txt: "温馨提示",
+					wanfaSonList: [],//玩法子类
+					curWanfaSonId: 0,
+					curWanfaSonName:'',
+                    user_info:{}
+
+				},
+				created: function() {
+					this.getWanfaList();
+					this.getKjList();
+				},
+				// 点击菜单使用的函数
+				methods: {
+					showPopup: function(pop_txt) {
+						this.popup_txt = pop_txt;
+						this.is_popup = true
+						return;
+					},
+					close_popup_btn: function() {
+						this.is_popup = false
+					},
+					makeActive: function(item) {
+						// 模型改变，视图会自动更新
+						this.active = item;
+					},
+					wanfaBoxFun: function() {
+						if (this.wanfaBox) {
+							this.wanfaBox = false
+						} else {
+							this.wanfaBox = true
+						}
+					},
+					rightBoxFun: function() {
+						if (this.rightBox) {
+							this.rightBox = false
+						} else {
+							this.rightBox = true
+						}
+					},
+					kjListBoxFun: function() {
+						if (this.kjListBox) {
+							this.kjListBox = false
+						} else {
+							this.kjListBox = true
+						}
+					},
+					betBoxFun: function() {
+						if (this.betBox) {
+							this.betBox = false
+						} else {
+							this.betBox = true
+						}
+					},
+					checkWanfaItem: function(key, item) {
+						var checkd = 1;
+						var that = this;
+						if (item.check == 1) {
+							checkd = 0;
+							that.wanfaChange(that.numberChecked, item.name, 0);
+						} else {
+							checkd = 1;
+							that.wanfaChange(that.numberChecked, item.name, 1);
+						}
+						that.wanfaItemList[key].check = checkd;
+						console.log("that.wanfaItemList", that.wanfaItemList);
+						console.log(that.numberChecked);
+					},
+					// type 1加0减
+					wanfaChange: function(arr, value, type = 1) {
+						var that = this;
+						if (type == 0) {
+							//剔除数组
+							that.numberChecked = this.removeItemOnce(that.numberChecked, value);
+						} else {
+							that.numberChecked.push(value);
+						}
+					},
+					removeItemOnce: function(arr, value) {
+						var index = arr.indexOf(value);
+						if (index > -1) {
+							arr.splice(index, 1);
+						}
+						return arr;
+					},
+					//清空选择项
+					delWanfaItem: function() {
+						var checkd = 1;
+						var that = this;
+						var stuArr = that.wanfaItemList;
+						for (var i = 0; i < stuArr.length; i++) {
+							stuArr[i].check = 0;
+						}
+						that.wanfaItemList = stuArr;
+						that.numberChecked = [];
+					},
+					//获取玩法列表
+					getWanfaList: function() {
+						let that = this
+						axios.get('/Application/ajax_lhc.php?type=wanfalist')
+							.then(function(response) {
+								var data = response.data;
+								if (data.success == true) {
+									that.wanfaList = data.content;
+									console.log("this.wanfaList", that.wanfaList)
+									that.choseWanfa('tema_haoma', "特码")
+									that.moneyList = data.money_list;
+                                    that.user_info = data.user;
+								}else{
+                                    alert(data.msg)
+                                    window.location.href= data.url
+                                }
+								console.log("data", data)
+
+							})
+							.catch(function(error) { // 请求失败处理
+								console.log(error);
+							});
+					},
+					//选择玩法
+					choseWanfa: function(id, wanfa) {
+
+						let that = this
+						that.curWanfaId = id;
+						that.curWanfaSonId = 0;
+						that.curWanfaSonName = '';
+						that.wanfa = wanfa;
+						axios.get('/Application/ajax_lhc.php?type=chosewanfa&wanfa=' + id)
+							.then(function(response) {
+								var data = response.data;
+								if (data.success == true) {
+									that.wanfaItemList = data.content;
+									that.wanfaType = data.wanfa_type;
+									//清空选中的号码
+									that.numberChecked = [];
+									//选择子类
+									that.wanfaSonList = data.son_list;
+									if(that.wanfaSonList.length > 0){
+										that.curWanfaSonId = that.wanfaSonList[0].posi;
+										that.curWanfaSonName = that.wanfaSonList[0].name;
+									}
+									console.log("this.wanfaItemList", that.wanfaItemList)
+								}
+								console.log("data", data)
+
+							})
+							.catch(function(error) { // 请求失败处理
+								console.log(error);
+							});
+					},
+					choseSonWanfa: function(wanfa){
+						let that = this
+						that.curWanfaSonId = wanfa.posi
+						that.curWanfaSonName = wanfa.name
+					},
+					//选择下注金额
+					checkMoney: function(money) {
+						let that = this
+						that.curMoney = money;
+					},
+					//获取开奖列表
+					getKjList: function() {
+						let that = this
+						axios.get('/Application/ajax_lhc.php?type=openHistory')
+							.then(function(response) {
+								var data = response.data;
+								if (data.success == true) {
+									that.kjList = data.content;
+									that.kj_info = data.info;
+									that.next_kj_seconds = data.info.next_times
+									that.next_time();
+									console.log("this.kjList", that.kjList)
+								}
+								console.log("data", data)
+
+							})
+							.catch(function(error) { // 请求失败处理
+								console.log(error);
+							});
+					},
+					// 天 时 分 秒 格式化函数
+					countDown: function() {
+						if(this.next_kj_seconds > 0){
+							let d = parseInt(this.next_kj_seconds / (24 * 60 * 60))
+							d = d < 10 ? "0" + d : d
+							let h = parseInt(this.next_kj_seconds / (60 * 60) % 24);
+							h = h < 10 ? "0" + h : h
+							let m = parseInt(this.next_kj_seconds / 60 % 60);
+							m = m < 10 ? "0" + m : m
+							let s = parseInt(this.next_kj_seconds % 60);
+							s = s < 10 ? "0" + s : s
+							this.next_kj_text = d + ':' + h + ':' + m + ':' + s
+						}else{
+							this.next_kj_text = "已开奖"
+						}
+						
+						
+					},
+					//定时器没过1秒参数减1
+					next_time: function() {
+						setInterval(() => {
+							this.next_kj_seconds -= 1
+							this.countDown()
+						}, 1000)
+					},
+					//投注按钮
+					betbtn: function() {
+						let that = this
+						if (that.numberChecked.length < 1) {
+							that.showPopup("请选择投注的号码")
+							return;
+						}
+						if (!that.curMoney) {
+							that.showPopup("请输入投注金额")
+							return;
+						}
+						that.betBoxFun();
+					},
+					betFun: function() {
+						let that = this
+						var bet_data = {
+							'wanfaId':that.curWanfaId,
+							'wanfaSonId':that.curWanfaSonId,
+							'price':that.curMoney,
+							'numberList':that.numberChecked.join(','),
+							'term':that.kj_info.next_term
+							
+						}
+						axios.post('/Application/ajax_lhc.php?type=bet',bet_data)
+							.then(function(response) {
+								var data = response.data;
+								if (data.success == true) {
+									that.showPopup(data.msg)
+                                    that.delWanfaItem();
+								}else{
+									that.showPopup(data.msg)
+								}
+								that.betBoxFun();
+								console.log("data", data)
+
+							})
+							.catch(function(error) { // 请求失败处理
+								console.log(error);
+							});
+					}
+				}
+			});
+		</script>
+
+	</body>
+</html>

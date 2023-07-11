@@ -1,0 +1,337 @@
+<?php
+$game = $_GET['game'] == "" ? '' : $_GET['game'];
+if(date('H') < 6){
+    $date_time = date('Y-m-d' , strtotime('-1days'));
+}else{
+    $date_time = date('Y-m-d');
+}
+if($_GET['date']){
+    $date = $_GET['date'];
+}else{
+    $date = date('Y-m-d 06:00:00' , strtotime($date_time)) . ' - ' . date('Y-m-d 05:59:59' , strtotime($date_time . ' + 1day'));
+}
+$datetype = $_GET['datetype'];
+$user_id = $_GET['userid']?$_GET['userid']:'';
+?>
+<link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
+<link rel="stylesheet" href="plugins/datatables/dataTables.bootstrap.css">
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            分数报表<small>分数报表汇总</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> 控制台</a></li>
+            <li><a href="#"> 分数报表</a></li>
+            <li class="active">分数报表汇总</li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#" >游戏汇总</a></li>
+                <li class=""><a href="zb9n8rUvp0.php?m=report&a=huizong&t=user" >用户汇总</a></li>
+            </ul>
+        </div>
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <h3 class="box-title">分数报表汇总</h3>
+                <div class="box-tools pull-right">
+                    <button onclick="start();" class="btn btn-primary btn-sm" data-toggle="tooltip" data-title="刷新列表"><i class="fa fa-refresh"></i></button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <div class="row">
+                            <div class="col-md-2" style="width: auto">
+                                <div class="input-group">
+                                    <select id="searchgame" class="form-control select2" style="width: 100%;">
+                                        <option value="" <?php if($game == '') echo 'selected'; ?>>全部游戏</option>
+                                        <?php $game_list = getGameList();?>
+                                        <?php foreach($game_list as $key => $val):?>
+                                        <option value="<?php echo getGameCodeById($key);?>" <?php if($game == getGameCodeById($key)) echo 'selected'; ?>><?php echo $val;?></option>
+                                        <?php endforeach;?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-1" style="width: 80px;padding: 0">
+                                <div class="input-group" style="width: 100%;">
+                                    <select id="datetype" name="datetype" class="form-control">
+                                        <option <?php if($datetype == 1):?>selected<?php endif;?> value="1" data-value="<?php echo date("Y-m-d 06:00:00" , strtotime($date_time));?>,<?php echo date("Y-m-d 05:59:59" , strtotime($date_time . ' + 1day'));?>">当天</option>
+                                        <option <?php if($datetype == '2'):?>selected<?php endif;?> value="2" data-value="<?php echo date("Y-m-d 06:00:00",strtotime($date_time . "- 1day"));?>,<?php echo date("Y-m-d 05:59:59",strtotime($date_time));?>">昨天</option>
+                                        <option <?php if($datetype == 3):?>selected<?php endif;?> value="3" data-value="<?php echo date("Y-m-d 06:00:00",strtotime($date_time  . " - " . (date('w')?(date('w') - 1):7) . " days"));?>,<?php echo date("Y-m-d 05:59:59" , strtotime($date_time . ' + 1day'));?>">本周</option>
+                                        <option <?php if($datetype == 4):?>selected<?php endif;?> value="4" data-value="<?php echo date("Y-m-d 06:00:00",strtotime($date_time . " -1 weeks - " . (date('w')?(date('w') - 1):7) . " days"));?>,<?php echo date("Y-m-d 05:59:59",strtotime($date_time . " -1 weeks + " . ( 7 - date('w') + 1) . " days"));?>">上周</option>
+                                        <option <?php if($datetype == 5):?>selected<?php endif;?> value="5" data-value="<?php echo date("Y-m-01 06:00:00",strtotime($date_time));?>,<?php echo date("Y-m-d 05:59:59",strtotime(date("Y-m-01", strtotime($date_time)) . "+1month"));?>">本月</option>
+                                        <option <?php if($datetype == 6):?>selected<?php endif;?> value="6" data-value='<?php echo date("Y-m-01 06:00:00",strtotime($date_time  . "- 1 month"));?>,<?php echo date("Y-m-d 05:59:59",strtotime(date("Y-m-01" , strtotime($date_time))));?>'>上月</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-1" style="width: 360px;">
+                                <div class="input-group " style="width: 100%">
+                                    <input value="<?php echo $date; ?>" type="text" class="form-control" id="daterange">
+                                </div>
+                            </div>
+                            <div class="col-md-1" style="width: 230px;padding-left: 0;">
+                                <div class="input-group ">
+                                    <input value="<?php echo $user_id;?>" type="text" class="form-control" id="userid" placeholder="用户编号">
+                                </div>
+                            </div>
+                            <div class="col-md-1" style="width: 50px;padding: 0;">
+                                <div class="box-tool">
+                                    <button onclick="search();" class="btn btn-info">查询</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-bordered table-striped" id="tableList">
+                    <thead>
+                    <tr>
+                        <th style="text-align:center">游戏</th>
+                        <th style="text-align:center">下级单量</th>
+                        <th style="text-align:center">下级投注</th>
+                        <th style="text-align:center">下级派奖</th>
+                        <th style="text-align:center">下级返点</th>
+                        <th style="text-align:center">下级盈亏</th>
+                        <th style="text-align:center">本级单量</th>
+                        <th style="text-align:center">本级投注</th>
+                        <th style="text-align:center">本级派奖</th>
+                        <th style="text-align:center">本级返点</th>
+                        <th style="text-align:center">本级盈亏</th>
+                        <th style="text-align:center">合计盈亏</th>
+                    </tr>
+                    </thead>
+
+
+                </table>
+            </div>
+            <div class="overlay" id="loading">
+                <i class="fa fa-refresh fa-spin"></i>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+
+<script src="plugins/daterangepicker/moment.min.js"></script>
+<script src="plugins/daterangepicker/daterangepicker.js"></script>
+<script src="plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="plugins/datatables/dataTables.bootstrap.min.js"></script>
+<script>
+    $(function () {
+        $('#datetype').on('change' , function(){
+            $('#daterange').val($(this).find('option:selected').attr('data-value').replace(',' , ' - '));
+            $('#daterange').daterangepicker({
+                timePicker: true, //是否显示小时分钟
+                timePickerSeconds:true,
+                timePickerIncrement: 1, //时间增量
+                timePicker24Hour: true, //显示月框
+                showDropdowns: true,
+                dateLimit: {
+                    days: 60
+                }, //起止时间的最大间隔
+                opens: 'right',
+                locale: {
+                    applyLabel: "确定",
+                    cancelLabel: "取消",
+                    daysOfWeek: ['日', '一', '二', '三', '四', '五', '六'],
+                    monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+                    format: 'YYYY-MM-DD hh:mm:ss'
+                }
+            });
+        });
+        $('#daterange').daterangepicker({
+            timePicker: true, //是否显示小时分钟
+            timePickerSeconds:true,
+            timePickerIncrement: 1, //时间增量
+            timePicker24Hour: true, //显示月框
+            showDropdowns: true,
+            dateLimit: {
+                days: 60
+            }, //起止时间的最大间隔
+            opens: 'right',
+            locale: {
+                applyLabel: "确定",
+                cancelLabel: "取消",
+                daysOfWeek: ['日', '一', '二', '三', '四', '五', '六'],
+                monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+                format: 'YYYY-MM-DD hh:mm:ss'
+            }
+        });
+        var datatable = $('#tableList').dataTable({
+            language: {
+                "processing":   "处理中...",
+                "lengthMenu":   "_MENU_ 记录/页",
+                "zeroRecords":  "没有匹配的记录",
+                "info":         "第 _START_ 至 _END_ 项记录，共 _TOTAL_ 项",
+                "infoEmpty":    "第 0 至 0 项记录，共 0 项",
+                "infoFiltered": "(由 _MAX_ 项记录过滤)",
+                "infoPostFix":  "",
+                "search":       "搜索:",
+                "url":          "",
+                "decimal": ",",
+                "thousands": ".",
+                "emptyTable":"未找到符合条件的数据",
+                "paginate": {
+                    "first":    "首页",
+                    "previous": "上页",
+                    "next":     "下页",
+                    "last":     "末页"
+                }
+            },
+            retrieve: true,
+            paging: true,
+            ordering: false,
+            info: true,
+            autoWidth: false,
+            pageLength: 10,//每页显示10条数据
+            pagingType: "full_numbers", //分页样式：simple,simple_numbers,full,full_numbers，
+            bFilter: false, //去掉搜索框方法
+            bLengthChange: true,//也就是页面上确认是否可以进行选择一页展示多少条
+            serverSide: true,
+            ajax: function (data, callback, settings) {
+                //封装相应的请求参数，这里获取页大小和当前页码
+                var pagesize = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候,页大小
+                var start = data.start;//开始的记录序号
+                var page = (data.start) / data.length + 1;//当前页码
+                var param = {
+                    page: page,
+                    pagesize: pagesize,//这里只传了当前页和页大小，如果有其他参数，可继续封装
+                    game:"<?php echo $game;?>",
+                    date:"<?php echo $date;?>",
+                    datetype:"<?php echo $datetype;?>",
+                    userid:"<?php echo $userid;?>"
+                }
+                $('#loading').show();
+                $.ajax({
+                    type: "get",
+                    url: "Api/ajax_huizong.php",
+                    cache : false,  //禁用缓存
+                    data: param,   //传入已封装的参数
+                    dataType: "json",//返回数据格式为json
+                    success: function(data) {
+                        $('#loading').hide();
+                        var returnData = {};
+                        //returnData.draw = arr.data.pagination.pageCount;//这里直接自行返回了draw计数器,应该由后台返回，没什么卵用！
+                        returnData.recordsTotal = data.totalCount;//totalCount指的是总记录数
+                        returnData.recordsFiltered = data.totalCount;//后台不实现过滤功能,全部的记录数都需输出到前端，记录数为总数
+                        returnData.data = data.list;//返回汽车列表
+
+                        callback(returnData);//这个别忘了！！！
+                        if($('#tableList').find('.heji').length == 0){
+                            let all_xiadan = 0;
+                            let all_touzhu = 0;
+                            let all_paijian = 0;
+                            let all_fandian = 0;
+                            let all_yk = 0;
+                            let bj_all_xiadan = 0;
+                            let bj_all_touzhu = 0;
+                            let bj_all_paijian = 0;
+                            let bj_all_fandian = 0;
+                            let bj_all_yk = 0;
+                            let yk = 0;
+                            $.each(data.list , function(index, value){
+                                all_xiadan += value.order_count * 1;
+                                all_touzhu += value.order_touzhu * 1;
+                                all_paijian += value.order_paijian * 1;
+                                all_fandian += value.fandian * 1;
+                                all_yk += value.yingkui * 1;
+                                bj_all_xiadan += value.bj_order_count * 1;
+                                bj_all_paijian += value.bj_order_paijian * 1;
+                                bj_all_touzhu += value.bj_order_touzhu * 1;
+                                bj_all_yk += value.bj_yingkui * 1;
+                                bj_all_fandian += value.bj_fandian * 1;
+                                yk += value.all_yingkui * 1;
+                            });
+                            let html = '<tbody class="heji"><tr style="background-color:#f6fcff;font-weight:bold;font-size:12px;text-align: center;">'
+                                + '<td>全部合计:</td>'
+                                + '<td>' + all_xiadan + '</td>'
+                                + '<td>' + all_touzhu.toFixed(4) + '</td>'
+                                + '<td>' + all_paijian.toFixed(4)  + '</td>'
+                                + '<td>' + all_fandian.toFixed(4)  + '</td>'
+                                + '<td>' + all_yk.toFixed(4)  + '</td>'
+                                + '<td>' + bj_all_xiadan + '</td>'
+                                + '<td>' + bj_all_touzhu.toFixed(4)  + '</td>'
+                                + '<td>' + bj_all_paijian.toFixed(4)  + '</td>'
+                                + '<td>' + bj_all_fandian.toFixed(4)  + '</td>'
+                                + '<td>' + bj_all_yk.toFixed(4)  + '</td>'
+                                + '<td>' + yk.toFixed(4)  + '</td>'
+                                + '</tr></tbody>';
+                            console.log(html);
+                            $('#tableList').append(html);
+                        }
+
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        $('#loading').hide();
+                    }
+                });
+            },
+            columns: [
+                {"data": "gamename", "name":"游戏",searchable: false },
+                {"data": "order_count", "name":"下级单量",searchable: false },
+                {"data": "order_touzhu", "name":"下级投注",searchable: false },
+                {"data": "order_paijian", "name":"下级派奖",searchable: false },
+                {"data": "fandian", "name":"下级返点",searchable: false },
+                {"data": "yingkui", "name":"下级盈亏",searchable: false },
+
+                {"data": "bj_order_count", "name":"本级单量",searchable: false },
+                {"data": "bj_order_touzhu", "name":"本级投注",searchable: false },
+                {"data": "bj_order_paijian", "name":"本级派奖",searchable: false },
+                {"data": "bj_fandian", "name":"本级返点",searchable: false },
+                {"data": "bj_yingkui", "name":"本级盈亏",searchable: false },
+                {"data": "all_yingkui", "name":"合计",searchable: false }
+            ],
+            drawCallback: function (setting) {
+                var _this = $(this);
+                var tableId = _this.attr('id');
+                var thisDataTable = $(this).DataTable();
+                var pageInfo = thisDataTable.page.info();
+                var maxPage = pageInfo.pages;
+                let option_pages = '';
+                for(var i=1;i<=maxPage;i++){
+                    option_pages += '<option value="' + i + '" ' + (i==(pageInfo.page + 1)?'selected="selected"':'') + '>' + i + '</option>';
+                }
+                $("#" + tableId + "_paginate ul").append('<li><a style="color: #777;">跳转到' +
+                    '<select id="' + tableId + '_gotoPage" style="margin: 0 5px;border: 1px solid #ddd;outline: none;">' +
+                    option_pages +
+                    '</select>页</a></li>');
+                $("#" + tableId + "_gotoPage").on('change' , function(){
+                    var page = $(this).val();
+                    if (!isNaN(page)) {
+                        page = Number(page) - 1;
+                        if (page < 0) {
+                            page = 0;
+                        } else if (page >= maxPage) {
+                            page = maxPage - 1;
+                        }
+                        datatable.fnPageChange(page);
+                    }
+                });
+            }
+        });
+
+    });
+    $('#popover').click(function () {
+        $('#popover').popover('toggle');
+    });
+
+    function start(){
+        window.location.href="zb9n8rUvp0.php?m=report&a=huizong";
+    }
+
+    function search() {
+        var game = $('#searchgame option:selected').val();
+        var term = $('#searchterm').val();
+        var time = $('#daterange').val();
+
+        window.location.href="zb9n8rUvp0.php?m=report&a=huizong&game=" + game + "&date=" + time + "&datetype=" + $("#datetype").val()+ "&userid=" + $("#userid").val();
+    }
+
+</script>

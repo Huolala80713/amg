@@ -1,0 +1,360 @@
+<?php
+    $menulist = getMenuList();
+    $menu_list = [];
+    foreach ($menulist as $key => &$value){
+        $value['text'] = $value['name'];
+        $child_list = $value['child_list'];
+        unset($value['child_list']);
+        $menu_list[] = $value;
+        foreach($child_list as $k=>$child){
+            $child['text'] = (($k==count($child_list) - 1)?" └ ":" ├ ") . $child['name'];
+            $menu_list[] = $child;
+        }
+    }
+?>
+<link rel="stylesheet" href="plugins/datepicker/datepicker3.css">
+<link rel="stylesheet" href="plugins/datatables/dataTables.bootstrap.css">
+<link rel="stylesheet" href="plugins/select2/select2.css" type="text/css">
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>管理员管理<small>在这里 管理您的系统管理员</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> 控制台</a></li>
+            <li class="active">管理员管理</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <h3 class="box-title">管理员管理</h3>
+
+                <div class="box-tools pull-right">
+                    <button type="button" onclick="adduser()" class="btn btn-primary btn-sm">新增管理员</button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                </div>
+            </div>
+            <div class="box-body">
+                <table id="userList" class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>所属房间ID</th>
+                        <th>账号</th>
+                        <th style="text-align: center;">类型</th>
+                        <th>添加时间</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                        select_query('fn_admin','*',"roomid = {$_SESSION['agent_room']}");
+                        while($con = db_fetch_array()){
+                            $cons[] = $con;
+                        }
+                        foreach($cons as $con){
+                    ?>
+                    <tr>
+                        <td>
+                            <?php echo $con['id']; ?>
+                        </td>
+                        <td>
+                            <?php echo $con['roomid']; ?>
+                        </td>
+                        <td>
+                            <?php echo $con['roomadmin']; ?>
+                        </td>
+                        <td style="text-align: center;">
+                            <?php
+                                switch($con['auth_type']){
+                                    case 1:
+                                           echo '<label class="label label-info">超级管理员</label>';
+                                        break;
+                                    case 2:
+                                            echo '<label class="label label-success">管理员</label>';
+                                        break;
+                                    case 3:
+                                            echo '<label class="label label-primary">总经理</label>';
+                                        break;
+                                    case 4:
+                                            echo '<label class="label label-danger">经理</label>';
+                                        break;
+                                    case 5:
+                                            echo '<label class="label label-warning">客服</label>';
+                                        break;
+                                }
+                            ?>
+                        </td>
+                        <td>
+                            <?php echo $con['add_time']; ?>
+                        </td>
+                        <td>
+                            <?php echo $con['status']==1?"<label class='label label-success'>正常</label>":"<label class='label label-default'>禁用</label>"; ?>
+                        </td>
+
+                        <td>
+                            <a href="#" onclick="edituser('<?php echo $con['id']; ?>')" class="btn btn-primary btn-sm">编辑</a>
+                            <?php if($con['auth_type'] == 1){?>
+                            <a href="#" class="btn btn-danger btn-sm disabled">删除</a>
+                            <?php }else{?>
+                            <a href="#" onclick="deleteuser('<?php echo $con['id']; ?>')" class="btn btn-danger btn-sm">删除</a>
+                            <?php }?>
+                        </td>
+                    </tr>
+                    <?php } ?>
+                    </tbody>
+                </table>
+            </div>
+            <div class="overlay" id="loading">
+                <i class="fa fa-refresh fa-spin"></i>
+            </div>
+        </div>
+
+    </section>
+    <!-- /.content -->
+</div>
+<div class="modal fade" id="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span></button>
+                <h4 class="modal-title">添加管理员</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>管理员登录名</label>
+                    <input id="username" class="form-control select2" style="width: 100%;" name="username" />
+                </div>
+                <div class="form-group">
+                    <label>管理员登录密码</label>
+                    <input id="password" type="password" class="form-control select2" style="width: 100%;" name="password" />
+                </div>
+                <div class="form-group">
+                    <label>账号类型</label>
+                    <select name="auth_type" name="status" class="form-control" style="width: 100%;">
+                        <option value="">选择账号类型</option>
+                        <!--<option value="1">超级管理员</option>-->
+                        <option value="2">管理员</option>
+                        <option value="3">总经理</option>
+                        <option value="4">经理</option>
+                        <option value="5">客服</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>权限列表</label>
+                    <select data-placeholder="请选择权限" name="auth[]" multiple="multiple" class="form-control select2 authinput" style="width: 100%;">
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>账号状态</label>
+                    <select id="status" name="status" class="form-control select2" style="width: 100%;">
+                        <option value="1">正常</option>
+                        <option value="0">禁用</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">关闭</button>
+                <button onclick="addadmin()" type="button" class="btn btn-primary">添加</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<div class="modal fade" id="edituser">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span></button>
+                <h4 class="modal-title">添加管理员</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>管理员登录名</label>
+                    <input readonly class="form-control select2" style="width: 100%;" name="username" />
+                </div>
+                <div class="form-group">
+                    <label>管理员登录密码</label>
+                    <input placeholder="不修改则该处不填写" type="password" class="form-control select2" style="width: 100%;" name="password" />
+                </div>
+                <!--<div class="form-group">-->
+                    <!--<label>账号类型</label>-->
+                    <!--<select name="auth_type" name="status" class="form-control" style="width: 100%;">-->
+                        <!--<option value="">选择账号类型</option>-->
+                        <!--<option value="1">超级管理员</option>-->
+                        <!--<option value="2">管理员</option>-->
+                        <!--<option value="3">总经理</option>-->
+                        <!--<option value="4">经理</option>-->
+                        <!--<option value="5">客服</option>-->
+                    <!--</select>-->
+                <!--</div>-->
+                <div class="form-group">
+                    <label>权限列表</label>
+                    <select data-placeholder="请选择权限" name="auth[]" multiple="multiple" class="form-control select2 authinput" style="width: 100%;">
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>账号状态</label>
+                    <select name="status" class="form-control select2" style="width: 100%;">
+                        <option value="1">正常</option>
+                        <option value="0">禁用</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input type="hidden" name="id">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">关闭</button>
+                <button onclick="editadmin()" type="button" class="btn btn-primary">修改</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<style type="text/css">
+    .select2-selection__rendered input{
+        border: 0 !important;
+    }
+</style>
+<!-- /.报表查询 -->
+<!-- DataTables -->
+<script src="plugins/datepicker/bootstrap-datepicker.js"></script>
+<script src="plugins/datepicker/locales/bootstrap-datepicker.zh-CN.js"></script>
+<script src="plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="plugins/datatables/dataTables.bootstrap.min.js"></script>
+<script src="plugins/select2/select2.js" type="text/javascript"></script>
+<script>
+    let menulist = JSON.parse('<?php echo json_encode($menu_list);?>');
+    function formatState(state){
+        if(state.id !== ''){
+            let text = state.text.replace(' ├ ' , '').replace(' └ ' , '');
+            // return state.text;
+            var $state = $(
+                '<span><span></span></span>'
+            );
+            $state.find("span").text(text);
+            return $state;
+        }
+    }
+    function deleteuser(id){
+        if(confirm('确定要删除该管理员用户吗?')){
+            $.get('Application/ajax_admin.php',{t: 'delete',id:id},function(data){
+                if(data.status){
+                    alert('删除成功');
+                    window.location.reload();
+                }else{
+                    alert(data.msg);
+                }
+            },'json');
+        }
+    }
+    function edituser(id){
+        $.get('Application/ajax_admin.php',{t: 'getinfo',id:id},function(data){
+            if(data.status){
+                $('#edituser').find('.authinput').val(data.data.auth).trigger("change");
+                let menu_list = [];
+                $.each(menulist , function (index , item) {
+                    menu_list[index] = item;
+                    if(data.data.auth.indexOf(item.id.toString()) >= 0){
+                        menu_list[index]['selected'] = true;
+                    }
+                });
+                $('#edituser').find('.authinput').select2({
+                    templateSelection: formatState,
+                    data:menu_list
+                });
+                $('#edituser').modal('toggle');
+                $('#edituser').data('id', id);
+                $('#edituser').find('input[name="password"]').val('');
+                $('#edituser').find('select[name="status"]').val(parseInt(data.data.status)).trigger("change");
+                $('#edituser').find('select[name="auth_type"]').val(data.data.auth_type).trigger('change');
+                $('#edituser').find('input[name="id"]').val(id);
+                $('#edituser').find('input[class="authinput"]').val(data.data.auth);
+                $('#edituser').find('input[name="username"]').val(data.data.roomadmin);
+                $('#edituser').find('.modal-title').text('编辑管理员' + data.data.roomadmin + '信息');
+            }else{
+                alert(data.msg);
+            }
+        },'json');
+    }
+    $(function () {
+        $('#userList').DataTable({
+            "searching" : false,
+            "scrollX": true,
+            "autoWidth": false,
+        });
+        $('.datepicker').datepicker({
+            autoclose: true,
+            language: 'zh-CN',
+            format: 'yyyy-mm-dd',
+        });
+        $("#loading").remove();
+    });
+
+    function adduser(){
+        $('#dialog').find('input[name="username"]').val('');
+        $('#dialog').find('input[name="password"]').val('');
+        $('#dialog').find('select[name="status"]').val(1).trigger('change');
+        $('#dialog').find('select[name="auth_type"]').val('').trigger('change');
+        $.each(menulist , function (index , item) {
+            item['selected'] = false;
+        });
+        $('#dialog').find('.authinput').val(null).trigger("change");
+        $("#dialog").find('.authinput').select2({
+            templateSelection: formatState,
+            data:menulist
+        });
+        $('#dialog').modal('toggle');
+        // var username = $("#username").val();
+        // var password = $("#password").val();
+        // var agent = $("#agent").val();
+        // $.get('Application/ajax_userdata.php',{t: 'add',username:username,password:password,agent:agent},function(data){
+        //     if(data.status){
+        //         alert('添加成功！');
+        //         window.location.reload();
+        //     }else{
+        //         alert(data.msg);
+        //     }
+        // },'json');
+    }
+    function addadmin(){
+        var username = $('#dialog').find('input[name="username"]').val();
+        var password = $('#dialog').find('input[name="password"]').val();
+        var auth_type = $('#dialog').find('select[name="auth_type"]').val();
+        var auth = $('#dialog').find('.authinput').val();
+        var status = $('#dialog').find('select[name="status"]').val();
+        $.get('Application/ajax_admin.php',{t: 'add',auth_type:auth_type,username:username,password:password,auth:auth,status:status},function(data){
+            if(data.status){
+                alert('添加成功！');
+                window.location.reload();
+            }else{
+                alert(data.msg);
+            }
+        },'json');
+    }
+    function editadmin(){
+        var username = $('#edituser').find('input[name="username"]').val();
+        var password = $('#edituser').find('input[name="password"]').val();
+        var auth = $('#edituser').find('.authinput').val();
+        var status = $('#edituser').find('select[name="status"]').val();
+//        var auth_type = $('#edituser').find('select[name="auth_type"]').val();
+        var id = $('#edituser').find('input[name="id"]').val();
+//        $.get('Application/ajax_admin.php',{t: 'edit',id:id,auth_type:auth_type,username:username,password:password,auth:auth,status:status},function(data){
+        $.get('Application/ajax_admin.php',{t: 'edit',id:id,username:username,password:password,auth:auth,status:status},function(data){
+            if(data.status){
+                alert('修改成功！');
+                window.location.reload();
+            }else{
+                alert(data.msg);
+            }
+        },'json');
+    }
+</script>

@@ -1,0 +1,623 @@
+<?php
+if(date('H') < 6){
+    $date_time = date('Y-m-d' , strtotime('-1days'));
+}else{
+    $date_time = date('Y-m-d');
+}
+if($_GET['time']){
+    $time = $_GET['time'];
+}else{
+    $time = date('Y-m-d 06:00:00' , strtotime($date_time)) . ' - ' . date('Y-m-d 05:59:59' , strtotime($date_time . ' + 1day'));
+}
+$user = $_GET['user'];
+$datetype = $_GET['datatype']?$_GET['datatype']:1;
+?>
+<link rel="stylesheet" href="plugins/datatables/dataTables.bootstrap.css">
+<link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
+<!-- bootstrap datepicker -->
+<link rel="stylesheet" href="plugins/datepicker/datepicker3.css">
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      用户报表<small>在这里设置您的用户数据</small>
+    </h1>
+    <ol class="breadcrumb">
+      <li><a href="#"><i class="fa fa-dashboard"></i> 控制台</a></li>
+      <li class="active">用户报表</li>
+    </ol>
+  </section>
+
+    <section class="content">
+      <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+          <li class=""><a href="zb9n8rUvp0.php?m=user" >用户管理</a></li>
+          <li class=""><a href="zb9n8rUvp0.php?m=userjia" >假人管理</a></li>
+          <li class="active"><a href="#" >用户报表</a></li>
+        </ul>
+      </div>
+      <div class="box box-deafault">
+        <div class="box-header with-border">
+          <h3 class="box-title">报表查询</h3>
+
+          <div class="box-tools pull-right">
+            <a id="popover" tabindex="0" class="btn btn-box-tool" style="font-size:20px" data-toggle="tooltip" title="报表合计是不包含拒绝以及假人的" data-placement="left"><i class="fa fa-info-circle"></i></a>
+            <button onclick="start();" class="btn btn-primary btn-sm" data-toggle="tooltip" data-title="刷新列表"><i class="fa fa-refresh"></i></button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div>
+        <div class="box-body">
+          <div class="box box-info">
+            <div class="box-header with-border">
+              <div class="row">
+                <div class="col-md-1" style="width: 100px;padding-right: 0">
+                  <div class="input-group" style="width: 100%;">
+                    <select id="datatype" name="datatype" class="form-control">
+                      <option <?php if($datetype == 1):?>selected<?php endif;?> value="1" data-value="<?php echo date("Y-m-d 06:00:00" , strtotime($date_time));?>,<?php echo date("Y-m-d 05:59:59" , strtotime($date_time . ' + 1day'));?>">当天</option>
+                      <option <?php if($datetype == '2'):?>selected<?php endif;?> value="2" data-value="<?php echo date("Y-m-d 06:00:00",strtotime($date_time . "- 1day"));?>,<?php echo date("Y-m-d 05:59:59",strtotime($date_time));?>">昨天</option>
+                      <option <?php if($datetype == 3):?>selected<?php endif;?> value="3" data-value="<?php echo date("Y-m-d 06:00:00",strtotime($date_time  . " - " . (date('w')?(date('w') - 1):7) . " days"));?>,<?php echo date("Y-m-d 05:59:59" , strtotime($date_time . ' + 1day'));?>">本周</option>
+                      <option <?php if($datetype == 4):?>selected<?php endif;?> value="4" data-value="<?php echo date("Y-m-d 06:00:00",strtotime($date_time . " -1 weeks - " . (date('w')?(date('w') - 1):7) . " days"));?>,<?php echo date("Y-m-d 05:59:59",strtotime($date_time . " -1 weeks + " . ( 7 - date('w') + 1) . " days"));?>">上周</option>
+                      <option <?php if($datetype == 5):?>selected<?php endif;?> value="5" data-value="<?php echo date("Y-m-01 06:00:00",strtotime($date_time));?>,<?php echo date("Y-m-d 05:59:59",strtotime(date("Y-m-01", strtotime($date_time)) . "+1month"));?>">本月</option>
+                      <option <?php if($datetype == 6):?>selected<?php endif;?> value="6" data-value='<?php echo date("Y-m-01 06:00:00",strtotime($date_time  . "- 1 month"));?>,<?php echo date("Y-m-d 05:59:59",strtotime(date("Y-m-01" , strtotime($date_time))));?>'>上月</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-4" style="width: 450px;padding-right: 0;">
+                  <div class="input-group date">
+                    <div class="input-group-addon ">
+                      <i class="fa fa-clock-o"></i> 查询时间
+                    </div>
+                    <input value="<?php echo $time;?>" type="text" class="form-control pull-right" id="datetimepicker">
+                  </div>
+                </div>
+                <div class="col-md-3" style="padding-right: 0">
+                  <div class="input-group date">
+                    <div class="input-group-addon ">
+                      查询用户名
+                    </div>
+                    <input type="text" value="<?php echo $user;?>" class="form-control pull-right" id="user">
+                  </div>
+                </div>
+
+                <div class="col-md-1" >
+                  <button onclick="search();" class="btn btn-info">查询</button>
+                </div>
+            </div>
+            </div>
+          </div>
+          <table class="table table-bordered table-striped" id="tableList">
+            <thead>
+            <tr>
+              <th>ID</th>
+              <th>用户ID</th>
+              <th>账号</th>
+              <th>用户备注</th>
+              <th>上分</th>
+              <th>下分</th>
+              <th>盈亏</th>
+              <th>流水</th>
+              <th>返点</th>
+              <th>当前余额</th>
+              <th>明细查询</th>
+            </tr>
+            </thead>
+          </table>
+        </div>
+        <div class="overlay" id="loading">
+          <i class="fa fa-refresh fa-spin"></i>
+        </div>
+      </div>
+    </section>
+
+<!-- /.报表查询 -->
+
+<script src="plugins/datepicker/bootstrap-datepicker.js"></script>
+<script src="plugins/datepicker/locales/bootstrap-datepicker.zh-CN.js"></script>
+<script src="plugins/daterangepicker/moment.min.js"></script>
+<script src="plugins/daterangepicker/daterangepicker.js"></script>
+<script src="plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="plugins/datatables/dataTables.bootstrap.min.js"></script>
+<script>
+  $(function () {
+    $('#datepicker').datepicker({
+      autoclose: true,
+      language: 'zh-CN',
+      format: 'yyyy-mm-dd',
+    });
+    $('#popover').click(function () {
+      $('#popover').popover({
+        html: true,
+        content: '当您的退水模式为根据亏损退水时,也请输入<label>正数</label><br/>如果不会使用退水,请联系<label>客服</label>或<label>代理</label>'
+      });
+      $('#popover').popover('show');
+    });
+    $('#popover2').click(function () {
+      $('#popover2').popover({
+        html: true,
+        content: '当您的退水模式为根据亏损退水时,也请输入<label>正数</label><br/>报表退水最大跨度为<label>60</label>天<br/>如果不会使用退水,请联系<label>客服</label>或<label>代理</label>'
+      });
+      $('#popover2').popover('show');
+    });
+    $('#zhangbiandatetype').on('change' , function(){
+      $('#zhangbiantime').val($(this).find('option:selected').attr('data-value').replace(',' , ' - '));
+      $('#zhangbiantime').daterangepicker({
+        timePicker: true, //是否显示小时分钟
+        timePickerSeconds:true,
+        timePickerIncrement: 1, //时间增量
+        timePicker24Hour: true, //显示月框
+        showDropdowns: true,
+        dateLimit: {
+          days: 60
+        }, //起止时间的最大间隔
+        opens: 'right',
+        locale: {
+          applyLabel: "确定",
+          cancelLabel: "取消",
+          daysOfWeek: ['日', '一', '二', '三', '四', '五', '六'],
+          monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+          format: 'YYYY-MM-DD hh:mm:ss'
+        }
+      });
+    });
+    $('#zhangbiantime').daterangepicker({
+      timePicker: true, //是否显示小时分钟
+      timePickerSeconds:true,
+      timePickerIncrement: 1, //时间增量
+      timePicker24Hour: true, //显示月框
+      showDropdowns: true,
+      dateLimit: {
+        days: 60
+      }, //起止时间的最大间隔
+      locale: {
+        applyLabel: "确定",
+        cancelLabel: "取消",
+        daysOfWeek: ['日', '一', '二', '三', '四', '五', '六'],
+        monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+        format: 'YYYY-MM-DD hh:mm:ss'
+      }
+    });
+    $('#gamedatetype').on('change' , function(){
+      $('#gametime').val($(this).find('option:selected').attr('data-value').replace(',' , ' - '));
+      $('#gametime').daterangepicker({
+        timePicker: true, //是否显示小时分钟
+        timePickerSeconds:true,
+        timePickerIncrement: 1, //时间增量
+        timePicker24Hour: true, //显示月框
+        showDropdowns: true,
+        dateLimit: {
+          days: 60
+        }, //起止时间的最大间隔
+        opens: 'right',
+        locale: {
+          applyLabel: "确定",
+          cancelLabel: "取消",
+          daysOfWeek: ['日', '一', '二', '三', '四', '五', '六'],
+          monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+          format: 'YYYY-MM-DD hh:mm:ss'
+        }
+      });
+    });
+    $('#gametime').daterangepicker({
+      timePicker: true, //是否显示小时分钟
+      timePickerSeconds:true,
+      timePickerIncrement: 1, //时间增量
+      timePicker24Hour: true, //显示月框
+      showDropdowns: true,
+      dateLimit: {
+        days: 60
+      }, //起止时间的最大间隔
+      locale: {
+        applyLabel: "确定",
+        cancelLabel: "取消",
+        daysOfWeek: ['日', '一', '二', '三', '四', '五', '六'],
+        monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+        format: 'YYYY-MM-DD hh:mm:ss'
+      }
+    });
+    $('#reservationtime').daterangepicker({
+      timePicker: true, //是否显示小时分钟
+      timePickerIncrement: 1, //时间增量
+      timePickerSeconds:true,
+      timePicker24Hour: true, //显示月框
+      showDropdowns: true,
+      dateLimit: {
+        days: 60
+      }, //起止时间的最大间隔
+      locale: {
+        applyLabel: "确定",
+        cancelLabel: "取消",
+        daysOfWeek: ['日', '一', '二', '三', '四', '五', '六'],
+        monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+        format: 'YYYY-MM-DD HH:mm:ss'
+      }
+    });
+    $('#datetype').on('change' , function(){
+      $('#datetimepicker').val($(this).find('option:selected').attr('data-value').replace(',' , ' - '));
+      $('#datetimepicker').daterangepicker({
+        timePicker: true, //是否显示小时分钟
+        timePickerSeconds:true,
+        timePickerIncrement: 1, //时间增量
+        timePicker24Hour: true, //显示月框
+        showDropdowns: true,
+        dateLimit: {
+          days: 60
+        }, //起止时间的最大间隔
+        opens: 'right',
+        locale: {
+          applyLabel: "确定",
+          cancelLabel: "取消",
+          daysOfWeek: ['日', '一', '二', '三', '四', '五', '六'],
+          monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+          format: 'YYYY-MM-DD hh:mm:ss'
+        }
+      });
+    });
+    $('#datetimepicker').daterangepicker({
+      timePicker: true, //是否显示小时分钟
+      timePickerIncrement: 1, //时间增量
+      timePickerSeconds:true,
+      timePicker24Hour: true, //显示月框
+      showDropdowns: true,
+      dateLimit: {
+        days: 60
+      }, //起止时间的最大间隔
+      opens: 'right',
+      locale: {
+        applyLabel: "确定",
+        cancelLabel: "取消",
+        daysOfWeek: ['日', '一', '二', '三', '四', '五', '六'],
+        monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+        format: 'YYYY-MM-DD hh:mm:ss'
+      }
+    });
+  });
+  function search(){
+    var time = $('#datetimepicker').val();
+    var user = $('#user').val();
+    var datatype = $('#datatype').val();
+    location.href = 'zb9n8rUvp0.php?m=userdata&user=' + user + '&time=' + time + '&datatype=' + datatype;
+  }
+  start();
+  function start(){
+    var time = $('#datetimepicker').val();
+    var user = $('#user').val();
+    var datatype = $('#datatype').val();
+    var datatable = $('#tableList').dataTable({
+      language: {
+        "processing":   "处理中...",
+        "lengthMenu":   "_MENU_ 记录/页",
+        "zeroRecords":  "没有匹配的记录",
+        "info":         "第 _START_ 至 _END_ 项记录，共 _TOTAL_ 项",
+        "infoEmpty":    "第 0 至 0 项记录，共 0 项",
+        "infoFiltered": "(由 _MAX_ 项记录过滤)",
+        "infoPostFix":  "",
+        "search":       "搜索:",
+        "url":          "",
+        "decimal": ",",
+        "thousands": ".",
+        "emptyTable":"未找到符合条件的数据",
+        "paginate": {
+          "first":    "首页",
+          "previous": "上页",
+          "next":     "下页",
+          "last":     "末页"
+        }
+      },
+      retrieve: true,
+      paging: true,
+      ordering: false,
+      info: true,
+      autoWidth: false,
+      pageLength: 10,//每页显示10条数据
+      pagingType: "full_numbers", //分页样式：simple,simple_numbers,full,full_numbers，
+      bFilter: false, //去掉搜索框方法
+      bLengthChange: true,//也就是页面上确认是否可以进行选择一页展示多少条
+      serverSide: true,
+      ajax: function (data, callback, settings) {
+        //封装相应的请求参数，这里获取页大小和当前页码
+        var pagesize = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候,页大小
+        var start = data.start;//开始的记录序号
+        var page = (data.start) / data.length + 1;//当前页码
+        var param = {
+          page: page,
+          pagesize: pagesize,//这里只传了当前页和页大小，如果有其他参数，可继续封装
+          user:user,
+          time:time,
+          datatype:datatype
+        }
+        $('#loading').show();
+        $.ajax({
+          type: "get",
+          url: "Api/ajax_userbaobiao.php",
+          cache : false,  //禁用缓存
+          data: param,   //传入已封装的参数
+          dataType: "json",//返回数据格式为json
+          success: function(data) {
+           $('#loading').hide();
+            var returnData = {};
+            //returnData.draw = arr.data.pagination.pageCount;//这里直接自行返回了draw计数器,应该由后台返回，没什么卵用！
+            returnData.recordsTotal = data.totalCount;//totalCount指的是总记录数
+            returnData.recordsFiltered = data.totalCount;//后台不实现过滤功能,全部的记录数都需输出到前端，记录数为总数
+            returnData.data = data.list;//返回汽车列表
+            callback(returnData);//这个别忘了！！！
+          },
+          error: function(XMLHttpRequest, textStatus, errorThrown) {
+           $('#loading').hide();
+          }
+        });
+      },
+      columns: [
+        {"data": "id", "name":"订单ID",searchable: false },
+        {"data": "uid", "name":"会员ID",searchable: false },
+        {"data": "userid", "name":"账号",searchable: false },
+        {"data": "remark", "name":"备注",searchable: false },
+        {"data": "sf", "name":"上分",searchable: false },
+        {"data": "xf", "name":"下分",searchable: false },
+        {"data": "yk", "name":"盈亏",searchable: false },
+        {"data": "allm", "name":"流水",searchable: false },
+        {"data": "fd", "name":"返点",searchable: false },
+        {"data": "money", "name":"当前余额",searchable: false },
+        {"data": "btn", "name":"明细查询",searchable: false }
+      ],
+      drawCallback: function (setting) {
+        var _this = $(this);
+        var tableId = _this.attr('id');
+        var thisDataTable = $(this).DataTable();
+        var pageInfo = thisDataTable.page.info();
+        var maxPage = pageInfo.pages;
+        let option_pages = '';
+        for(var i=1;i<=maxPage;i++){
+          option_pages += '<option value="' + i + '" ' + (i==(pageInfo.page + 1)?'selected="selected"':'') + '>' + i + '</option>';
+        }
+        $("#" + tableId + "_paginate ul").append('<li><a style="color: #777;">跳转到' +
+                '<select id="' + tableId + '_gotoPage" style="margin: 0 5px;border: 1px solid #ddd;outline: none;">' +
+                option_pages +
+                '</select>页</a></li>');
+        $("#" + tableId + "_gotoPage").on('change' , function(){
+          var page = $(this).val();
+          if (!isNaN(page)) {
+            page = Number(page) - 1;
+            if (page < 0) {
+              page = 0;
+            } else if (page >= maxPage) {
+              page = maxPage - 1;
+            }
+            datatable.fnPageChange(page);
+          }
+        });
+      }
+    });
+    //
+    // $('#userList').dataTable({
+    //   "destroy": true,
+    //   "autoWidth": false,
+    //   "scrollX": true,
+    //   "ajax":{
+    //     "url":"Application/ajax_userdata.php?t=getuser&time=" + time,
+    //     "dataSrc": function(data){
+    //       if(data.length == 0){
+    //         return data;
+    //       }
+    //       return data.data;
+    //     }
+    //   }
+    // });
+  }
+
+  function disreport(id, username , type) {
+    if(type == 1){
+      location.href = 'zb9n8rUvp0.php?m=report&a=jishi&userid=' + username;
+    }
+    if(type == 2){
+      location.href = 'zb9n8rUvp0.php?m=report&a=up&user=' + username;
+    }
+    // $('#report').modal('toggle');
+    // $('#report_id').text(id + " " + username);
+    // $('#report').data('id', id);
+  }
+
+  function getgame(cp){
+    var table = $('#report #gamereport').dataTable({
+      "destroy": true,
+      "autoWidth": false,
+      "order":[[0,'desc']],
+      "scrollX": true,
+      "ajax": {
+        "url":'Application/ajax_getreport.php?t=2&userid=' + $('#report').data('id') + '&time=' + $('#gametime').val() + '&code=' + cp,
+        "dataSrc": function( json ){
+          $('#gamereport #allmoney').text(json.allmoney);
+          $('#gamereport #allstatus').text(json.allstatus);
+          if(json.data[0] == null) {
+            return json;
+          }
+          return json.data;
+        }
+      }
+    });
+  }
+
+  function onetui(){
+    var mode = $('#tab_1 #mode option:selected').val();
+    var time = $('#datepicker').val();
+    var plan1 = $('#plan1_1').val() + '-' + $('#plan1_2').val();
+    var plan2 = $('#plan2_1').val() + '-' + $('#plan2_2').val();
+    var plan3 = $('#plan3_1').val() + '-' + $('#plan3_2').val();
+    var plan1s = $('#plan1s').val();
+    var plan2s = $('#plan2s').val();
+    var plan3s = $('#plan3s').val();
+
+    if($('#plan1_1').val() == '' || $('#plan1_2').val() == '' || plan1s == ''){
+      alert('至少填写一种方案...');
+      return;
+    }else if(
+            ($('#plan2_1').val() != '' && $('#plan2_2').val() == '' && plan2s == '') ||
+            ($('#plan2_1').val() == '' && $('#plan2_2').val() != '' && plan2s != '') ||
+            ($('#plan2_1').val() != '' && $('#plan2_2').val() != '' && plan2s == '') ||
+            ($('#plan2_1').val() == '' && $('#plan2_2').val() == '' && plan2s != '') ||
+            ($('#plan2_1').val() != '' && $('#plan2_2').val() == '' && plan2s != '') ||
+            ($('#plan2_1').val() == '' && $('#plan2_2').val() != '' && plan2s == '')
+    ){
+      alert('方案2填写后请务必填写完整..');
+      return;
+    }else if(
+            ($('#plan3_1').val() != '' && $('#plan3_2').val() == '' && plan3s == '') ||
+            ($('#plan3_1').val() == '' && $('#plan3_2').val() != '' && plan3s != '') ||
+            ($('#plan3_1').val() != '' && $('#plan3_2').val() != '' && plan3s == '') ||
+            ($('#plan3_1').val() == '' && $('#plan3_2').val() == '' && plan3s != '') ||
+            ($('#plan3_1').val() != '' && $('#plan3_2').val() == '' && plan3s != '') ||
+            ($('#plan3_1').val() == '' && $('#plan3_2').val() != '' && plan3s == '')
+    ){
+      alert('方案3填写后请务必填写完整..');
+      return;
+    }
+
+    if(mode == '-1'){
+      alert('请选择退水模式 ...');
+      return;
+    }
+
+    if(!confirm('确定进行回水操作吗?')){
+      return;
+    }
+
+    $.ajax({
+      url: 'Application/ajax_userdata.php?t=onetui',
+      type:'post',
+      data: {time: time,mode: mode,plan1: plan1,plan2: plan2,plan3: plan3,plan1s: plan1s,plan2s: plan2s, plan3s: plan3s},
+      dataType: 'json',
+      success: function(data){
+        if(data.success){
+          $('#tab_1 #tuiTable #tuibody').html('');
+          if(data.tuidata.length > 0 && data.tuidata != null){
+            var json = data.tuidata;
+            var str = '';
+            for(var i=0;i<json.length;i++){
+              str += '<tr>'
+                      +  '<td>' + json[i].id + '</td>'
+                      +  '<td>' + json[i].username + '</td>'
+                      +  '<td>' + json[i].userid + '</td>'
+                      +  '<td>' + json[i].mode + '</td>'
+                      +  '<td>' + json[i].mode + '</td>'
+                      +  '<td>' + json[i].money + '</td>'
+                      +  '</tr>';
+            }
+            $('#tab_1 #tuiTable #tuibody').html(str);
+            $('#tab_1 #tuiTable #tuimode').text(data.mode);
+            $('#tab_1 #tuiTable').dataTable({
+              "destroy": true,
+              "autoWidth": false,
+              "scrollX": true
+            });
+            $('#tab_1 #tuiTable').removeClass('fade');
+          }else{
+            alert('没有对应玩家可以进行回水..请降低条件后再试..');
+          }
+
+        }else{
+          alert(data.msg);
+        }
+      },
+      error: function(){ }
+    })
+  }
+  function getzhangbian(){
+    $('#report #zhangbiantable').dataTable({
+      "destroy": true,
+      "autoWidth": false,
+      "order":[[0,'desc']],
+      "ajax": {
+        "url": 'Application/ajax_getreport.php?t=1&userid=' + $('#report').data('id') + '&time=' + $('#zhangbiantime').val(),
+        "dataSrc": function(json){
+          if(json.data[0] == null) {
+            return json;
+          }
+          return json.data;
+        }
+      }
+    });
+  }
+  function twotui(){
+    var mode = $('#tab_2 #mode option:selected').val();
+    var time = $('#reservationtime').val();
+    var plan1 = $('#tab_2 #plan1_1').val() + '-' + $('#tab_2 #plan1_2').val();
+    var plan2 = $('#tab_2 #plan2_1').val() + '-' + $('#tab_2 #plan2_2').val();
+    var plan3 = $('#tab_2 #plan3_1').val() + '-' + $('#tab_2 #plan3_2').val();
+    var plan1s = $('#tab_2 #plan1s').val();
+    var plan2s = $('#tab_2 #plan2s').val();
+    var plan3s = $('#tab_2 #plan3s').val();
+
+    if($('#tab_2 #plan1_1').val() == '' || $('#tab_2 #plan1_2').val() == '' || plan1s == ''){
+      alert('至少填写一种方案...');
+      return;
+    }else if(
+            ($('#tab_2 #plan2_1').val() != '' && $('#tab_2 plan2_2').val() == '' && plan2s == '') ||
+            ($('#tab_2 #plan2_1').val() == '' && $('#tab_2 #plan2_2').val() != '' && plan2s != '') ||
+            ($('#tab_2 #plan2_1').val() != '' && $('#tab_2 #plan2_2').val() != '' && plan2s == '') ||
+            ($('#tab_2 #plan2_1').val() == '' && $('#tab_2 #plan2_2').val() == '' && plan2s != '') ||
+            ($('#tab_2 #plan2_1').val() != '' && $('#tab_2 #plan2_2').val() == '' && plan2s != '') ||
+            ($('#tab_2 #plan2_1').val() == '' && $('#tab_2 #plan2_2').val() != '' && plan2s == '')
+    ){
+      alert('方案2填写后请务必填写完整..');
+      return;
+    }else if(
+            ($('#tab_2 #plan3_1').val() != '' && $('#tab_2 #plan3_2').val() == '' && plan3s == '') ||
+            ($('#tab_2 #plan3_1').val() == '' && $('#tab_2 #plan3_2').val() != '' && plan3s != '') ||
+            ($('#tab_2 #plan3_1').val() != '' && $('#tab_2 #plan3_2').val() != '' && plan3s == '') ||
+            ($('#tab_2 #plan3_1').val() == '' && $('#tab_2 #plan3_2').val() == '' && plan3s != '') ||
+            ($('#tab_2 #plan3_1').val() != '' && $('#tab_2 #plan3_2').val() == '' && plan3s != '') ||
+            ($('#tab_2 #plan3_1').val() == '' && $('#tab_2 #plan3_2').val() != '' && plan3s == '')
+    ){
+      alert('方案3填写后请务必填写完整..');
+      return;
+    }
+
+    if(mode == '-1'){
+      alert('请选择退水模式 ...');
+      return;
+    }
+
+    if(!confirm('确定进行回水操作吗?')){
+      return;
+    }
+
+    $.ajax({
+      url: 'Application/ajax_userdata.php?t=twotui',
+      type:'post',
+      data: {time: time,mode: mode,plan1: plan1,plan2: plan2,plan3: plan3,plan1s: plan1s,plan2s: plan2s, plan3s: plan3s},
+      dataType: 'json',
+      success: function(data){
+        if(data.success){
+          $('#tab_2 #tuiTable #tuibody').html('');
+          if(data.tuidata.length > 0 && data.tuidata != null){
+            var json = data.tuidata;
+            var str = '';
+            for(var i=0;i<json.length;i++){
+              str += '<tr>'
+                      +  '<td>' + json[i].id + '</td>'
+                      +  '<td>' + json[i].username + '</td>'
+                      +  '<td>' + json[i].userid + '</td>'
+                      +  '<td>' + json[i].mode + '</td>'
+                      +  '<td>' + json[i].money + '</td>'
+                      +  '</tr>';
+            }
+            $('#tab_2 #tuiTable #tuibody').html(str);
+            $('#tab_2 #tuiTable #tuimode').text(data.mode);
+            $('#tab_2 #tuiTable').dataTable({
+              "destroy": true,
+              "autoWidth": false,
+              "scrollX": true
+            });
+            $('#tab_2 #tuiTable').removeClass('fade');
+          }else{
+            alert('没有对应玩家可以进行回水..请降低条件后再试..');
+          }
+
+        }else{
+          alert(data.msg);
+        }
+      },
+      error: function(){ }
+    })
+  }
+</script>

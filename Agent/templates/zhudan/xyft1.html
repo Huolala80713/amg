@@ -1,0 +1,462 @@
+<?
+$game = getGameTxtName($gameID);
+$game_type = getGameCodeById($gameID);
+$wanfa = $_GET['wanfa'];
+?>
+<link rel="stylesheet" href="plugins/datatables/dataTables.bootstrap.css">
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            游戏即时注单<small><?php echo $game;?></small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> 控制台</a></li>
+            <li><a href="#"> 游戏即时注单</a></li>
+            <li class="active"><?php echo $game;?></li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-success direct-chat direct-chat-success">
+                    <div class="box-header with-border" style="display: flex;">
+                        <span style="flex: 1">期号：<label id="term">000期</label></span>
+                        <span style="flex: 1">总金额：<label id="amount">0.00</label></span>
+                        <span style="flex: 1">参与人数：</span>
+                        <span style="flex: 1">距离下期开奖：<label style="" id="time">00</label></span>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <!-- Conversations are loaded here -->
+                        <div class="direct-chat-messages"  style="height:auto;overflow: hidden;">
+                            <?php if(empty($wanfa)):?>
+                            <div class="box box-info">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title"> 冠亚组和 指定 </h3>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">和3(赔率:<?php echo get_query_val('fn_lottery' . $gameID,'`he341819`',array('roomid'=>$_SESSION['agent_room'])); ?>)</span>
+                                                <input readonly class="form-control data_和03"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">和4(赔率:<?php echo get_query_val('fn_lottery' . $gameID,'`he341819`',array('roomid'=>$_SESSION['agent_room'])); ?>)</span>
+                                                <input readonly class="form-control data_和04"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">和5(赔率:<?php echo get_query_val('fn_lottery' . $gameID,'`he561617`',array('roomid'=>$_SESSION['agent_room'])); ?>)</span>
+                                                <input readonly class="form-control data_和05"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">和6(赔率:<?php echo get_query_val('fn_lottery' . $gameID,'`he561617`',array('roomid'=>$_SESSION['agent_room'])); ?>)</span>
+                                                <input readonly class="form-control data_和06"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">和7(赔率:<?php echo get_query_val('fn_lottery' . $gameID,'`he781415`',array('roomid'=>$_SESSION['agent_room'])); ?>)</span>
+                                                <input readonly class="form-control data_和07"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">和8(赔率:<?php echo get_query_val('fn_lottery' . $gameID,'`he781415`',array('roomid'=>$_SESSION['agent_room'])); ?>)</span>
+                                                <input readonly class="form-control data_和08"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">和9(赔率:<?php echo get_query_val('fn_lottery' . $gameID,'`he9101213`',array('roomid'=>$_SESSION['agent_room'])); ?>)</span>
+                                                <input readonly class="form-control data_和09"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">和10(赔率:<?php echo get_query_val('fn_lottery' . $gameID,'`he9101213`',array('roomid'=>$_SESSION['agent_room'])); ?>)</span>
+                                                <input readonly class="form-control data_和10"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">和11(赔率:<?php echo get_query_val('fn_lottery' . $gameID,'`he11`',array('roomid'=>$_SESSION['agent_room'])); ?>)</span>
+                                                <input readonly class="form-control data_和11"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">和12(赔率:<?php echo get_query_val('fn_lottery' . $gameID,'`he9101213`',array('roomid'=>$_SESSION['agent_room'])); ?>)</span>
+                                                <input readonly class="form-control data_和12"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">和13(赔率:<?php echo get_query_val('fn_lottery' . $gameID,'`he9101213`',array('roomid'=>$_SESSION['agent_room'])); ?>)</span>
+                                                <input readonly class="form-control data_和13"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">和14(赔率:<?php echo get_query_val('fn_lottery' . $gameID,'`he781415`',array('roomid'=>$_SESSION['agent_room'])); ?>)</span>
+                                                <input readonly class="form-control data_和14"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">和15(赔率:<?php echo get_query_val('fn_lottery' . $gameID,'`he781415`',array('roomid'=>$_SESSION['agent_room'])); ?>)</span>
+                                                <input readonly class="form-control data_和15"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">和16(赔率:<?php echo get_query_val('fn_lottery' . $gameID,'`he561617`',array('roomid'=>$_SESSION['agent_room'])); ?>)</span>
+                                                <input readonly class="form-control data_和16"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">和17(赔率:<?php echo get_query_val('fn_lottery' . $gameID,'`he561617`',array('roomid'=>$_SESSION['agent_room'])); ?>)</span>
+                                                <input readonly class="form-control data_和17"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">和18(赔率:<?php echo get_query_val('fn_lottery' . $gameID,'`he341819`',array('roomid'=>$_SESSION['agent_room'])); ?>)</span>
+                                                <input readonly class="form-control data_和18"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">和19(赔率:<?php echo get_query_val('fn_lottery' . $gameID,'`he341819`',array('roomid'=>$_SESSION['agent_room'])); ?>)</span>
+                                                <input readonly class="form-control data_和19"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box box-primary">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title"> 冠亚组和 两面 </h3>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">和大(赔率:<?php echo get_query_val('fn_lottery' . $gameID,'`heda`',array('roomid'=>$_SESSION['agent_room'])); ?>)</span>
+                                                <input readonly class="form-control data_和大"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">和小(赔率:<?php echo get_query_val('fn_lottery' . $gameID,'`hexiao`',array('roomid'=>$_SESSION['agent_room'])); ?>)</span>
+                                                <input readonly class="form-control data_和小"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">和单(赔率:<?php echo get_query_val('fn_lottery' . $gameID,'`hedan`',array('roomid'=>$_SESSION['agent_room'])); ?>)</span>
+                                                <input readonly class="form-control data_和单"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">和双(赔率:<?php echo get_query_val('fn_lottery' . $gameID,'`heshuang`',array('roomid'=>$_SESSION['agent_room'])); ?>)</span>
+                                                <input readonly class="form-control data_和双"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php endif;?>
+                            <?php for($a=1;$a<=10;$a++):?>
+                            <?php
+                                if(empty($wanfa) && $a != 1 && $a != 2){
+                                    continue;
+                                }
+                                if($wanfa == 1 && !in_array($a,[3,4,5,6])){
+                                    continue;
+                                }
+                                if($wanfa == 2 && !in_array($a,[7,8,9,10])){
+                                    continue;
+                                }
+                                switch ($a){
+                                    case 1:
+                                        $type = '冠军';
+                                        break;
+                                    case 2:
+                                        $type = '亚军';
+                                        break;
+                                    case 3:
+                                        $type = '第三名';
+                                        break;
+                                    case 4:
+                                        $type = '第四名';
+                                        break;
+                                    case 5:
+                                        $type = '第五名';
+                                        break;
+                                    case 6:
+                                        $type = '第六名';
+                                        break;
+                                    case 7:
+                                        $type = '第七名';
+                                        break;
+                                    case 8:
+                                        $type = '第八名';
+                                        break;
+                                    case 9:
+                                        $type = '第九名';
+                                        break;
+                                    case 10:
+                                        $type = '第十名';
+                                        break;
+                                }
+                            ?>
+                            <div class="box box-primary">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title"> <?php echo $type;?> </h3>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">大(赔率:<?php echo get_query_val('fn_lottery' . $gameID,'`da`',array('roomid'=>$_SESSION['agent_room'])); ?>)</span>
+                                                <input readonly class="form-control data_<?php echo $a;?>大"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">小(赔率:<?php echo get_query_val('fn_lottery' . $gameID,'`xiao`',array('roomid'=>$_SESSION['agent_room'])); ?>)</span>
+                                                <input readonly class="form-control data_<?php echo $a;?>小"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">单(赔率:<?php echo get_query_val('fn_lottery' . $gameID,'`dan`',array('roomid'=>$_SESSION['agent_room'])); ?>)</span>
+                                                <input readonly class="form-control data_<?php echo $a;?>单"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">双(赔率:<?php echo get_query_val('fn_lottery' . $gameID,'`shuang`',array('roomid'=>$_SESSION['agent_room'])); ?>)</span>
+                                                <input readonly class="form-control data_<?php echo $a;?>双"/>
+                                            </div>
+                                        </div>
+                                        <?php if($a <= 5):?>
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">龙(赔率:<?php echo get_query_val('fn_lottery' . $gameID,'`long`',array('roomid'=>$_SESSION['agent_room'])); ?>)</span>
+                                                <input readonly class="form-control data_<?php echo $a;?>龙"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">虎(赔率:<?php echo get_query_val('fn_lottery' . $gameID,'`hu`',array('roomid'=>$_SESSION['agent_room'])); ?>)</span>
+                                                <input readonly class="form-control data_<?php echo $a;?>虎"/>
+                                            </div>
+                                        </div>
+                                        <?php endif;?>
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">大单(赔率:<?php echo get_query_val('fn_lottery' . $gameID,'`dadan`',array('roomid'=>$_SESSION['agent_room'])); ?>)</span>
+                                                <input readonly class="form-control data_<?php echo $a;?>大单"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">大双(赔率:<?php echo get_query_val('fn_lottery' . $gameID,'`dashuang`',array('roomid'=>$_SESSION['agent_room'])); ?>)</span>
+                                                <input readonly class="form-control data_<?php echo $a;?>大双"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">小单(赔率:<?php echo get_query_val('fn_lottery' . $gameID,'`xiaodan`',array('roomid'=>$_SESSION['agent_room'])); ?>)</span>
+                                                <input readonly class="form-control data_<?php echo $a;?>小单"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">小双(赔率:<?php echo get_query_val('fn_lottery' . $gameID,'`xiaoshuang`',array('roomid'=>$_SESSION['agent_room'])); ?>)</span>
+                                                <input readonly class="form-control data_<?php echo $a;?>小双"/>
+                                            </div>
+                                        </div>
+                                        <?php for($i=1;$i<=10;$i++):?>
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><img style="width: 18px;" src="<?php echo WEB_HOST;?>/openimg/<?php echo $i . $i . $i;?>.png" />(赔率:<?php echo get_query_val('fn_lottery' . $gameID,'`tema`',array('roomid'=>$_SESSION['agent_room'])); ?>)</span>
+                                                <input readonly class="form-control data_<?php echo $a;?><?php echo $i<10?'0' . $i:$i;?>"/>
+                                            </div>
+                                        </div>
+                                        <?php endfor;?>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php endfor;?>
+
+                        </div>
+                        <!--/.direct-chat-messages-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+<style type="text/css">
+    .input-group-addon{
+        width: 160px;
+        box-sizing: border-box;
+    }
+    .input-group{
+        margin-bottom: 10px;
+    }
+    .form-control{
+        text-align: center;
+    }
+    #tableList_wrapper .row{
+        margin: 0 !important;
+    }
+    #tableList_wrapper .row .col-sm-12{
+        padding: 0 !important;
+    }
+    #tableList_wrapper .row .col-sm-12 .dataTables_scrollBody:last-child{
+        overflow: hidden !important;
+    }
+</style>
+<script src="plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="plugins/datatables/dataTables.bootstrap.min.js"></script>
+<script>
+    var id = 0;
+    var game = '<?php echo getGameCodeById($gameID); ?>';
+    var first = true;
+    var time = 0;
+    var term = '';
+    getgame();
+    tablestart();
+    function gettouzhu(){
+        $.ajax({
+            url: 'Application/ajax_gettouzhu.php?g=' + game + '&term=' + term + '&wanfa=<?php echo $wanfa;?>',
+            type: 'get',
+            dataType:'json',
+            success: function(data){
+                if(data.status){
+                    $("#amount").text(data.data.amount);
+                    $("#paijian").text(data.data.paijian_amount);
+                    $("#yingkui").text(data.data.yingkui);
+
+
+                    $("#gyhe").text(data.data.gyhe);
+                    $("#gydx").text(data.data.gydx);
+                    $("#gyds").text(data.data.gyds);
+                    $("#gj").text(data.data.gj);
+                    $("#yj").text(data.data.yj);
+                    $("#san").text(data.data.san);
+                    $("#si").text(data.data.si);
+                    $("#wu").text(data.data.wu);
+                    $("#liu").text(data.data.liu);
+                    $("#qi").text(data.data.qi);
+                    $("#ba").text(data.data.ba);
+                    $("#jiu").text(data.data.jiu);
+                    $("#shi").text(data.data.shi);
+
+                    $.each(data.data.list , function (index,value) {
+                        if(!isNaN(index) && index < 10){
+                            index = '0' + index;
+                        }
+                        $('.data_' + index).val(value);
+                    });
+                }
+                setTimeout(function(){
+                    gettouzhu();
+                } , 5000);
+            },
+            error: function() { }
+        });
+    }
+    function getgame(){
+        $.ajax({
+            url: 'Application/ajax_getcode.php?g=' + game,
+            type: 'get',
+            dataType:'json',
+            success: function(data){
+                $('#term').text(data.term + '期');
+                $('#opencode').text(data.code);
+                term = data.term;
+                time = data.time;
+                if(first){
+                    gettouzhu();
+                    gotime();
+                    first = false;
+                }
+            },
+            error: function() { }
+        });
+    }
+    function gotime(){
+        time = time - 1;
+        if(time < 0){
+            getgame();
+            $('#time').text('开奖中...');
+            setTimeout(function() {
+                gotime();
+                tablestart();
+            }, 5000);
+            return;
+        }
+
+        $('#time').text(time + '秒');
+        setTimeout(function() {
+            gotime();
+        }, 1000);
+    }
+    function tablestart(){
+        $('#tableList').DataTable({
+            "searching" : false,
+            "destroy": true,
+            "scrollX": true,
+            "lengthChange": false,
+            "ajax":{
+                "url": "Application/ajax_getonline.php",
+                "dataSrc":function(json){
+                    if(json.data[0] == 'null'){
+                        return json;
+                    }
+                    // for(var i=0;i<json.data.length; i++){
+                    //     json.data[i][2] = "<a href='javascript:ban(\"" + json.data[i][2] + "\")' class='btn btn-danger btn-xs'>禁言玩家</a>";
+                    // }
+                    return json.data;
+                }
+            }
+        });
+    }
+    function ban(id){
+        $.ajax({
+            url:'Application/ajax_banuser.php',
+            type: 'post',
+            data: {id: id},
+            dataType: 'json',
+            success: function( data ){
+                if(data.success){
+                    alert('禁言成功..');
+                }else{
+                    alert(data.msg);
+                }
+            },
+            error: function() { }
+        })
+    }
+</script>

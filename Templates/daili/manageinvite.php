@@ -40,6 +40,8 @@ foreach ($game_list as $key => $game){
         $table = 'fn_lottery7';
     } elseif ($BetGame == 'jsssc') {
         $table = 'fn_lottery8';
+    } elseif ($BetGame == 'xglhc') {
+        $table = 'fn_lottery9';
     }
     $default_agent_list[$key] = get_query_val($table , 'fandian' , ['roomid'=>$_SESSION['roomid']]);
 }

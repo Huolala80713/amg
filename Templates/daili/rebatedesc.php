@@ -21,6 +21,8 @@ if ($BetGame == 'pk10') {
     $table = 'fn_lottery7';
 } elseif ($BetGame == 'jsssc') {
     $table = 'fn_lottery8';
+} elseif ($BetGame == 'xglhc') {
+    $table = 'fn_lottery9';
 }
 $info = get_query_vals($table , '*' , ['roomid'=>$_SESSION['roomid']]);
 if($game_name == 5){
@@ -54,6 +56,8 @@ if($game_name == 5){
         'zuhe_1314_2' => $info['zuhe_zongzhu2'] . '@14大双/' . $info['zuhe_zongzhu2'] . '@13小单',
         'zuhe_1314_3' => $info['zuhe_zongzhu3'] . '@14大双/' . $info['zuhe_zongzhu3'] . '@13小单',
     ];
+}elseif($game_name == 9){
+    $wanfa_list = [];
 }else{
     $wanfa_list = [
         'da' => '大',

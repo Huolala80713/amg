@@ -171,6 +171,7 @@ function getGameTxtName($gameid=''){
     $gmidName[4]='极速赛车';
     $gmidName[5]='加拿大28';
     $gmidName[6]='极速摩托/飞艇';
+    $gmidName[9]='极速摩托/飞艇';
     /*$gmidName[7]='jssc';
     $gmidName[8]='jsssc';*/
     if(empty($gameid)) return $gmidName;

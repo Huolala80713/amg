@@ -212,7 +212,12 @@ if(in_array($do,$cando)){
             $game_list = getGameList();
             foreach ($game_list as $key => $val){
                 $info = get_query_vals('fn_lottery' . $key, 'gameopen', array('roomid' => $_SESSION['roomid']));
-                $list[$key]=['game_id'=>$key,'is_open'=>$info['gameopen'],'opinfo'=>getOpenInfo(getGameCodeById($key) , 1)];
+                if($key == 9){
+                    $list[$key]=['game_id'=>$key,'is_open'=>$info['gameopen'],'opinfo'=>getOpenInfo(getGameCodeById($key) , 1)];
+                }else{
+                    $list[$key]=['game_id'=>$key,'is_open'=>$info['gameopen'],'opinfo'=>getOpenInfo(getGameCodeById($key) , 1)];
+                }
+
             }
             //var_dump($list);
             krsort($list);

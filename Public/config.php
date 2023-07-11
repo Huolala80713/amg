@@ -73,6 +73,7 @@ function checkLogin(){
         header('Location:/fn.php');
     }
 }
+
 function getInviteCode($leng = 10){
     $leng = $leng < 6 ? 6 :$leng;
     $chars = '0123456789';

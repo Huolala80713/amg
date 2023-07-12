@@ -213,8 +213,26 @@ $page = getPageList($list['count'] , 10 , '/Templates/user/orderinfo.php');
                 <td><?php echo $order['gamename'];?></td>
                 <td><?php echo $order['add_time'];?></td>
                 <td><?php echo $order['term'];?></td>
-                <td><?php echo $order['mingci'];?></td>
-                <td><?php echo str_replace(['chuanjiao','niannian','gufan'],['串角','年念','孤番'] , $order['content']);?></td>
+                <td><?php
+                    if($order['type'] == 9){
+                        $wanfa_name = explode("#",$order['content']);
+                        //echo $wanfa_name[1]."[".$wanfa_name[1]."]";
+                        echo $wanfa_name[0];
+                    }else{
+                        echo $order['mingci'];
+                    }
+
+                    ?></td>
+                <td><?php
+                    if($order['type'] == 9){
+                        $wanfa_name = explode("#",$order['content']);
+                        //echo $wanfa_name[1]."[".$wanfa_name[1]."]";
+                        echo $wanfa_name[2];
+                    }else{
+                        echo str_replace(['chuanjiao','niannian','gufan'],['串角','年念','孤番'] , $order['content']);
+                    }
+
+                    ?></td>
                 <td><?php echo $order['money'];?></td>
                 <td><?php echo $order['peilv'];?></td>
                 <td style="color: <?php echo $order['status'] < 0 ?'red':'';?>"><?php echo $order['status'];?></td>

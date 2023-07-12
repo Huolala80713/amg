@@ -171,7 +171,7 @@ function getGameTxtName($gameid=''){
     $gmidName[4]='极速赛车';
     $gmidName[5]='加拿大28';
     $gmidName[6]='极速摩托/飞艇';
-    $gmidName[9]='极速摩托/飞艇';
+    $gmidName[9]='香港六合彩';
     /*$gmidName[7]='jssc';
     $gmidName[8]='jsssc';*/
     if(empty($gameid)) return $gmidName;
@@ -393,6 +393,65 @@ function getOpenInfo($gameName , $type = 0){
     $rowsend['gyh']=$h.' '.($h>10?'大':'小').' '.($h%2==0?'双':'单');
     return $rowsend;
 }
+
+function getLhcOpenInfo($gameName , $type = 0){
+    global $gmidAli;
+    $typeNum=$gmidAli;
+    $typeNum=array_flip($typeNum);
+    $_COOKIE['game']=$gameName;
+
+    $roomid=$_SESSION['roomid'];
+    $GameType=$typeNum[$gameName];
+    $field = 'term,next_term,next_time,code,code_te,iskaijiang';
+    $BetTerm = get_query_vals('fn_open_lhc', $field, "type = {$GameType} order by `next_term` desc limit 1");
+    //$time = (int)get_query_val('fn_lottery'.$GameType, 'fengtime', array('roomid' => $roomid));
+    $thisTerm= explode(',',$BetTerm['code']);
+    //var_dump($thisTerm);exit;
+    if($GameType == 5){
+        $h=intval($thisTerm[0])+intval($thisTerm[1])+intval($thisTerm[2]);
+    }else{
+        $h=intval($thisTerm[0])+intval($thisTerm[1]);
+    }
+    $rowsend=[];
+    $rowsend['current_sn']=$BetTerm['term'];
+    $rowsend['next_sn']=$BetTerm['next_term'];
+    $rowsend['open_num']=$BetTerm['code'];
+    if($BetTerm['iskaijiang'] == 0){
+
+        $last_open = get_query_vals('fn_open', $field, "type = {$GameType} and next_term = '{$BetTerm['term']}' order by `next_time` desc limit 1");
+        $thisTerm= explode(',',$last_open['code']);
+        //var_dump($thisTerm);exit;
+        if($GameType == 5){
+            $h=intval($thisTerm[0])+intval($thisTerm[1])+intval($thisTerm[2]);
+        }else{
+            $h=intval($thisTerm[0])+intval($thisTerm[1]);
+        }
+        $rowsend['open_num']=$last_open['code'];
+        $rowsend['letf_time'] = '正在开奖';
+        $rowsend['current_sn']=$last_open['term'];
+        $rowsend['next_sn']=$last_open['next_term'];
+    }else{
+        $game_info = get_query_vals('fn_lottery' . $GameType, 'gameopen,fengtime', array('roomid' => $roomid));
+        if($game_info['gameopen'] == 'false'){
+            $rowsend['letf_time'] = -100;
+        }else{
+            $rowsend['letf_time']=strtotime($BetTerm['next_time']) - GetTtime() - $game_info['fengtime'];
+        }
+        $key = md5($roomid . $GameType . $gameName . $rowsend['current_sn']);
+        if($rowsend['letf_time'] < 0 && $type == 0){
+            if(!isset($_SESSION[$key]) || empty($_SESSION[$key])){
+                $_SESSION[$key] = true;
+                senddatas($roomid, $GameType, $gameName);
+                管理员喊话("第 " . $BetTerm['next_term'] . " 期已封盘，请等待下期!", $BetTerm['roomid'], $gmidAli[$BetTerm['type']]);
+            }
+        }
+    }
+
+    $rowsend['fp_time']=1;
+    $rowsend['gyh']=$h.' '.($h>10?'大':'小').' '.($h%2==0?'双':'单');
+    return $rowsend;
+}
+
 
 function GetTtime(){
 //    $data=file_get_contents('http://127.0.0.1:1323');

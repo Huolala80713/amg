@@ -15,6 +15,7 @@ switch($type) {
         $arr['content'] = getWanfaCate();
         $arr['money_list'] = [5, 10, 50, 100, 1000];
         $arr['user'] = get_query_vals('fn_user','money,userid,id',['userid'=>$userid]);
+        $arr['game_list'] = getGameList();
         echo json_encode($arr);
         break;
     case "chosewanfa":
@@ -180,21 +181,21 @@ switch($type) {
                         'money' => $money,
                         'roomid' => $roomid,
                         'addtime' => 'now()'));
-                insert_query("fn_upmark",
-                    array(
-                        "userid" => $userid,
-                        'headimg' => $user['headimg'],
-                        'username' => $user['username'],
-                        'type' => '下分',
-                        'money' => $money,
-                        'content' => $content,
-                        'status' => '已处理',
-                        'time' => 'now()',
-                        'game' => getGameCodeById($gameTypeID),
-                        'roomid' => $roomid,
-                        'jia' => 'false'
-                    )
-                );
+//                insert_query("fn_upmark",
+//                    array(
+//                        "userid" => $userid,
+//                        'headimg' => $user['headimg'],
+//                        'username' => $user['username'],
+//                        'type' => '下分',
+//                        'money' => $money,
+//                        'content' => $content,
+//                        'status' => '已处理',
+//                        'time' => 'now()',
+//                        'game' => getGameCodeById($gameTypeID),
+//                        'roomid' => $roomid,
+//                        'jia' => 'false'
+//                    )
+//                );
                 update_query('fn_user', array('money' => '-=' . $money), array('userid' => $userid, 'roomid' => $roomid));
             }
 

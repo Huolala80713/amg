@@ -57,7 +57,12 @@ if($game_name == 5){
         'zuhe_1314_3' => $info['zuhe_zongzhu3'] . '@14大双/' . $info['zuhe_zongzhu3'] . '@13小单',
     ];
 }elseif($game_name == 9){
-    $wanfa_list = [];
+    require_once './../../Public/config_lhc.php';
+
+    $wanfa_data = getWanfaPeilvStepList(9,$_SESSION['userid']);
+    $wanfa_list = $wanfa_data['wanfa_list'];
+    $peilv_list = $wanfa_data['peilv'];
+
 }else{
     $wanfa_list = [
         'da' => '大',
@@ -244,23 +249,30 @@ $default_fandian = $info['fandian'];
     </dl>
     <div class="fandian_list">
         <div style="width: <?php echo $left_width * ($fandian / 0.01 + 1);?>px;">
-            <?php for($i=$fandian;$i>=0;$i-=0.01):?>
+            <?php for($i=$fandian;$i>=0;$i-=0.01){?>
                 <dl style="float: left;">
                     <dt><?php echo round($i,2);?>(%)</dt>
-                    <?php foreach($wanfa_list as $key => $value):?>
+                    <?php foreach ($wanfa_list as $key => $value): ?>
                         <dd>
-                        <?php
-                            echo "赔率" . getManagePeilv($game_name , $_SESSION['roomid'] , $info[$value['key']] , $i , $value['key']);
-//                            $peilv_step = round($info[$value['key']] / 10000 + $info[$value['key']] / 1000000 , 7);
-//
-//                            $peilv = $info[$value['key']] - ($fandian - $i)/0.01 * $peilv_step - ($default_fandian - $fandian)/0.01 * $peilv_step;
-//
-//                            echo "赔率" . ($peilv>=0?round(floor($peilv * 10000) / 10000 , 4):0);
-                        ?>
+                            <?php
+                            if($game_name == 9){ // ($peilv_list[$key]['peilv_step']) .":".
+                                echo "赔率" . bcsub($peilv_list[$key]['user_peilv'],bcmul($peilv_list[$key]['peilv_step'],bcsub($fandian,$i,2) * 100,3),3);
+                            }else{
+                                echo "赔率" . getManagePeilv($game_name, $_SESSION['roomid'], $info[$value['key']], $i, $value['key']);
+                            }
+
+
+                            //                            $peilv_step = round($info[$value['key']] / 10000 + $info[$value['key']] / 1000000 , 7);
+                            //
+                            //                            $peilv = $info[$value['key']] - ($fandian - $i)/0.01 * $peilv_step - ($default_fandian - $fandian)/0.01 * $peilv_step;
+                            //
+                            //                            echo "赔率" . ($peilv>=0?round(floor($peilv * 10000) / 10000 , 4):0);
+                            ?>
                         </dd>
                     <?php endforeach;?>
+
                 </dl>
-            <?php endfor;?>
+        <?php } ?>
         </div>
     </div>
 </div>

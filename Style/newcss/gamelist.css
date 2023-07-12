@@ -41,6 +41,36 @@
 .n10{background:#07bf00}
 .n0{background:#07bf00}
 
+/*'red'=> ['01','02','07','08','12','13','18','19','23','24','29','30','34','35','40','45','46'],*/
+/*'blue'=> [ '03','04','09','10','14','15','20','25','26','31','36','37','41','42','47','48'],*/
+/*'green'=> ['05','06','11','16','17','21','22','27','28','32','33','38','39','43','44','49'],*/
+
+.n01,.n02,.n07,.n08,.n02,.n12,.n13,.n18,.n19,.n23,.n24,.n29,.n30,.n34,.n02,.n35,.n40,.n45,.n46{background:red}
+.n03,.n04,.n09,.n10,.n14,.n15,.n20,.n25,.n26,.n31,.n36,.n37,.n41,.n42,.n47,.n48{background:#0000ff}
+.n05,.n06,.n11,.n16,.n16,.n17,.n21,.n22,.n27,.n28,.n32,.n33,.n38,.n39,.n39,.n43,.n44,.n49{background:#008000}
+
+.number-box1{
+    vertical-align: top;
+    display: table-cell;
+    margin: 0 .3em;
+    text-align: center
+}
+#current_num_9{
+    bottom: 8% !important;
+}
+.number-box {
+    height: 1.8em !important;
+    width: 1.8em !important;
+    line-height: 1.8em;
+    /*-webkit-box-shadow: 0 2px 1px #bbb59c !important;*/
+    /*box-shadow: 0 2px 1px #bbb59c;*/
+    border-radius: 50% !important;
+    color: #fff;
+    font-size: .8em;
+    margin-left: 8px !important;
+    bottom: 8% !important;
+}
+
 .mainbox .room-history{flex-grow: 10}
 .mainbox .btn-bg{flex-grow: 0;flex-shrink: 0;}
 .mainbox .btn-bg img{width: 100%}

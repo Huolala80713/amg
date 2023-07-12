@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	    <span style="font-size:18px;"> </span><span style="font-size:24px;"><meta http-equiv="refresh" content="6;URL=fn.php"> </span> 
+	    <span style="font-size:18px;"> </span><span style="font-size:24px;"><meta http-equiv="refresh" content="2;URL=fn.php"> </span>
 <span style="font-size:24px;"></span> 
 		<meta charset="utf-8">
 		<title>AMG</title>

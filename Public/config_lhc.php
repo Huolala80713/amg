@@ -552,7 +552,63 @@ function getWanfaByType($wanfa,$userid,$roomid){
 	}
 	return($data);
 }
-
+//获取所有玩法列表及赔率增长点 20230712
+function getWanfaPeilvStepList($type,$userid,$roomid='666777'){
+    $lottery = get_query_vals('fn_lottery'.$type,"*",['roomid'=>$roomid]);
+    $user_fandian = userFanDian($userid,$roomid,$type);
+    $levels = ($lottery['fandian'] - $user_fandian) / 0.01;//返点基点数
+    $peilv_list = [];
+    $wanfa_list = [];
+    foreach($lottery as $key=>$v){
+        if(strstr($key,"_step")){
+            $arr = [];
+            $name = "";
+            if(strstr($key,"tema_")){
+                $name = "特码";
+            }
+            if(strstr($key,"zhengma_")){
+                $name = "正码";
+            }
+            if(strstr($key,"shuangmian_")){
+                $name = $name."双面";
+            }
+            if(strstr($key,"shengxiao_")){
+                $name = $name."生肖";
+            }
+            if(strstr($key,"red_")){
+                $name = $name."红波";
+            }
+            if(strstr($key,"blue_")){
+                $name = $name."蓝波";
+            }
+            if(strstr($key,"green_")){
+                $name = $name."绿波";
+            }
+            if(strstr($key,'tu_')){
+                $name = $name."兔";
+            }
+            if(strstr($key,'danshuang_')){
+                $name = $name."单双";
+            }
+            if(strstr($key,'daxiao_')){
+                $name = $name."大小";
+            }
+            if(strstr($key,'dxds_')){
+                $name = $name."大小";
+            }
+            if($name){
+                $arr['key'] = $key;
+                $arr['name'] = $name;
+                $arr['value'] = $v;
+                $arr['user_peilv'] = $lottery[str_replace("_step","",$key)] - $lottery[$key] * $levels;
+                $arr['peilv_step'] =  $lottery[$key];
+                $wanfa_list[$key] = $name;
+                $peilv_list[] = $arr;
+            }
+        }
+    }
+    return ['peilv'=>$peilv_list,'wanfa_list'=>$wanfa_list];
+}
 //获取玩法大分类
 function getWanfaCate(){
 	$wanfa = array();

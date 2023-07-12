@@ -376,6 +376,7 @@ function orderlist($userid , $day1 , $day2 , $gamename , $jiesuan = '' , $page =
             'mingci' => $mingci,
             'content' => $content,
             'peilv' => $peilv,
+            'type' => $order['type'],
             'money' => $order['money'],
             'status' => $order['status'],
         ];

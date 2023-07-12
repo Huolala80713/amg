@@ -43,8 +43,8 @@
 
 		</style>
 	</head>
-	<body style="font-size: 22.1213px;">
-		<div data-v-5f2608b6="" id="app" style="">
+	<body style="font-size: 22.1213px;"  >
+		<div data-v-5f2608b6="" style="" id="app">
 			<header data-v-5f2608b6="" class="top"><span data-v-5f2608b6="">香港六合彩</span>
 				<div data-v-5f2608b6="" class="iconfont back" style="display: none;"></div> <a data-v-5f2608b6=""
 					href="/lottery/SIX/1" class="iconfont back on" style="display: none;"></a> <a data-v-5f2608b6=""
@@ -114,15 +114,13 @@
 									<div data-v-4cb2415a="" class="sc-1pmraqt-0 dzcbBD" style="padding-top: 0px;display: none"
 										v-show="rightBox==true" @click="rightBoxFun()">
 										<div data-v-4cb2415a="" class="game-div">
-											<h3 data-v-4cb2415a="" class="game-title">快3系列</h3>
-											<div data-v-4cb2415a="" class="game-item-wrapper"><span data-v-4cb2415a=""
-													class="game-item">极速快3</span></div>
+
 											<h3 data-v-4cb2415a="" class="game-title">PK10系列</h3>
-											<div data-v-4cb2415a="" class="game-item-wrapper"><span data-v-4cb2415a=""
-													class="game-item">极速赛车</span><span data-v-4cb2415a=""
-													class="game-item">澳洲赛马</span><span data-v-4cb2415a=""
-													class="game-item">澳洲赛车</span><span data-v-4cb2415a=""
-													class="game-item">幸运赛车</span>
+											<div data-v-4cb2415a="" class="game-item-wrapper">
+
+                                                <span v-for="(game, key) in game_list" :key="key"  @click="to_game_url(key)"  data-v-4cb2415a="" class="game-item">{{game}}</span>
+
+
 											</div>
 										</div>
 									</div>
@@ -464,7 +462,8 @@
 					wanfaSonList: [],//玩法子类
 					curWanfaSonId: 0,
 					curWanfaSonName:'',
-                    user_info:{}
+                    user_info:{},
+                    game_list:[],
 
 				},
 				created: function() {
@@ -473,6 +472,11 @@
 				},
 				// 点击菜单使用的函数
 				methods: {
+                    to_game_url: function(game_id){
+                        if(game_id !== 9){
+                            window.location.href= "/action.php?do=room&game="+game_id
+                        }
+                    },
 					showPopup: function(pop_txt) {
 						this.popup_txt = pop_txt;
 						this.is_popup = true
@@ -567,6 +571,7 @@
 									that.choseWanfa('tema_haoma', "特码")
 									that.moneyList = data.money_list;
                                     that.user_info = data.user;
+                                    that.game_list = data.game_list;
 								}else{
                                     alert(data.msg)
                                     window.location.href= data.url
@@ -650,7 +655,21 @@
 							m = m < 10 ? "0" + m : m
 							let s = parseInt(this.next_kj_seconds % 60);
 							s = s < 10 ? "0" + s : s
-							this.next_kj_text = d + ':' + h + ':' + m + ':' + s
+                            var kj_str = "";
+                            if(d > 0){
+                                kj_str = d + ':';
+                            }
+                            if(h > 0){
+                                kj_str = kj_str + h + ':';
+                            }
+                            if(m > 0){
+                                kj_str = kj_str + m + ':';
+                            }
+                            if(s > 0){
+                                kj_str = kj_str + s ;
+                            }
+
+                            this.next_kj_text = kj_str;// d + ':' + h + ':' + m + ':' + s
 						}else{
 							this.next_kj_text = "已开奖"
 						}

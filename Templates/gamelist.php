@@ -7,7 +7,7 @@
         ?>】房间</title>
 
     <link rel="Stylesheet" type="text/css" href="/Style/newcss/common.css" />
-    <link rel="Stylesheet" type="text/css" href="/Style/newcss/gamelist.css?t=1" />
+    <link rel="Stylesheet" type="text/css" href="/Style/newcss/gamelist.css?t=8" />
     <style>
         .footer_menu2{display: flex;position: fixed;bottom: 0px;width: 100%;left: 0px;justify-content: space-between;align-items: center;padding: 0.1rem 0.2rem;box-sizing: border-box}
         .footer_menu2 li{display: flex;}
@@ -134,9 +134,6 @@
         }else{
             window.location.href='/action.php?do=room&game='+gmid;
         }
-
-
-
     });
     gimdIDS.forEach(function (item , index){
         showTimer(item);
@@ -161,7 +158,15 @@
                     var numArr=row.open_num.split(',');
                     var numHtml='<span class="sn-num">'+row.current_sn+'</span>';
                     for (j=0;j<numArr.length;j++){
-                        numHtml+='<span class="n'+numArr[j]+'">'+numArr[j]+'</span>';
+                        if(row.gameid == 9){
+                            if(j == 5){
+                                numHtml+='<span>+</span>';
+                            }
+                            numHtml+='<span class="number-box n'+numArr[j]+'">'+numArr[j]+'</span>';
+                        }else{
+                            numHtml+='<span class="n'+numArr[j]+'">'+numArr[j]+'</span>';
+                        }
+
                     }
 
                     $('#current_num_'+row.gameid).html(numHtml);
@@ -181,16 +186,32 @@
         }
         var totalSec=parseInt(leftSec);
         if(totalSec<parseInt(fpSec)) return '<b class="fping">已封盘</b>';
-        var min  =   Math.floor(totalSec/60);
+        var day  =   Math.floor(totalSec/(60 * 60 * 24));
+        var hours  =   Math.floor((totalSec%(60 * 60 * 24))/(60 * 60));
+        var min  =   Math.floor((totalSec%(60*60)/60));
         var sec = totalSec%60;
         min=(min<10)?'0'+min:min+"";
         sec=(sec<10)?'0'+sec:sec+"";
         var lastStr='';
-        lastStr+='<b>'+min[0]+'</b>';
-        lastStr+='<b>'+min[1]+'</b>';
-        lastStr+='<b>:</b>';
-        lastStr+='<b>'+sec[0]+'</b>';
-        lastStr+='<b>'+sec[1]+'</b>';
+        if(day > 0){
+            lastStr+='<b>'+day+'</b>';
+//            lastStr+='<b>:</b>';
+        }
+        if(hours > 0){
+            lastStr+='<b>'+hours+'</b>';
+//            lastStr+='<b>:</b>';
+        }
+        if(min > 0){
+            lastStr+='<b>'+min+'</b>';
+            lastStr+='<b>:</b>';
+        }
+//        lastStr+='<b>'+min[1]+'</b>';
+//        lastStr+='<b>:</b>';
+        if(sec > 0){
+            lastStr+='<b>'+sec+'</b>';
+        }
+//        lastStr+='<b>'+sec[0]+'</b>';
+//        lastStr+='<b>'+sec[1]+'</b>';
         return lastStr;
     }
 </script>

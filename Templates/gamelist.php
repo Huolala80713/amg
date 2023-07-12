@@ -159,7 +159,7 @@
                     var numHtml='<span class="sn-num">'+row.current_sn+'</span>';
                     for (j=0;j<numArr.length;j++){
                         if(row.gameid == 9){
-                            if(j == 5){
+                            if(j == 6){
                                 numHtml+='<span>+</span>';
                             }
                             numHtml+='<span class="number-box n'+numArr[j]+'">'+numArr[j]+'</span>';

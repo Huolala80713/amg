@@ -415,18 +415,18 @@ function getLhcOpenInfo($gameName , $type = 0){
     $rowsend=[];
     $rowsend['current_sn']=$BetTerm['term'];
     $rowsend['next_sn']=$BetTerm['next_term'];
-    $rowsend['open_num']=$BetTerm['code'];
+    $rowsend['open_num']=$BetTerm['code'].",".$BetTerm['code_te'];
     if($BetTerm['iskaijiang'] == 0){
 
-        $last_open = get_query_vals('fn_open', $field, "type = {$GameType} and next_term = '{$BetTerm['term']}' order by `next_time` desc limit 1");
-        $thisTerm= explode(',',$last_open['code']);
+        $last_open = get_query_vals('fn_open_lhc', $field, "type = {$GameType} and next_term = '{$BetTerm['term']}' order by `next_time` desc limit 1");
+        $thisTerm= explode(',',$last_open['code'].",".$last_open['code_te']);
         //var_dump($thisTerm);exit;
         if($GameType == 5){
             $h=intval($thisTerm[0])+intval($thisTerm[1])+intval($thisTerm[2]);
         }else{
             $h=intval($thisTerm[0])+intval($thisTerm[1]);
         }
-        $rowsend['open_num']=$last_open['code'];
+        $rowsend['open_num']=$last_open['code'].",".$last_open['code_te'];
         $rowsend['letf_time'] = '正在开奖';
         $rowsend['current_sn']=$last_open['term'];
         $rowsend['next_sn']=$last_open['next_term'];

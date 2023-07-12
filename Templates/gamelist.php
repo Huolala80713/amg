@@ -207,9 +207,7 @@
         }
 //        lastStr+='<b>'+min[1]+'</b>';
 //        lastStr+='<b>:</b>';
-        if(sec > 0){
-            lastStr+='<b>'+sec+'</b>';
-        }
+        lastStr+='<b>'+sec+'</b>';
 //        lastStr+='<b>'+sec[0]+'</b>';
 //        lastStr+='<b>'+sec[1]+'</b>';
         return lastStr;

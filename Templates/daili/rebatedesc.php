@@ -59,7 +59,7 @@ if($game_name == 5){
 }elseif($game_name == 9){
     require_once './../../Public/config_lhc.php';
 
-    $wanfa_data = getWanfaPeilvStepList(9,$_SESSION['userid']);
+    $wanfa_data = getWanfaPeilvStepList(9,$_SESSION['userid'],$_SESSION['roomid']);
     $wanfa_list = $wanfa_data['wanfa_list'];
     $peilv_list = $wanfa_data['peilv'];
 

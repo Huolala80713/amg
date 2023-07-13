@@ -28918,7 +28918,9 @@ hr[data-v-01736910] {
     height: 2.2em;
     line-height: 2.2em;
     width: 100%;
-    border-radius: .26rem
+    border-radius: .26rem;
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
 .confirmNote[data-v-3ff97372] {

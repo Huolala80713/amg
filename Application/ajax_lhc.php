@@ -7,6 +7,7 @@ if(!$_SESSION['userid']) exit(json_encode(array("success" => false, "msg" => '�
 if(!$_SESSION['roomid']) exit(json_encode(array("success" => false, "msg" => '请先进房间','url'=>'/action.php?do=roomdoor')));
 $userid = $_SESSION['userid'];
 $roomid = $_SESSION['roomid'];
+$gameTypeID = 9;
 switch($type) {
     //获取六合彩相关方法
     case "wanfalist":
@@ -59,6 +60,66 @@ switch($type) {
         $arr['content'] = $kj_data;
         echo json_encode($arr);
         break;
+    case "order_list":
+        $arr = array();
+        $page = $_GET['page'] ? $_GET['page'] : 1;
+        $limit = 15;
+        $status = $_GET['status'] ? $_GET['status'] : 'all';
+        $date_type = $_GET['date_type'] ? $_GET['date_type'] : 1;
+        if(date('H') < 6){
+            $date = date('Y-m-d' , strtotime('-1days'));
+        }else{
+            $date = date('Y-m-d');
+        }
+        if($date_type == 1){//今天
+            $day1 =  $day2 = $date;
+        }
+        if($date_type == 2){//昨天
+            $day1 =  date("Y-m-d",strtotime($date . "- 1day"));
+            $day2 =  date("Y-m-d",strtotime($date . "- 1day"));
+        }
+        if($date_type == 3){//本周
+            $day1 =  date('Y-m-d', time()-86400*date('w'));
+            $day2 =  $date;
+        }
+        if($date_type == 4){//上周
+            $day1 =  date("Y-m-d",strtotime($date . " -1 weeks - " . (date('w')?(date('w') - 1):7) . " days"));
+            $day2 =  date("Y-m-d",strtotime($date . " -1 weeks + " . ( 7 - date('w')) . " days"));
+        }
+        if($date_type == 5){//本月
+            $day1 =  date("Y-m-01" , strtotime($date));
+            $day2 =  date("Y-m-d",strtotime(date("Y-m-01" , strtotime($date)) . " + 1month -1day"));
+        }
+        if($date_type == 6){//上月
+            $day1 =  date("Y-m-01",strtotime($date . "- 1 month"));
+            $day2 =  date("Y-m-d",strtotime(date("Y-m-01" , strtotime($date)) . "- 1 day"));
+        }
+
+//        var_dump($day1);
+//        var_dump($day2);
+        $arr['success'] = true;
+        $arr['content'] = lhcorderlist($userid , $day1 , $day2 , $gameTypeID , $status , $page , $limit);
+        echo json_encode($arr);
+        break;
+    case "order_list_config":
+        $arr = array();
+        $arr['success'] = true;
+        $arr['order_type'] = [
+            ['id'=>'all','name'=>'所有'],
+            ['id'=>'zj','name'=>'中奖'],
+            ['id'=>'wzj','name'=>'未中奖'],
+            ['id'=>'dkj','name'=>'待开奖'],
+        ];
+        $arr['order_date'] = [
+            ['id'=>1,'name'=>'今天'],
+            ['id'=>2,'name'=>'昨天'],
+            ['id'=>3,'name'=>'本周'],
+            ['id'=>4,'name'=>'上周'],
+            ['id'=>5,'name'=>'本月'],
+            ['id'=>6,'name'=>'上月'],
+        ];
+        echo json_encode($arr);
+        break;
     case "bet"://投注
         /*
          * numberList"虎,狗"
@@ -68,7 +129,6 @@ switch($type) {
          */
         $data = array();
         $data['success'] = true;
-        $gameTypeID = 9;
         $kj_info = get_query_vals('fn_open_lhc', '*', array('type' => $gameTypeID));//get_query_vals("fn_open_lhc", '*', "`type` = 9");
         $bet_str = file_get_contents('php://input');
         $bet_data = $bet_str ? json_decode($bet_str, true) : [];

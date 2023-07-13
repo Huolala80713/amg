@@ -321,6 +321,10 @@ $page = getPageList($list['count'] , 10 , '/Templates/user/orderinfo.php');
         </ul>
     </div>
 </div>
+<?php
+include_once("../../Templates/public/menu.html");
+?>
+
 <script src="/Style/newweb/js/ydui.js"></script>
 <script type="text/javascript">
     var lang = {

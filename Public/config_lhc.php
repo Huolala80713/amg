@@ -784,4 +784,61 @@ function betIsRight($order_info,$kj_info){
     }
 }
 
+function lhcorderlist($userid , $day1 , $day2 , $gamename , $jiesuan = '' , $page = 1 , $limit = 10){
+
+    $day1 = date('Y-m-d 06:00:00' , strtotime($day1));
+    $day2 = date('Y-m-d 05:59:59' , strtotime($day2 . ' + 1day'));
+
+    $ordersql = " and (`addtime` between '{$day1}' and '{$day2}')";
+    if($gamename){
+        $ordersql .= " and type = '" . $gamename . "'";
+    }
+    $ordertable = 'fn_order';
+    $order = ['addtime desc'];
+    if($jiesuan == 'zj'){
+        $sql = "roomid = {$_SESSION['roomid']} and `status` > 0 and status != '未结算'  and status != '已撤单' " . $ordersql ;
+    }elseif($jiesuan == 'wzj'){
+        $sql = "roomid = {$_SESSION['roomid']} and `status` < 0 and status != '未结算'  and status != '已撤单' " . $ordersql ;
+    }elseif($jiesuan == 'dkj' || $jiesuan === false){
+        $sql = "roomid = {$_SESSION['roomid']} and `status` = '未结算' " . $ordersql ;
+    }elseif($jiesuan && $jiesuan != 'all'){
+        $sql = "roomid = {$_SESSION['roomid']} and (`status` > 0 or `status` < 0) and status != '未结算'  and status != '已撤单' " . $ordersql ;
+    }else{
+        $sql = "roomid = {$_SESSION['roomid']} " . $ordersql ;
+    }
+    if(is_array($userid)){
+        $sql .= " and userid in ('" . implode("','" , $userid) . "') ";
+    }else{
+        $sql .= " and userid = '{$userid}' ";
+    }
+   // var_dump($sql);
+    select_query($ordertable, '*', $sql , $order , (($page - 1) * $limit) . ',' . $limit);
+    $order_list = $cons = [];
+    while ($con = db_fetch_array()) {
+        $cons[] = $con;
+    }
+
+    //var_dump($cons);
+    foreach ($cons as $order) {
+        $wanfa_name = explode("#",$order['content']);
+        $mingci = $wanfa_name[0]."[".$wanfa_name[1]."]";
+        $order_list[] = [
+            'gamename' => getGameTxtName($order['type']),
+            'add_time' => date('m-d' , strtotime($order['addtime'])) . '<br>' . date('H:i:s' , strtotime($order['addtime'])),
+            'term' => $order['term'],
+            'userid' => $order['userid'],
+            'wanfa' => $mingci,
+            'content' => $wanfa_name[2],
+            'peilv' => $order['peilv'],
+            'type' => $order['type'],
+            'money' => $order['money'],
+            'status' => $order['status'],
+        ];
+    }
+    $all_touzhu = get_query_val($ordertable , 'sum(money)' , $sql);
+    $all_paijian = get_query_val($ordertable , 'sum(status)' , $sql . " and status != '未结算'  and status != '已撤单'");
+    $count = get_query_val($ordertable , 'count(id)' , $sql);
+    return ['list'=>$order_list,'count'=>$count,'all_touzhu'=>$all_touzhu,'all_paijian'=>$all_paijian];
+}
+
 ?>

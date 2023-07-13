@@ -361,5 +361,8 @@ $page = getPageList($list['count'] , 10 , '/Templates/user/shenqing.php');
         }
     });
 </script>
+<?php
+include_once("../../Templates/public/menu.html");
+?>
 </body>
 </html>

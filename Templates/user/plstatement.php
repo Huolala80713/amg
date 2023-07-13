@@ -344,5 +344,8 @@ $game_list = getGameList();
         }
     });
 </script>
+<?php
+include_once("../../Templates/public/menu.html");
+?>
 </body>
 </html>

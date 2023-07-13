@@ -443,5 +443,8 @@ $game_list = getGameList();
         search(type);
     }
 </script>
+<?php
+include_once("../../Templates/public/menu.html");
+?>
 </body>
 </html>

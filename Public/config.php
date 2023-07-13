@@ -660,7 +660,12 @@ function userFanDian($userid , $roomid , $gametypeid){
     }else{
         $fandian = json_decode($user_info['fandian'] , true);
         if($fandian){
-            return $fandian[$gametypeid];
+            $user_game_fandian = $fandian[$gametypeid];
+            if(!$user_game_fandian){
+                $user_game_fandian = $game_config['fandian'];
+            }
+            //return $fandian[$gametypeid];
+            return $user_game_fandian;
         }
     }
     return $game_config['fandian'];

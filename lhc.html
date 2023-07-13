@@ -589,6 +589,8 @@
                         if (this.recordBox) {
                             this.recordBox = false
                         } else {
+                            this.cur_page = 1;
+                            this.getOrderList();
                             this.recordBox = true
                         }
                     },

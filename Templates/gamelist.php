@@ -149,7 +149,7 @@
                 for (i=0;i<res.list.length;i++){
                     var row=res.list[i];
                     if(!row.current_sn) continue;
-                    var timeStr=buildTime(row.letf_time,row.fp_time);
+                    var timeStr=buildTime(row.letf_time,row.fp_time,row.game);
                     $('#game-id-'+row.gameid).find('.game-time').html(timeStr);
                     if(row.gameid == 3 || row.gameid == 4 || row.gameid == 6){
                         row.current_sn = row.current_sn.slice(3);
@@ -180,7 +180,7 @@
     }
     //showTimer();
 
-    function buildTime(leftSec,fpSec) {
+    function buildTime(leftSec,fpSec,game_id=1) {
         if(leftSec == '正在开奖'){
             return '<b class="fping">开奖中</b>';
         }
@@ -192,24 +192,36 @@
         var sec = totalSec%60;
         min=(min<10)?'0'+min:min+"";
         sec=(sec<10)?'0'+sec:sec+"";
-        var lastStr='';
-        if(day > 0){
-            lastStr+='<b>'+day+'</b>';
-//            lastStr+='<b>:</b>';
-        }
-        if(hours > 0){
-            lastStr+='<b>'+hours+'</b>';
-//            lastStr+='<b>:</b>';
-        }
-        if(min > 0){
-            lastStr+='<b>'+min+'</b>';
+        if(game_id == 9){
+            var lastStr='';
+
+            lastStr+='<b>'+min[1]+'</b>';
+            lastStr+='<b>'+min[1]+'</b>';
             lastStr+='<b>:</b>';
-        }
+//            lastStr+='<b>'+sec+'</b>';
+           lastStr+='<b>'+sec[0]+'</b>';
+           lastStr+='<b>'+sec[1]+'</b>';
+        }else{
+            var lastStr='';
+            if(day > 0){
+                lastStr+='<b>'+day+'</b>';
+//            lastStr+='<b>:</b>';
+            }
+            if(hours > 0){
+                lastStr+='<b>'+hours+'</b>';
+//            lastStr+='<b>:</b>';
+            }
+            if(min > 0){
+                lastStr+='<b>'+min+'</b>';
+                lastStr+='<b>:</b>';
+            }
 //        lastStr+='<b>'+min[1]+'</b>';
 //        lastStr+='<b>:</b>';
-        lastStr+='<b>'+sec+'</b>';
+            lastStr+='<b>'+sec+'</b>';
 //        lastStr+='<b>'+sec[0]+'</b>';
 //        lastStr+='<b>'+sec[1]+'</b>';
+        }
+
         return lastStr;
     }
 </script>

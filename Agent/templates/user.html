@@ -62,7 +62,7 @@
             <th>余额</th>
             <th>返点</th>
             <th>状态</th>
-            <th>是否代理</th>
+              <th width="30">是否代理</th>
             <th>上级</th>
             <th>注册时间</th>
             <th>备注</th>
@@ -131,6 +131,26 @@
       </div>
     </div>
   </div>
+</div>
+
+<!-- 游戏返点信息 -->
+<div class="modal fade" id="game_fandian_box">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span></button>
+                <h4 class="modal-title">游戏返点信息<small>(id:<span id="userid"></span>)</small></h4>
+            </div>
+            <div class="modal-body">
+                <div id="game_html"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">关闭</button>
+                <button type="button" data-dismiss="modal" class="btn btn-primary">关闭</button>
+            </div>
+        </div>
+    </div>
 </div>
 <!-- /.聊天框 -->
 <!-- 报表查询 -->
@@ -453,7 +473,7 @@
         {"data": "money", "name":"余额",searchable: false },
         {"data": "fandian", "name":"返点",searchable: false },
         {"data": "online", "name":"状态",searchable: false },
-        {"data": "isagent", "name":"是否代理",searchable: false },
+          {"data": "isagent", "name":"是否代理",searchable: false },
         {"data": "agent", "name":"上级",searchable: false },
         {"data": "create_time", "name":"注册时间",searchable: false },
         {"data": "remark", "name":"备注",searchable: false },
@@ -644,6 +664,13 @@
     $('#chat_id').text(id + " " + username);
     $('#chat').data('id', id);
   }
+
+  function game_fandian( userid,game_html) {
+      $('#game_fandian_box').modal('toggle');
+      $('#game_html').html(game_html);
+      $('#userid').html(userid);
+  }
+
 
   function getzhangbian(){
     $('#report #zhangbiantable').dataTable({

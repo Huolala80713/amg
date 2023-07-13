@@ -19,19 +19,19 @@ if($game_code && $room_id){
         $left_time = strtotime($opendata['next_time']) - $stystime - $time - 5;
         $open_time = $stystime - strtotime($opendata['time']);
 
-//        if ($left_time < 1) {
-//            echo "游戏已停止下注" . PHP_EOL;
-//        }elseif ($open_time <= 10) {
-//            //超过十秒后执行
-//            echo "超过十秒后执行" . PHP_EOL;
-//        } elseif ($opendata['iskaijiang'] == 0) {
-//            //超过十秒后执行
-//            echo "正在开奖中" . PHP_EOL;
-//        }  elseif ($gameid == 2 && date('H:i:s') >= '04:03:45' && date('H:i:s') <= '13:08:45') {
-//            echo "幸运飞艇不在投注时间" . PHP_EOL;
-//        }
-//        else {
-            select_query('fn_robots', '*', "roomid = {$room_id} and game = '{$game_code}' order by rand() desc limit 3");
+        if ($left_time < 1) {
+            echo "游戏已停止下注" . PHP_EOL;
+        }elseif ($open_time <= 10) {
+            //超过十秒后执行
+            echo "超过十秒后执行" . PHP_EOL;
+        } elseif ($opendata['iskaijiang'] == 0) {
+            //超过十秒后执行
+            echo "正在开奖中" . PHP_EOL;
+        }  elseif ($gameid == 2 && date('H:i:s') >= '04:03:45' && date('H:i:s') <= '13:08:45') {
+            echo "幸运飞艇不在投注时间" . PHP_EOL;
+        }
+        else {
+            select_query('fn_robots', '*', "roomid = {$room_id} and game = '{$game_code}' order by rand() desc limit 1");
             $robots_list = [];
             while ($con = db_fetch_array()) {
                 $robots_list[] = $con;
@@ -151,7 +151,7 @@ if($game_code && $room_id){
                     echo '机器人投注完成，方案：' . $plan . PHP_EOL;
                 }
             }
-//        }
+        }
     }else{
         echo "游戏未开启" . PHP_EOL;
     }

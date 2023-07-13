@@ -20,14 +20,24 @@ while($con = db_fetch_array()){
     $list[] = $con;
 }
 foreach($list as &$con){
-    $con['fandian'] = (double)get_query_val('fn_marklog','sum(`money`)',"roomid = {$_SESSION['agent_room']} and userid = '{$con['userid']}' and `type` = '返点' ");
-    $con['fandian'] = round($con['fandian'] , 4);
+    //游戏返点信息 20230713
+
+    $game_fandian = json_decode($con['fandian'],true);
+    //var_dump($game_fandian);
+    $game_html = "";
+    foreach($game_fandian as $k=>$v){
+        $game_html .= getGameList()[$k]."   :  ".$v."<br/><hr>";
+    }
+    $con['game_fandian'] = $game_html;
+    $con['fandian1'] = (double)get_query_val('fn_marklog','sum(`money`)',"roomid = {$_SESSION['agent_room']} and userid = '{$con['userid']}' and `type` = '返点' ");
+    $con['fandian'] = round($con['fandian1'] , 4);
     $con['username_text'] = '<img src="' . WEB_HOST . $con['headimg'] . '" width="35" height="35">&nbsp;' . $con['username'] . ($con['jia'] == 'true'?'<span class="badge bg-purple">假人</span>':'');
     if($con['agent'] == 'null'){
         $con['agent'] = '无';
     }else{
         $con['agent'] = get_query_val('fn_user','userid',"roomid = {$_SESSION['agent_room']} and userid = '{$con['agent']}'");
     }
+
     $btn = '<a href="#" onclick="modifypass('.$con['id'].',\'' . $con['username'] . '\')" class="text">修改密码</a> || ';
     if($con['is_black'] != 1){
         $btn .= '<a href="#" onclick="lahei('.$con['id'].',\'' . $con['username'] . '\')" class="text">拉黑用户</a> || ';
@@ -47,7 +57,8 @@ foreach($list as &$con){
     }
     $btn .= '<a href="#" onclick="changejia('.$con['id'].',\'' . $con['username'] . '\')" class="text">' . ($con['jia'] == 'true'?'取消假人':'设置假人') . '</a> || ';
     $btn .= '<a href="#" onclick="disupmark('.$con['id'].',\'' . $con['username'] . '\')" class="text">分数操作</a> || ';
-    $btn .= '<a href="#" onclick="dischat('.$con['id'].',\'' . $con['username'] . '\')" class="text">私信TA</a>';
+//    $btn .= '<a href="#" onclick="dischat('.$con['id'].',\'' . $con['username'] . '\')" class="text">私信TA</a>';
+    $btn .= '<a href="#" onclick="game_fandian(\''.$con['userid'].'\',\'' . $con['game_fandian'] . '\')" class="text">游戏返点</a>';
 
     $con['btn'] = $btn;
     if (time() - (int)$con['statustime'] > 5000) {
@@ -57,8 +68,9 @@ foreach($list as &$con){
     }
     $con['isagent'] = ($con['isagent'] == 'false') ? '否' : '是';
 	//在线时间
-	$con['create_time'] = $con['create_time'] ? date("Y-m-d H:i") : '';
+	$con['create_time'] = $con['create_time'] ? date('Y-m-d H:i',$con['create_time']) :date("Y-m-d H:i");
 }
+//var_dump($list);
 $data = [
     'list' => $list,
     'money_count' => (double)get_query_val('fn_user','sum(money) as counts' , $sql),

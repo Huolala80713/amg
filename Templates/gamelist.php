@@ -203,23 +203,11 @@
            lastStr+='<b>'+sec[1]+'</b>';
         }else{
             var lastStr='';
-            if(day > 0){
-                lastStr+='<b>'+day+'</b>';
-//            lastStr+='<b>:</b>';
-            }
-            if(hours > 0){
-                lastStr+='<b>'+hours+'</b>';
-//            lastStr+='<b>:</b>';
-            }
-            if(min > 0){
-                lastStr+='<b>'+min+'</b>';
-                lastStr+='<b>:</b>';
-            }
-//        lastStr+='<b>'+min[1]+'</b>';
-//        lastStr+='<b>:</b>';
-            lastStr+='<b>'+sec+'</b>';
-//        lastStr+='<b>'+sec[0]+'</b>';
-//        lastStr+='<b>'+sec[1]+'</b>';
+            lastStr+='<b>'+min[0]+'</b>';
+            lastStr+='<b>'+min[1]+'</b>';
+            lastStr+='<b>:</b>';
+            lastStr+='<b>'+sec[0]+'</b>';
+            lastStr+='<b>'+sec[1]+'</b>';
         }
 
         return lastStr;

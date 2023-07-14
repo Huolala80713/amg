@@ -88,7 +88,7 @@ if($game_code && $room_id){
                             $message_list[$key][$value] += $con[2];
                             $money_count += $con[2];
                             $peilv = getPeilv($con['userid'] , $con['roomid'] , getGameIdByCode($game_code) , $con[0] , $con[1]);
-                            //update_query('fn_order' , ['peilv'=>$peilv],['id'=>$con['id']]);
+                            update_query('fn_order' , ['peilv'=>$peilv],['id'=>$con['id']]);
                             //删除订单数据 20230710
                             //var_dump($con);
                             //delete_query('fn_order',['userid'=>"robot"]);
@@ -145,7 +145,7 @@ if($game_code && $room_id){
                         //删除一投注记录 20230710
                         foreach($res as $v){
                             $id = intval($v);
-                            delete_query('fn_order',['id'=>$id]);
+                            //delete_query('fn_order',['id'=>$id]);
                         }
                     }
                     echo '机器人投注完成，方案：' . $plan . PHP_EOL;

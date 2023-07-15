@@ -40,7 +40,18 @@
             <div class="rightcon" style="font-size: 15px;"><marquee><?php echo strip_tags(get_query_val('fn_setting','setting_kefu',array('roomid'=>$_SESSION['roomid']))); ?></marquee></div>
         </div>
     </div>
-
+<style>
+    .game-name-text{
+        font-size: 25px;
+        margin-left: 15px;
+        /* font-weight: 600; */
+        text-indent: 10px;
+        color: #ededed;
+        letter-spacing: 4px;
+        -webkit-text-stroke: 1px #ededed;
+        text-shadow: 4px 4px #0092dd;
+    }
+    </style>
     <div class="gamelist" style="position: fixed;width: 100%;left: 0;top: 0;">
         <div class="last-show" style="display: none;height: 100%;">
             <?php foreach($list as $gm):
@@ -50,7 +61,19 @@
                     <img src="/Style/newimg/gamebg.png">
                     <div class="game-info">
                         <li class="game-ico"><img src="/Style/newimg/game_<?php echo $gm['game_id'];?>.png"></li>
-                        <li class="game-name"><img src="/Style/newimg/game_name_<?php echo $gm['game_id'];?>.png"></li>
+                        <?php
+                        if($gm['game_id'] == 9){
+                            ?>
+                            <li class="game-name"><span class="game-name-text"><?=$gm['game_name']?></span></li>
+                            <?php
+                             }else{
+                            ?>
+<!--                            <li class="game-name"><img src="/Style/newimg/game_name_--><?php //echo $gm['game_id'];?><!--.png"></li>-->
+                            <li class="game-name"><span class="game-name-text"><?=$gm['game_name']?></span></li>
+                        <?php
+                        }
+                        ?>
+
                         <li class="game-sn"><b>第<span id="next_num_<?php echo $gm['game_id'];?>"><b>——</b></span>期</b></li>
                         <li class="game-time"><b>-</b><b>-</b><b>:</b><b>-</b><b>-</b></li>
                         <li class="game-num" id="current_num_<?php echo $gm['game_id'];?>">

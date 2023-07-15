@@ -213,9 +213,9 @@ if(in_array($do,$cando)){
             foreach ($game_list as $key => $val){
                 $info = get_query_vals('fn_lottery' . $key, 'gameopen', array('roomid' => $_SESSION['roomid']));
                 if($key == 9){
-                    $list[$key]=['game_id'=>$key,'is_open'=>$info['gameopen'],'opinfo'=>getLhcOpenInfo(getGameCodeById($key) , 1)];
+                    $list[$key]=['game_id'=>$key,'game_name'=>$val,'is_open'=>$info['gameopen'],'opinfo'=>getLhcOpenInfo(getGameCodeById($key) , 1)];
                 }else{
-                    $list[$key]=['game_id'=>$key,'is_open'=>$info['gameopen'],'opinfo'=>getOpenInfo(getGameCodeById($key) , 1)];
+                    $list[$key]=['game_id'=>$key,'game_name'=>$val,'is_open'=>$info['gameopen'],'opinfo'=>getOpenInfo(getGameCodeById($key) , 1)];
                 }
 
             }

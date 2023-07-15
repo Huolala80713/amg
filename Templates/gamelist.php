@@ -29,7 +29,7 @@
 <div class="mainbox max-width" style="position: initial;display: block;overflow: hidden;background: none;">
     <div style="position: fixed;top: 0;left: 0;">
         <div class="roomtop">
-            <img src="/Style/newimg/logo.png" style="width: 50%;margin: 0 auto;display: block;">
+            <img src="/Style/newimg/logo.png?v=12" style="width: 50%;margin: 0 auto;display: block;">
             <div class="top-btn">
                 <img id="goback" src="/Style/newimg/gameback.png">
             </div>
@@ -47,9 +47,10 @@
         /* font-weight: 600; */
         text-indent: 10px;
         color: #ededed;
-        letter-spacing: 4px;
-        -webkit-text-stroke: 1px #ededed;
+        /* letter-spacing: 4px; */
+        /* -webkit-text-stroke: 1px #ededed; */
         text-shadow: 4px 4px #0092dd;
+        font-family: "MicrosoftYaHei";
     }
     </style>
     <div class="gamelist" style="position: fixed;width: 100%;left: 0;top: 0;">

@@ -29,7 +29,7 @@
 <div class="mainbox max-width" style="position: initial;display: block;overflow: hidden;background: none;">
     <div style="position: fixed;top: 0;left: 0;">
         <div class="roomtop">
-            <img src="/Style/newimg/logo.png?v=12" style="width: 50%;margin: 0 auto;display: block;">
+            <img src="/Style/newimg/logo.png?v=<?=time()?>" style="width: 50%;margin: 0 auto;display: block;">
             <div class="top-btn">
                 <img id="goback" src="/Style/newimg/gameback.png">
             </div>

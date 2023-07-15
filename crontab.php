@@ -31,18 +31,6 @@ if ($out[0] == 0) {
     echo "澳洲10采集任务已开启" . PHP_EOL;
 }
 unset($out);
-
-//香港六合彩采集 20230711
-$command = "ps aux |grep 'amg/caiji/xglhc.php' | grep -v 'grep' |wc -l";
-exec($command, $out);
-if ($out[0] == 0) {
-    exec('nohup php /www/wwwroot/amg/caiji/xglhc.php >/dev/null 2>&1 &');
-}else{
-    echo "香港集任务已开启" . PHP_EOL;
-}
-unset($out);
-
-
 $command = "ps aux |grep 'amg/caiji/fandian.php' | grep -v 'grep' |wc -l";
 exec($command, $out);
 if ($out[0] == 0) {

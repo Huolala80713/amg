@@ -11,7 +11,7 @@ while (true){
     mysqli_close($dbconn);
 }
 function caiji(){
-    writeLog("极速赛车开始爬取数据" . time(),'jscc');
+    writeLog("极速赛车开始爬取数据" . date("Y-m-d H:i:s"),'jscc');
     $typeid = '4';
     $url = 'https://api.api68.com/pks/getLotteryPksInfo.do?lotCode=10037';
     $context = stream_context_create(array(
@@ -54,6 +54,10 @@ function caiji(){
     $nexttime = strtotime($jsondata["result"]["data"]["drawTime"]);//开奖时间
     $topcode = db_query("select `term` from `fn_open` where `type`=$typeid order by `next_time` desc limit 1");
     $topcode = db_fetch_array();
+    if($qihao){
+        writeLog("数据采集 $qihao 成功！" . date("Y-m-d H:i:s"),'jscc');
+    }
+
     if((!$topcode || $topcode[0] <> $qihao) && $qihao){
         insert_query('fn_open', array('term' => $qihao, 'code' => $opencode, 'time' => date('Y-m-d H:i:s',strtotime($opentime)), 'type' => $typeid, 'next_term' => $next_term, 'next_time' => date('Y-m-d H:i:s',$nexttime)));
 //    jiesuan($typeid , $qihao);
@@ -72,9 +76,9 @@ function caiji(){
 //    }
 //    doSaveOpenHistoryImg($typeid ,$history_list[0] ,  $history_list ,$gmidAli[$typeid]);
 //    kaichat($typeid, $next_term,$qihao,$opencode);
-        writeLog("更新 $qihao 成功！" . time(),'jscc');
+        writeLog("更新 $qihao 成功！" . date("Y-m-d H:i:s"),'jscc');
     }else{
-        writeLog("等待 $next_term 刷新！" . time(),'jscc');
+        writeLog("等待 $next_term 刷新！" . date("Y-m-d H:i:s"),'jscc');
     }
-    writeLog("极速赛车爬取数据结束" . time(),'jscc');
+    writeLog("极速赛车爬取数据结束" . date("Y-m-d H:i:s"),'jscc');
 }

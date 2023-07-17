@@ -420,6 +420,18 @@ function getWanfaList(){
 	$wanfa['teme_daxiaodanshuang'] = "特码大小单双组合";
 	$wanfa['zhengma'] = "正码";
 }
+
+//获取子玩法
+function getWanfaSonlistByType($wanfa){
+    $list = [];
+    if ($wanfa == "zhengma_haoma" || $wanfa == "zhengma_shuangmian") {
+        $list = zhengmaCateList();
+    }
+    if ($wanfa == "zhengma_shengxiao") {
+        $list = shengxiaoCateList();
+    }
+    return $list;
+}
 //获取赔率信息
 function getUserLhcPeilv($userid,$roomid='666777'){
 
@@ -551,6 +563,84 @@ function getWanfaByType($wanfa,$userid,$roomid){
         $data = $new_arr;
 	}
 	return($data);
+}
+
+//获取所有玩法 20230718
+function getWanfaListByType($wanfa){
+    $data = array();
+    //var_dump($wanfa);
+    $wanfa_name = explode("_",$wanfa)[0];
+    $type = explode("_",$wanfa)[1];
+    if($type == 'haoma'){
+        $number_arr = kj_number();
+        $new_arr = [];
+        foreach($number_arr as $key=>$v){
+            $arr = [];
+            $arr['id'] = intval($v-1);
+            $arr['name'] = $v;
+            $arr['class'] = bo_name_by_number($v)['name'];
+            $new_arr[] = $arr;
+        }
+        $data = $new_arr;
+    }
+    if($type == 'shuangmian'){
+        $number_arr = getShuangmian();
+        $new_arr = [];
+        foreach($number_arr as $key=>$v){
+            $arr = [];
+            $arr['id'] = $key;
+            $arr['name'] = $v;
+            $arr['class'] = "black";
+            $new_arr[] = $arr;
+        }
+        $data = $new_arr;
+    }
+    if($type == 'shengxiao'){
+        $number_arr = shengxiao_en_name_arr();
+        $new_arr = [];
+        foreach($number_arr as $key=>$v){
+            $arr = [];
+            $arr['id'] = $key;
+            $arr['name'] = $v;
+            $arr['class'] = "black";
+            $arr['check'] = 0;
+            $new_arr[] = $arr;
+        }
+        $data = $new_arr;
+    }
+    return($data);
+}
+//获取所有的玩法 20230718
+function getAllWanfaItem(){
+    $wanfa_one_cate = getWanfaCate();
+    $wanfa_list = [];
+    foreach($wanfa_one_cate as $key=>$value){
+        $arr = [];
+        $arr['id'] = $key;
+        $arr['name'] = $value;
+        $son_list = getWanfaSonlistByType($key);
+        if(!$son_list){
+            $son_list =[['posi'=>7,'name'=>'特码']];
+        }
+        //获取子类的各类玩法
+        foreach($son_list as $sonkey=>&$sv){
+            $item_list =  getWanfaListByType($key);
+            $son_item = [];
+            foreach($item_list as $wf_key=>$wf_val){
+                $item = [];
+                $item = $wf_val;
+                $item['wanfa_name'] = $value;
+                $item['son_name'] = $sv['name'];
+                $item['mingci'] = $key."#".$wf_val['id']."#".$sv['posi'];
+                $item['class'] = $key."-".$wf_val['id']."-".$sv['posi'];
+                $son_item[] = $item;
+            }
+            $sv['son_item'] = $son_item;
+        }
+        $arr['list'] = $son_list;
+        $wanfa_list[] = $arr;
+    }
+    return $wanfa_list;
 }
 //获取所有玩法列表及赔率增长点 20230712
 function getWanfaPeilvStepList($type,$userid,$roomid='666777'){

@@ -153,12 +153,13 @@
 									</div> <!----> <!---->
 								</div>
 								<div data-v-db6848ac="" class="timebar">
-									<div data-v-db6848ac="" style="" class="timebar-issue">
+									<div data-v-db6848ac="" style="" class="timebar-issue"   @click="recordBoxFun()">
 										<p data-v-db6848ac="">{{kj_info.next_term}}期</p>
 										<p data-v-db6848ac="">投注截止</p><!---->
 									</div>
 									<h4 data-v-db6848ac="">{{next_kj_text}}</h4>
 								</div>
+                                <div class="betrecord-icon" @click="recordBoxFun()"></div>
 								<div data-v-db6848ac="" class="past-open line-white-before-" v-if="kjListBox">
 									<table data-v-db6848ac="" class="past-open-table">
 										<thead data-v-db6848ac="">
@@ -199,7 +200,7 @@
 												data-v-db6848ac="">查看更多走势</em></div>
 									</div>
 								</div>
-								<div class="betrecord-icon" @click="recordBoxFun()"></div>
+
 							</div>
 							<div data-v-01736910="" data-v-367accfc="" class="sscMain">
 								<div data-v-01736910="" class="sscTips" style="display: none;">
@@ -685,6 +686,25 @@
 								console.log(error);
 							});
 					},
+                    //获取玩法列表
+                    getUserInfo: function() {
+                        let that = this
+                        axios.get('/Application/ajax_lhc.php?type=userinfo')
+                                .then(function(response) {
+                                    var data = response.data;
+                                    if (data.success == true) {
+                                        that.user_info = data.content;
+                                    }else{
+                                        alert(data.msg)
+                                        window.location.href= data.url
+                                    }
+                                    console.log("data", data)
+
+                                })
+                                .catch(function(error) { // 请求失败处理
+                                    console.log(error);
+                                });
+                    },
 					//选择玩法
 					choseWanfa: function(id, wanfa) {
 
@@ -693,6 +713,7 @@
 						that.curWanfaSonId = 0;
 						that.curWanfaSonName = '';
 						that.wanfa = wanfa;
+                        that.wanfaSonList = [];
 						axios.get('/Application/ajax_lhc.php?type=chosewanfa&wanfa=' + id)
 							.then(function(response) {
 								var data = response.data;
@@ -829,6 +850,7 @@
 								if (data.success == true) {
 									that.showPopup(data.msg)
                                     that.delWanfaItem();
+                                    that.getUserInfo();
 								}else{
 									that.showPopup(data.msg)
 								}

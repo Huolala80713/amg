@@ -19,6 +19,13 @@ switch($type) {
         $arr['game_list'] = getGameList();
         echo json_encode($arr);
         break;
+    //获取六合彩相关方法
+    case "userinfo":
+        $arr = array();
+        $arr['success'] = true;
+        $arr['content'] = get_query_vals('fn_user','money,userid,id',['userid'=>$userid]);
+        echo json_encode($arr);
+        break;
     case "chosewanfa":
         $arr = array();
         $wanfa = $_GET['wanfa'];
@@ -174,6 +181,18 @@ switch($type) {
         if ($fengpan) {
 //            echo json_encode(array('success' => false, 'msg' => '等待开奖中，停止投注！'));
 //            die();
+        }
+        //判断投注是否开始
+        $begin_times = $lottery_data['begin_bet_times'];
+        $is_begin = strtotime($open_data['next_time']) - time() > $begin_times;
+
+        $hours = ceil(((21.5 * 3600) - $begin_times) / 3600);
+        $mins = intval(intval(((21.5 * 3600) - $begin_times) % 3600)/60);
+        $mins = $mins > 0 ? 60 -  $mins : 0;
+        $kaipan_date = substr($open_data['next_time'],0,10) . " ".$hours.":".$mins;
+        if($is_begin){
+            echo json_encode(array('success' => false, 'msg' => '游戏还未开盘！开盘时间为：' . $kaipan_date));
+            die();
         }
         //最小金额判断，最大金额判断
         $money_min = $lottery_data[$wanfa_type . '_min'];

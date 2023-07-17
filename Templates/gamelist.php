@@ -44,12 +44,12 @@
     .game-name-text{
         font-size: 25px;
         margin-left: 15px;
-        /* font-weight: 600; */
+        font-weight: 600;
         text-indent: 10px;
         color: #ededed;
         /* letter-spacing: 4px; */
         /* -webkit-text-stroke: 1px #ededed; */
-        text-shadow: 4px 4px #0092dd;
+        /* text-shadow: 4px 4px #0092dd; */
         font-family: "MicrosoftYaHei";
     }
     </style>
@@ -61,7 +61,7 @@
                 <div class="game-box" style="margin: 0.1rem 0.2rem 0 0.2rem;" id="game-id-<?php echo $gm['game_id'];?>" data-gid="<?php echo $gm['game_id'];?>" data-left="<?php echo $gm['opinfo']['letf_time'];?>">
                     <img src="/Style/newimg/gamebg.png">
                     <div class="game-info">
-                        <li class="game-ico"><img src="/Style/newimg/game_<?php echo $gm['game_id'];?>.png"></li>
+                        <li class="game-ico"><img src="/Style/newimg/game_<?php echo $gm['game_id'];?>.png?v=<?=time()?>"></li>
                         <?php
                         if($gm['game_id'] == 9){
                             ?>

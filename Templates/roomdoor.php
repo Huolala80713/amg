@@ -6,7 +6,7 @@
     <title>AMG入口</title>
 
     <link rel="Stylesheet" type="text/css" href="/Style/newcss/common.css" />
-    <link rel="Stylesheet" type="text/css" href="/Style/newcss/roomdoor.css" />
+    <link rel="Stylesheet" type="text/css" href="/Style/newcss/roomdoor.css?v=<?=time()?>" />
     <script type="text/javascript" src="/Style/newjs/jquery-1.10.1.min.js"></script>
     <link rel="Stylesheet" type="text/css" href="/Style/pop/css/style.css" />
     <script type="text/javascript" src="/Style/pop/js/popups.js"></script>

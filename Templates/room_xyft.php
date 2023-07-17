@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0,  user-scalable=0" />
     <title>【<?php echo get_query_val("fn_room", "roomname", array("roomid" => $_SESSION['roomid'])); ?>】房间</title>
     <link rel="Stylesheet" type="text/css" href="/Style/newcss/common.css" />
-    <link rel="Stylesheet" type="text/css" href="/Style/newcss/chatroom.css?t=13" />
+    <link rel="Stylesheet" type="text/css" href="/Style/newcss/chatroom.css?v=<?=time()?>" />
     <script type="text/javascript" src="/Style/newjs/jquery-1.10.1.min.js"></script>
     <script type="text/javascript" src="/Style/newjs/mobile/layer.js" ></script>
     <link rel="Stylesheet" type="text/css" href="/Style/pop/css/style.css" />

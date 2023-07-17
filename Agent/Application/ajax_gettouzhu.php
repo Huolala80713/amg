@@ -38,6 +38,50 @@ if($game){
             'paijian_amount' => number_format($paijian_amount , 2 , '.' , ''),
             'yingkui' => number_format($paijian_amount - $touzhu_amount , 2 , '.' , '')
         ];
+    }else if($game == 'xglhc'){
+//        $wanfa = htmlspecialchars($_GET['wanfa']);
+//        switch ($wanfa){
+//            case 1:
+//                $sql .= 'and (mingci = 3 or mingci = 4 or mingci = 5 or mingci = 6)';
+//                break;
+//            case 2:
+//                $sql .= 'and (mingci = 7 or mingci = 8 or mingci = 9 or mingci = "0")';
+//                break;
+//            default:
+//                $sql .= 'and (mingci = "和" or mingci = 1 or mingci = 2)';
+//                break;
+//        }
+            select_query("fn_order", 'sum(money) as money,content,mingci', $sql . ' group by mingci,content');
+            $list = [];
+            while($con = db_fetch_array()){
+                $cons[] = $con;
+                if(is_numeric($con['mingci']) && $con['mingci'] == 0){
+                    $con['mingci'] = 10;
+                }
+                if(is_numeric($con['content']) && $con['content'] == 0){
+                    $con['content'] = 10;
+                }
+                if(is_numeric($con['content']) && $con['content'] < 10){
+                    $con['content'] = '0' . $con['content'];
+                }
+                $list[str_replace('#','-',$con['mingci'])] = number_format($con['money'] , 2 , '.' , '');
+            }
+            $touzhu_amount = get_query_val('fn_order' , 'sum(money)' , $sql);
+            $paijian_amount = get_query_val('fn_order' , 'sum(status)' , $sql . ' and status > 0 and status != "未结算"');
+
+            select_query('fn_order' , 'count(userid) as counts' , $sql . ' group by userid');
+            $users = [];
+            while($cons = db_fetch_array()){
+                $users[] = $cons;
+            }
+            $arr['status'] = 1;
+            $arr['data'] = [
+                'list' => $list,
+                'user_count' => count($users),
+                'amount' => number_format($touzhu_amount , 2 , '.' , ''),
+                'paijian_amount' => number_format($paijian_amount , 2 , '.' , ''),
+                'yingkui' => number_format($paijian_amount - $touzhu_amount , 2 , '.' , ''),
+            ];
     }else{
 //        $wanfa = htmlspecialchars($_GET['wanfa']);
 //        switch ($wanfa){

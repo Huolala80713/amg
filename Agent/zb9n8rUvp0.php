@@ -388,6 +388,13 @@ if($_GET['m'] == ''){
                 if($gameID == '5'){
                     require 'templates/gamesetting/jnd28.html';
                 }if($gameID == '9'){
+                    $begin_times = get_query_val('fn_lottery9','begin_bet_times',array('roomid'=>$_SESSION['agent_room']));
+                    $hours = ceil(((21.5 * 3600) - $begin_times) / 3600);
+                    $mins = intval(intval(((21.5 * 3600) - $begin_times) % 3600)/60);
+                    $mins = $mins > 0 ? 60 -  $mins : 0;
+//                    var_dump($mins);
+//                    var_dump($hours);
+//                    var_dump("begin_times",$begin_times);
                     require 'templates/gamesetting/lhc.html';
                 }else{
                     require 'templates/gamesetting/xyft.html';
@@ -406,6 +413,11 @@ if($_GET['m'] == ''){
                 $gameID=$_GET['g'];
                 if($gameID == '5'){
                     require 'templates/zhudan/jnd28.html';
+                }if($gameID == '9'){
+                    require_once(dirname(dirname((preg_replace('@\(.*\(.*$@', '', __FILE__)))) . "/Public/config_lhc.php");
+                    $wanfa_list = getAllWanfaItem();
+                    //var_dump($wanfa_list);
+                    require 'templates/zhudan/lhc.html';
                 }else{
                     require 'templates/zhudan/xyft.html';
                 }

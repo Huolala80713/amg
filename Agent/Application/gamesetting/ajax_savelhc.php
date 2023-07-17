@@ -86,8 +86,14 @@ if($_GET['form'] == 'form1'){
 }elseif($_GET['form'] == 'form3'){
     $open = $_POST['opengame'] == 'on' ? 'true' : 'false';
     $fengtime = $_POST['fengtime'];
+    $begin_bet_hours = (21.5 - $_POST['begin_bet_hours']);
+    $begin_bet_min = $_POST['begin_bet_min'];
+    $begin_bet_times = ($begin_bet_hours * 3600) + ($begin_bet_min*60);
+//    var_dump($begin_bet_min);
+//    var_dump($begin_bet_hours);
+//    var_dump($begin_bet_times);
     $peilv_step = $_POST['peilv_step'];
-    update_query("fn_lottery9", array("fengtime" => $fengtime, 'gameopen' => $open, 'peilv_step' => $peilv_step), array('roomid' => $_SESSION['agent_room']));
+    update_query("fn_lottery9", array("fengtime" => $fengtime, 'gameopen' => $open, 'begin_bet_times' => $begin_bet_times, 'peilv_step' => $peilv_step), array('roomid' => $_SESSION['agent_room']));
     echo '<script>alert("保存成功~感谢使用!"); window.location.href="/zb9n8rUvp0.php?m=g_setting&g=9";</script>';
 }elseif($_GET['form'] == 'form4'){
     $content = $_POST['customcont'];

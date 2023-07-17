@@ -16,10 +16,19 @@ case "xy28": $game = '4';
 case "jnd28": $game = '5';
 	$feng = get_query_val('fn_lottery5', 'fengtime', array('roomid' => $_SESSION['agent_room']));
     break;
+case "xglhc": $game = '9';//20230717
+    $feng = get_query_val('fn_lottery9', 'fengtime', array('roomid' => $_SESSION['agent_room']));
+    break;
 case "jsmt": $game = '6';
     break;
 }
-$term_info = get_query_vals('fn_open', '*', "type = '$game' order by term desc limit 1");
+if($game == 9){
+    $term_info = get_query_vals('fn_open_lhc', '*', "type = '$game' order by term desc limit 1");
+    $term_info['code'] = $term_info['code'].','.$term_info['code_te'];
+}else{
+    $term_info = get_query_vals('fn_open', '*', "type = '$game' order by term desc limit 1");
+}
+
 
 $code = $term_info['code'];
 $time = strtotime($term_info['next_time']) - time();

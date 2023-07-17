@@ -350,6 +350,14 @@
                                     </label>
                                 </div>
                                 <div class="input-group">
+                                    <span class="input-group-addon">投注开始时间点（24小时制）</span>
+                                    <!--<input name="begin_bet_times" type="number" class="form-control" placeholder="输入封盘时间..." value="<?php echo get_query_val('fn_lottery9','begin_bet_times',array('roomid'=>$_SESSION['agent_room'])); ?>">-->
+                                    <input name="begin_bet_hours"   oninput="if(value>21)value=21" value="<?php echo $hours ?>" />时（0-21）
+                                    <input name="begin_bet_min"   oninput="if(value>59)value=59"  value="<?php echo $mins ?>" />分（0-59）
+
+                                </div>
+                                <br/>
+                                <div class="input-group">
                                     <span class="input-group-addon">封盘时间</span>
                                     <input name="fengtime" type="number" class="form-control" placeholder="输入封盘时间..." value="<?php echo get_query_val('fn_lottery9','fengtime',array('roomid'=>$_SESSION['agent_room'])); ?>">
                                 </div>

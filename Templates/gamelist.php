@@ -42,7 +42,7 @@
     </div>
 <style>
     .game-name-text{
-        font-size: 25px;
+        font-size: 20px;
         margin-left: 15px;
         font-weight: 600;
         text-indent: 10px;

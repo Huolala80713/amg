@@ -125,7 +125,7 @@
             
          
            
-<div style="position: fixed;
+<div class="kefu-box" style="position: fixed;
 right: 50px;
 top: 4.2rem;
 color: gold;
@@ -149,7 +149,7 @@ font-size: 13px;"><a style="color: gold;text-decoration:none;font-size: 13px;" h
 <!--width: 0px;-->
 <!--font-size: 13px;"><a style="color: gold;text-decoration:none;font-size: 13px;" href="/caiji/168kj/aoz10.html"> <img src="/SwitchTable2.png" style="left:0px; position: relative; top:0px" /></div></a>
 -->
-<div style="position: fixed;
+<div class="kefu-box" style="position: fixed;
 right: 50px;
 top: 3.2rem;
 color: gold;
@@ -161,7 +161,7 @@ text-align: left;
 width: 0px;
 font-size: 13px;"><a style="color: gold;text-decoration:none;font-size: 13px;" id="xinyong_touzhu"> <img src="/Style/newimg/SwitchTable.png" style="left:0px; position: relative; top:0px" /></div></a>
 
-<div style="position: fixed;
+<div  class="kefu-box" style="position: fixed;
 right: 46px;
 top: 2.2rem;
 color: gold;

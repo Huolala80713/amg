@@ -633,6 +633,7 @@ function getAllWanfaItem(){
                 $item['son_name'] = $sv['name'];
                 $item['mingci'] = $key."#".$wf_val['id']."#".$sv['posi'];
                 $item['class'] = $key."-".$wf_val['id']."-".$sv['posi'];
+                $item['bg_class'] = $wf_val['class'];
                 $son_item[] = $item;
             }
             $sv['son_item'] = $son_item;
@@ -928,7 +929,9 @@ function lhcorderlist($userid , $day1 , $day2 , $gamename , $jiesuan = '' , $pag
     $all_touzhu = get_query_val($ordertable , 'sum(money)' , $sql);
     $all_paijian = get_query_val($ordertable , 'sum(status)' , $sql . " and status != '未结算'  and status != '已撤单'");
     $count = get_query_val($ordertable , 'count(id)' , $sql);
-    return ['list'=>$order_list,'count'=>$count,'all_touzhu'=>$all_touzhu,'all_paijian'=>$all_paijian];
+    $page = ceil($count / $limit);
+    $yingkui = round($all_paijian - $all_touzhu , 4);
+    return ['list'=>$order_list,'count'=>$count,'all_touzhu'=>$all_touzhu,'all_paijian'=>$all_paijian,'page'=>$page,'yingkui'=>$yingkui];
 }
 
 ?>

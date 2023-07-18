@@ -31,7 +31,7 @@
 		<title>彩票中心</title>
 		<link type="text/css" rel="stylesheet" href="/static/layui.css">
 		<link type="text/css" rel="stylesheet" href="/static/style/app.css?v=19">
-		<link type="text/css" rel="stylesheet" href="/static/style/index.css?v=6">
+		<link type="text/css" rel="stylesheet" href="/static/style/index.css?v=7">
 
 		<!-- <script type="text/javascript" src="https://gt188.cc/mobile/v1/static/js/manifest.dee5983400ddab883501.js"></script>
 		<script type="text/javascript" src="https://gt188.cc/mobile/v1/static/js/vendor.6e90662e069bb743fa68.js"></script>
@@ -370,6 +370,7 @@
 							<div data-v-2dc764b8="" class="betboxlist">
 								<div data-v-2dc764b8="" class="betbox">
                                     <table>
+                                        <tr><td>总计：</td><td>{{all_count}}注</td><td></td><td>{{all_touzhu_money}}</td><td></td><td>{{yingkui_money}}</td></tr>
                                         <thead>
                                         <th>期号</th>
                                         <th>玩法</th>
@@ -379,7 +380,8 @@
                                         <th>亏盈</th>
                                         </thead>
                                         <tbody>
-                                        <tr v-if="orderList.count > 0" v-for="(item, key) in orderList.list" :key="key">
+
+                                        <tr v-if="orderList.length > 0" v-for="(item, key) in orderList" :key="key">
                                             <td>{{item.term}}</td>
                                             <td>{{item.wanfa}}</td>
                                             <td>{{item.content}}</td>
@@ -388,7 +390,7 @@
                                             <td>{{item.status}}</td>
 
                                         </tr>
-                                        <tr v-if="orderList.count == 0"><td colspan="6">暂无记录</td></tr>
+                                        <tr v-if="nomore"><td colspan="6">暂无记录</td></tr>
                                         </tbody>
                                     </table>
 
@@ -533,12 +535,16 @@
                     game_list:[],
                     recordBox:false,
                     orderList:[],
+                    yingkui_money:'',//亏盈金额
+                    all_touzhu_money:'',//总投注金额
+                    all_count:'',
                     order_type:[],
                     curOrderTypeId:'all',
                     order_date:{},
                     order_date_list:[],
                     orderDateBox:false,
                     cur_page:1,
+                    nomore:false
 
                 },
 				created: function() {
@@ -869,7 +875,12 @@
                                 .then(function(response) {
                                     var data = response.data;
                                     if (data.success == true) {
-                                        that.orderList = data.content;
+                                        var contents = data.content;
+                                        that.orderList = contents.list;
+                                        that.all_touzhu_money = contents.all_touzhu
+                                        that.yingkui_money = contents.yingkui
+                                        that.all_count = contents.count
+                                        console.log("that.orderList",that.orderList)
                                     }else{
                                         alert(data.msg)
                                         window.location.href= data.url

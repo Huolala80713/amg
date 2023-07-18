@@ -70,7 +70,7 @@ switch($type) {
     case "order_list":
         $arr = array();
         $page = $_GET['page'] ? $_GET['page'] : 1;
-        $limit = 15;
+        $limit = 300;
         $status = $_GET['status'] ? $_GET['status'] : 'all';
         $date_type = $_GET['date_type'] ? $_GET['date_type'] : 1;
         if(date('H') < 6){

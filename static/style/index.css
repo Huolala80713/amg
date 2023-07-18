@@ -378,6 +378,7 @@
 .betbox table{
     width: 98%;
     margin: 0 auto;
+    font-size: 12px;
 }
 .betbox table thead{
     height: 40px;

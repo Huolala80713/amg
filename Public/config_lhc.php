@@ -643,6 +643,26 @@ function getAllWanfaItem(){
     }
     return $wanfa_list;
 }
+
+//获取所有的玩法 20230718
+function getAllWanfaItemByWanfa($wanfa,$posi){
+    $wanfa_one_cate = getWanfaCate();
+    $wanfa_name = $wanfa_one_cate[$wanfa];
+    $item_list =  getWanfaListByType($wanfa);
+    $son_item = [];
+    foreach($item_list as $wf_key=>$wf_val){
+        $item = [];
+        $item = $wf_val;
+        $item['wanfa_name'] = $wanfa_name;
+        $item['mingci'] = $wanfa."#".$wf_val['id']."#".$posi;
+        $item['class'] = $wanfa."-".$wf_val['id']."-".$posi;
+        $item['bg_class'] = $wf_val['class'];
+        $son_item[] = $item;
+    }
+    return $son_item;
+}
+
+
 //获取所有玩法列表及赔率增长点 20230712
 function getWanfaPeilvStepList($type,$userid,$roomid='666777'){
     $lottery = get_query_vals('fn_lottery'.$type,"*",['roomid'=>$roomid]);

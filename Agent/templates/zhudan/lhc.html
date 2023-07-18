@@ -32,6 +32,26 @@ $game_type = getGameCodeById($gameID);
         background-color: #008000 !important;
         color: #FFFFFF;
     }
+    .one-cate {
+        color: #FFFFFF;
+    }
+    .curr{
+        background: #FF0000;
+    }
+    .curr a{
+        color: #FFFFFF;
+    }
+    .direct-chat-messages{
+        height: auto !important;
+    }
+    .input-group-addon{
+        width: 40px !important;
+        text-align: center !important;
+    }
+    .input-group-bg{
+        background: #cccccc;
+        min-width: 50px !important;
+    }
     </style>
     <!-- Main content -->
     <section class="content">
@@ -46,39 +66,57 @@ $game_type = getGameCodeById($gameID);
                         <span style="flex: 1">距离下期开奖：<label style="" id="time">00</label></span>
                     </div>
                     <!-- /.box-header -->
-                    <div class="box-body" style="overflow-x: scroll !important;height: 550px">
+                    <div class="box-body">
                         <!-- Conversations are loaded here -->
-                        <div class="direct-chat-messages" style="height:auto;display: flex;width: 2400px;overflow: scroll;">
+                        <div class="direct-chat-messages">
+                            <div class="col-sm-12">
+                            <?php
+                            foreach($wanfa_one_cate as $key=>$wanfa_name){
+                            ?>
+                            <div class="col-sm-2 box-header with-border one-cate <?php if($key == $wanfa){ echo "curr"; }?>" style="text-align: center">
+                                <h3 class="box-title">
+                                    <a href="?m=<?=$_GET['m']?>&g=<?=$_GET['g']?>&wanfa=<?=$key?>">
+                                    <?=$wanfa_name?>
+                                        </a>
+                                </h3>
+                            </div>
+                            <?php
+                            }
+                            ?>
+                            </div>
+                        <div class="col-sm-12" style="margin-top: 5px">
+                            <div class="box-body" style="background: #e0e0e0">
+                                <?php
+                            foreach($son_cate as $son_key=>$posi_item){
+                                ?>
+                                <div class="col-sm-2 box-header with-border one-cate <?php if($posi_item['posi'] == $posi){ echo "curr"; }?>" style="text-align: center">
+                                <h3 class="box-title">
+                                    <a href="?m=<?=$_GET['m']?>&g=<?=$_GET['g']?>&wanfa=<?=$wanfa?>&posi=<?=$posi_item['posi']?>">
+                                        <?=$posi_item['name']?>
+                                    </a>
+                                </h3>
+                            </div>
+                            <?php
+                            }
+                            ?>
+                        </div>
+                    </div>
                             <!--<table>-->
                                 <!---->
                                 <!--<tr></tr>-->
                                 <!---->
                                 <!--</table>-->
-                            <?php
-                            foreach($wanfa_list as $key=>$wanfa){
-                            ?>
-
-                            <?php
-                                foreach($wanfa['list'] as $skey=>$wanfa_son){
-                            ?>
-                            <div class="box box-primary" style="width: 120px;margin-left: 10px;">
-                                <div class="box-header with-border" style="text-align: center">
-                                    <h1 class="box-title">
-                                        <?=$wanfa['name']?>
-                                        <br/>
-                                        <?=$wanfa_son['name']?>
-                                    </h1>
-                                </div>
+                            <div class="col-sm-12" style="margin-top: 10px">
 
                                 <div class="box-body">
                                     <div class="row">
                                         <?php
-                                foreach($wanfa_son['son_item'] as $item_key=>$item){
+                                foreach($item_list as $item_key=>$item){
                                         ?>
-                                        <div class="col-md-12">
-                                            <div class="input-group">
+                                        <div class="col-md-1">
+                                            <div class="input-group ">
                                                 <span class="input-group-addon <?=$item['bg_class']?>"><?=$item['name']?></span>
-                                                <span style="width: 80px" class="form-control" id="<?=$item['class']?>"></span>
+                                                <span class="form-control input-group-bg" id="<?=$item['class']?>"></span>
                                             </div>
                                         </div>
 
@@ -90,12 +128,6 @@ $game_type = getGameCodeById($gameID);
 
                                 </div>
                             </div>
-                            <?php
-                            }
-                            ?>
-                            <?php
-                            }
-                            ?>
 
                         </div>
                         <!--/.direct-chat-messages-->

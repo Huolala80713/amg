@@ -105,6 +105,9 @@ if(empty($user['agent'])){
     $fandian = $info['fandian'];
 }else{
     $fandian = json_decode($user['fandian'] , true)[$game_name];
+    if(!$fandian){
+        $fandian = $info['fandian'];
+    }
 }
 $default_fandian = $info['fandian'];
 ?>

@@ -70,8 +70,10 @@
                         } elseif ($BetGame == 'jssc') {
                             $info = get_query_vals('fn_lottery7', '*', array('roomid' => $_SESSION['agent_room']));
                         } elseif ($BetGame == 'jsssc') {
+                            $info = get_query_vals('fn_lottery8', '*', array('roomid' => $_SESSION['agent_room']));
+                        } elseif ($BetGame == 'xglhc') {
                             $info = get_query_vals('fn_lottery9', '*', array('roomid' => $_SESSION['agent_room']));
-                        }
+                            }
                     ?>
                     <div class="col-md-12">
                         <div class="input-group">

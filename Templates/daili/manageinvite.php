@@ -45,6 +45,7 @@ foreach ($game_list as $key => $game){
     }
     $default_agent_list[$key] = get_query_val($table , 'fandian' , ['roomid'=>$_SESSION['roomid']]);
 }
+$default_old_agent_list = $default_agent_list;
 $user = get_query_vals('fn_user', 'fandian,agent,isagent', ['userid'=>$_SESSION['userid'],'roomid'=>$_SESSION['roomid']]);
 if($user['agent']){
     $agent_list = json_decode($user['fandian'] , true);
@@ -418,7 +419,7 @@ if($_POST['do'] == 'create'){
     <div class="cell-item" style="display: flex;position: relative;border-bottom: 0;">
         <div class="cell-left" style="flex:1;font-size: 16px;"><?php echo $game;?>：</div>
         <div class="cell-right" style="flex:1;">
-            <input type="text" placeholder="请输入返点" class="cell-input agent" name="<?php echo getGameCodeById($key);?>" value="<?php echo isset($agent_list[$key])?$agent_list[$key]:0;?>">
+            <input type="text" placeholder="请输入返点" class="cell-input agent" name="<?php echo getGameCodeById($key);?>" value="<?php echo isset($agent_list[$key])?$agent_list[$key]:$default_old_agent_list[$key];?>">
         </div>
         <div class="cell-right" style="min-height: auto;flex:0.1;position: absolute;height: 0.7rem;line-height: 0.7rem;top: 0.2rem;right: 0;width: 45px;text-align: center;">%</div>
     </div>

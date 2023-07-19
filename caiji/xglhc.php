@@ -96,7 +96,7 @@ function caiji(){
         $arr['type'] = $typeid;
         $arr['next_term'] = str_replace('/','',$next_kj['id']) ? str_replace('/','',$next_kj['id']) : intval($arr['term'])+1;
         $kj_date = explode('/',$next_kj['date']);
-        $arr['next_time'] = count($kj_date) > 1  ? $kj_date[2].'-'.$kj_date[1].'-'.$kj_date[0]." 21:30:00" : date("Y-m-d 21:30");
+        $arr['next_time'] = count($kj_date) > 1  ? $kj_date[2].'-'.$kj_date[1].'-'.$kj_date[0]." 21:30:00" : date("Y-m-d 21:30",(time() + 24*60*60));
         $arr['iskaijiang'] = 1;
         $has_open = get_query_val('fn_open_lhc' , 'term' , ['term'=>$arr['term'],'type'=>$typeid]);
         if(!$has_open){

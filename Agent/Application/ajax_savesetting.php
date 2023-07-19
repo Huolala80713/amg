@@ -24,12 +24,19 @@ if($_GET['form'] == 'agentsetting'){
         $table = 'fn_lottery7';
     } elseif ($BetGame == 'jsssc') {
         $table = 'fn_lottery8';
+    } elseif ($BetGame == 'xglhc') {
+        $table = 'fn_lottery9';
     }
     $fandian = $_POST['fandian'];
-    $peilv_step = $_POST['peilv_step'];
+    $peilv_step = isset($_POST['peilv_step']) ? $_POST['peilv_step'] : '';
     if($fandian !== '' || $peilv_step !== '' || empty($table)){
         doLog('操作' . getGameTxtName($game) . '游戏代理设置');
-        update_query($table, array('fandian'=>$fandian,'peilv_step'=>$peilv_step), array('roomid' => $_SESSION['agent_room']));
+        $update_data = [];
+        $update_data['fandian'] = $fandian;
+        if($peilv_step){
+            $update_data['peilv_step'] = $peilv_step;
+        }
+        update_query($table, $update_data, array('roomid' => $_SESSION['agent_room']));
         echo '<script>alert("设置成功!"); window.location.href="/zb9n8rUvp0.php?m=setting&t=agent&game=' . $game . '";</script>';
     }else{
         echo '<script>alert("提交参数错误，请核对!"); window.location.href="/zb9n8rUvp0.php?m=setting&t=agent&game=' . $game . '";</script>';

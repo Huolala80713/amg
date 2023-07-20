@@ -576,12 +576,16 @@ function invitecodelist($user_id , $type , $page = 1 , $limit = 10){
     while ($item = db_fetch_array()) {
         $reg_user = explode(',' , $item['reg_user']);
         $reg_user = array_unique(array_filter($reg_user));
+        $fandian = json_decode($item['fandian'],true);
         $list[] = [
             'add_time' => $item['add_time'],
 //            'add_time' => date('y-m-d' , strtotime($item['add_time'])) . '<br>' . date('H-i:s' , strtotime($item['add_time'])),
             'reg_count' => count($reg_user),
             'invite_code' => $item['invite_code'],
             'id' => $item['id'],
+            'fandian'=>$fandian,
+            'fandian_len'=>count($fandian)
+
         ];
     }
     $count = get_query_val($ordertable , 'count(id)' , $ordersql);

@@ -45,10 +45,11 @@ foreach ($game_list as $key => $game){
     }
     $default_agent_list[$key] = get_query_val($table , 'fandian' , ['roomid'=>$_SESSION['roomid']]);
 }
-$default_old_agent_list = $default_agent_list;
+//$default_old_agent_list = $default_agent_list;
 $user = get_query_vals('fn_user', 'fandian,agent,isagent', ['userid'=>$_SESSION['userid'],'roomid'=>$_SESSION['roomid']]);
 if($user['agent']){
     $agent_list = json_decode($user['fandian'] , true);
+    $agent_list[9] = $agent_list[9] ? $agent_list[9] : get_query_val('fn_lottery9' , 'fandian' , ['roomid'=>$_SESSION['roomid']]);
     $default_agent_list = $agent_list;
 }else{
     $agent_list = $default_agent_list;
@@ -159,6 +160,14 @@ if($_POST['do'] == 'create'){
         }
     }
     update_query('fn_invite_code', ['fandian' => json_encode($fandian)] , ['id'=>$_POST['id']] );
+    //修改下级用户的返点 20230720
+    $invite_user = get_query_val('fn_invite_code' , 'reg_user' , ['id'=>$_POST['id']]);
+    if($invite_user){
+        $invite_user_list = explode(",",$invite_user);
+        foreach($invite_user_list as $v){
+            update_query('fn_user', ['fandian' => json_encode($fandian)] , "userid = '{$v}'" );
+        }
+    }
     return ajaxMsg('修改成功' , 1);
 }elseif($_POST['do'] == 'kaihu'){
     $fandian = [];
@@ -398,6 +407,9 @@ if($_POST['do'] == 'create'){
         .cell-item:not(:last-child):after{
             border: 0;
         }
+        .fandian_black{
+            background: #cccccc;
+        }
     </style>
 </div>
 <div class="m-cell" style="margin-top:0.35rem;">
@@ -416,13 +428,16 @@ if($_POST['do'] == 'create'){
     </div>
     <?php endif;?>
     <?php foreach ($game_list as $key => $game):?>
-    <div class="cell-item" style="display: flex;position: relative;border-bottom: 0;">
+
+    <div class="cell-item game_<?=$key?>" style="display: flex;position: relative;border-bottom: 0;">
         <div class="cell-left" style="flex:1;font-size: 16px;"><?php echo $game;?>：</div>
         <div class="cell-right" style="flex:1;">
-            <input type="text" placeholder="请输入返点" class="cell-input agent" name="<?php echo getGameCodeById($key);?>" value="<?php echo isset($agent_list[$key])?$agent_list[$key]:$default_old_agent_list[$key];?>">
+            <input type="text" placeholder="请输入返点" class="cell-input agent <?php if($id && isset($agent_list[$key])){ echo "fandian_black"; } ?>" <?php if($id && isset($agent_list[$key])){ echo "readonly"; } ?> name="<?php echo getGameCodeById($key);?>"
+                   value="<?php echo isset($agent_list[$key])?$agent_list[$key]:$default_agent_list[$key];?>">
         </div>
         <div class="cell-right" style="min-height: auto;flex:0.1;position: absolute;height: 0.7rem;line-height: 0.7rem;top: 0.2rem;right: 0;width: 45px;text-align: center;">%</div>
     </div>
+
     <?php endforeach;?>
     <input type="hidden" name="do" value="<?php echo $type;?>">
     <input type="hidden" name="user_id" value="<?php echo $user_id;?>">

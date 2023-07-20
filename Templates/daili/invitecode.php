@@ -169,10 +169,10 @@ $page = getPageList($list['count'] , 5 , '/Templates/daili/invitecode.php');
         if(!empty($invitecodelist)):
             ?>
             <?php foreach ($invitecodelist as $invitecode){?>
-            <tr onclick="updateinivitecode('<?php echo $invitecode['id'];?>')">
+            <tr onclick="updateinivitecode('<?php echo $invitecode['id'];?>','<?php echo $invitecode['fandian_len'];?>')">
                 <td style="color: rgb(51, 136, 255);"><?php echo $invitecode['invite_code'];?></td>
                 <td><?php echo $invitecode['add_time'];?></td>
-                <td>注册（<?php echo $invitecode['reg_count'];?>）</td>
+                <td>注册（<?php echo $invitecode['reg_count'];?>）<?php if(intval($invitecode['fandian_len']) < 7){ echo "<font color='red'>修改</font>";}?></td>
             </tr>
         <?php }?>
         <?php endif;?>
@@ -183,9 +183,9 @@ $page = getPageList($list['count'] , 5 , '/Templates/daili/invitecode.php');
     <div class="blackBg"></div>
     <div class="moreLayer">
         <ul>
-<!--            <li>-->
-<!--                <a class="updatefandian">修改返点</a>-->
-<!--            </li>-->
+            <li class="fandian_edit" style="display: none">
+                <a class="updatefandian">修改返点</a>
+            </li>
             <li>
                 <a class="delete">删除邀请码</a>
             </li>
@@ -217,9 +217,14 @@ $page = getPageList($list['count'] , 5 , '/Templates/daili/invitecode.php');
     function search(){
         window.location.href="?type=" + $('input[name="type"]:checked').val();
     }
-    function updateinivitecode(id){
+    function updateinivitecode(id,len){
         inivitecode_id = id;
         $("#popBox").show();
+        if(len < 7){
+            $(".fandian_edit").show()
+        }else{
+            $(".fandian_edit").hide()
+        }
     }
     $(".cancel").click(function(){
         inivitecode_id = '';

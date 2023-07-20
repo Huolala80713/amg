@@ -236,7 +236,31 @@
 
         return lastStr;
     }
+
+    <?php
+    require "user/function.php";
+    $user_id = $_SESSION['userid'];
+    $list = invitecodelist($user_id , 'dl' , 1 , 100);
+    $invitecodelist = $list['list'];
+    foreach($invitecodelist as $v){
+      if($v['fandian_len'] < 7){
+            echo "gotoinvite()";
+            break;
+      }
+    }
+
+    ?>
+    //跳转
+    function gotoinvite(){
+        jqtoast('请修改邀请码的游戏返点！即将跳转');
+        setTimeout(function () {
+            window.location.href = "/Templates/daili/invitecode.php"
+        },2000);
+
+    }
+
 </script>
+
 <!--<div style="overflow: hidden;">-->
 <!--    <audio src="/bgMusic.mp3" id="Jaudio" class="media-audio" autoplay preload loop="loop"></audio>-->
 <!--</div>-->

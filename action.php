@@ -53,6 +53,19 @@ if(in_array($do,$cando)){
                 if(empty($agent)){
                     ajaxMsg('未找到该邀请码！',0);
                 }
+                //如果返点少于六位，则返回修改
+                $fandian_res = true;
+                $agent_fandian = json_decode($agent['fandian'],true);
+                $game_list = getGameList();
+                foreach($game_list as $key=>$name){
+                    if(!$agent_fandian[$key]){
+                        $fandian_res = false;
+                        ajaxMsg($name.'未设置游戏点，请联系邀请人修改！',0);
+                    }
+                }
+                if(!$fandian_res){
+                    exit;
+                }
             }
             insert_query("fn_user",[
 				'userid'=>$userName,

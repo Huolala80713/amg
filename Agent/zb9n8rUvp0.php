@@ -389,11 +389,23 @@ if($_GET['m'] == ''){
                     require 'templates/gamesetting/jnd28.html';
                 }if($gameID == '9'){
                     $begin_times = get_query_val('fn_lottery9','begin_bet_times',array('roomid'=>$_SESSION['agent_room']));
-                    $hours = ceil(((21.5 * 3600) - $begin_times) / 3600);
+                    $hours = intval(((21.5 * 3600) - $begin_times) / 3600);
                     $mins = intval(intval(((21.5 * 3600) - $begin_times) % 3600)/60);
-                    $mins = $mins > 0 ? 60 -  $mins : 0;
-//                    var_dump($mins);
-//                    var_dump($hours);
+                    $mins = $mins > 0 ? $mins : 0;
+
+//                    var_dump("bet_begin_times",$begin_times);
+//                    var_dump("_begin_times",$hours);
+//                    var_dump("_begin_times",$mins);
+                    //封盘时间
+                    $fengpan_begin_times = get_query_val('fn_lottery9','fengtime',array('roomid'=>$_SESSION['agent_room']));
+                    $fengpan_hours = intval(((21.5 * 3600) - $fengpan_begin_times) / 3600);
+                    $fengpan_mins = intval(intval(((21.5 * 3600) - $fengpan_begin_times) % 3600)/60);
+                    //var_dump($fengpan_mins);
+                    $fengpan_mins = $fengpan_mins > 0 ? $fengpan_mins : 0;
+
+//                    var_dump("fengpan_begin_times",$fengpan_begin_times);
+//                    var_dump($fengpan_hours);
+//                    var_dump($fengpan_mins);
 //                    var_dump("begin_times",$begin_times);
                     require 'templates/gamesetting/lhc.html';
                 }else{

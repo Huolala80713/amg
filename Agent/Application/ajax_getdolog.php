@@ -7,7 +7,8 @@ $sql = '';
 if($date){
     $date = explode(' - ' , $date);
     if(count($date) == 2){
-        $sql = 'create_time between ' . strtotime($date[0] . ' 06:00:00') . ' and ' . strtotime(strtotime($date[1] . ' + 1days') . ' 05:59:59');
+       // $sql = 'create_time between ' . strtotime($date[0] . ' 06:00:00') . ' and ' . strtotime(strtotime($date[1] . ' + 1days') . ' 05:59:59');
+        $sql = 'create_time between ' . strtotime(substr($date[0],0,10) . ' 06:00:00') . ' and ' . strtotime(substr($date[1],0,10) . ' + 1days');
     }
 }
 select_query('fn_admin_log' , 'id,create_time,adminuser,ip,message' , $sql , ['id desc'] , ($page-1)*$pagesize . ',' . $pagesize);

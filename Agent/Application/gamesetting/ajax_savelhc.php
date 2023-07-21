@@ -85,10 +85,17 @@ if($_GET['form'] == 'form1'){
     echo '<script>alert("保存成功~感谢使用!"); window.location.href="/zb9n8rUvp0.php?m=g_setting&g=9";</script>';
 }elseif($_GET['form'] == 'form3'){
     $open = $_POST['opengame'] == 'on' ? 'true' : 'false';
-    $fengtime = $_POST['fengtime'];
-    $begin_bet_hours = (21.5 - $_POST['begin_bet_hours']);
+    //$fengtime = $_POST['fengtime'];
+    $begin_bet_hours = (21 - $_POST['begin_bet_hours']);
     $begin_bet_min = $_POST['begin_bet_min'];
-    $begin_bet_times = ($begin_bet_hours * 3600) + ($begin_bet_min*60);
+    $begin_bet_times = ($begin_bet_hours * 3600) + ((30 - $begin_bet_min)*60);
+
+    //封盘时间
+    $begin_fengpan_hours = (21 - $_POST['begin_fengpan_hours']);
+    $begin_fengpan_min = $_POST['begin_fengpan_min'];
+    $fengtime = ($begin_fengpan_hours * 3600) + ((30 - $begin_fengpan_min)*60);
+
+    var_dump($fengtime);
 //    var_dump($begin_bet_min);
 //    var_dump($begin_bet_hours);
 //    var_dump($begin_bet_times);

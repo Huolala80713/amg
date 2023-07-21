@@ -357,15 +357,22 @@
 
                                 </div>
                                 <br/>
+                                <!--<div class="input-group">-->
+                                    <!--<span class="input-group-addon">封盘时间</span>-->
+                                    <!--<input name="fengtime" type="number" class="form-control" placeholder="输入封盘时间..." value="<?php echo get_query_val('fn_lottery9','fengtime',array('roomid'=>$_SESSION['agent_room'])); ?>">-->
+                                <!--</div>-->
                                 <div class="input-group">
-                                    <span class="input-group-addon">封盘时间</span>
-                                    <input name="fengtime" type="number" class="form-control" placeholder="输入封盘时间..." value="<?php echo get_query_val('fn_lottery9','fengtime',array('roomid'=>$_SESSION['agent_room'])); ?>">
+                                    <span class="input-group-addon">封盘时间（24小时制）</span>
+                                    <!--<input name="begin_bet_times" type="number" class="form-control" placeholder="输入封盘时间..." value="<?php echo get_query_val('fn_lottery9','begin_bet_times',array('roomid'=>$_SESSION['agent_room'])); ?>">-->
+                                    <input name="begin_fengpan_hours"   oninput="if(value>21)value=21" value="<?php echo $fengpan_hours ?>" />时（0-21）
+                                    <input name="begin_fengpan_min"   oninput="if(value>59)value=59"  value="<?php echo $fengpan_mins ?>" />分（0-59）
+
                                 </div>
                                 <br/>
-                                <div class="input-group">
-                                    <span class="input-group-addon">返点降赔基点</span>
-                                    <input name="peilv_step" required="true" type="number"  step="0.001" class="form-control" placeholder="输入返点降赔基点..." value="<?php echo get_query_val('fn_lottery9','peilv_step',array('roomid'=>$_SESSION['agent_room'])); ?>">
-                                </div>
+                                <!--<div class="input-group">-->
+                                    <!--<span class="input-group-addon">返点降赔基点</span>-->
+                                    <!--<input name="peilv_step" required="true" type="number"  step="0.001" class="form-control" placeholder="输入返点降赔基点..." value="<?php echo get_query_val('fn_lottery9','peilv_step',array('roomid'=>$_SESSION['agent_room'])); ?>">-->
+                                <!--</div>-->
                                 <br/>
                             </form>
                         </div>

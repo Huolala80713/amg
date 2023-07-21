@@ -444,6 +444,7 @@ if($_POST['do'] == 'create'){
     <input type="hidden" name="id" value="<?php echo $id;?>">
 </div>
 </form>
+<?php if($_GET['button_type'] != 'show'){ ?>
 <?php if($id){?>
     <input type="button" class="btn-block b-blue sub" value="修改邀请码返点">
 <?php }elseif($user_id){?>
@@ -451,7 +452,7 @@ if($_POST['do'] == 'create'){
 <?php }else{?>
     <input type="button" class="btn-block b-blue sub" value="<?php echo $title;?>">
 <?php }?>
-
+<?php }?>
 <script src="/Style/newweb/js/ydui.js"></script>
 <link rel="Stylesheet" type="text/css" href="/Style/pop/css/style.css" />
 <script type="text/javascript" src="/Style/pop/js/popups.js"></script>

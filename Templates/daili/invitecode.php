@@ -184,8 +184,12 @@ $page = getPageList($list['count'] , 5 , '/Templates/daili/invitecode.php');
     <div class="moreLayer">
         <ul>
             <li class="fandian_edit" style="display: none">
-                <a class="updatefandian">修改返点</a>
+                <a class="updatefandian" data-type="update">修改返点</a>
             </li>
+            <li class="fandian_show">
+                <a class="updatefandian" data-type="show">查看返点</a>
+            </li>
+
             <li>
                 <a class="delete">删除邀请码</a>
             </li>
@@ -230,7 +234,9 @@ $page = getPageList($list['count'] , 5 , '/Templates/daili/invitecode.php');
         inivitecode_id = '';
     });
     $(".updatefandian").on('click' , function(){
-        window.location.href="manageinvite.php?id=" + inivitecode_id;
+        var type = $(this).attr('data-type');
+        console.log(type);
+        window.location.href="manageinvite.php?id=" + inivitecode_id + "&button_type="+type;
     })
     $(".delete").on('click' , function(){
         $("#popBox").hide();

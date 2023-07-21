@@ -86,7 +86,19 @@ switch($type) {
         }
         if($begin_kaipan > 0){
             $djs = intval($peizhi['begin_bet_times']) - $begin_kaipan - intval($peizhi['fengtime']);
-            $kaipan_time_str = intval($djs / (3600)).":".intval(($djs % (3600)) / 60) .":".intval($djs %  60);
+            $kaipan_time_str = "";//intval($djs / (3600)).":".intval(($djs % (3600)) / 60) .":".intval($djs %  60);
+            $djs_hours = intval($djs / (3600));
+            if($djs_hours){
+                $kaipan_time_str .= str_pad($djs_hours,2,'0',STR_PAD_LEFT).":";
+            }
+            $djs_mins = intval(($djs % (3600)) / 60);
+            if($djs_mins){
+                $kaipan_time_str .= str_pad($djs_mins,2,'0',STR_PAD_LEFT).":";
+            }
+            $djs_ses = intval($djs %  60);
+            if($djs_ses){
+                $kaipan_time_str .= str_pad($djs_ses,2,'0',STR_PAD_LEFT);
+            }
             if($djs < 0){
                 $kaipan_time_str = "已封盘";
             }

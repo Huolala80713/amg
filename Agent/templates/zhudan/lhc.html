@@ -50,7 +50,14 @@ $game_type = getGameCodeById($gameID);
     }
     .input-group-bg{
         background: #cccccc;
-        min-width: 50px !important;
+        min-width: 105px !important;
+    }
+    .item-box{
+
+    }
+    .item-list{
+        width: 12.2%;
+        display: inline-block;
     }
     </style>
     <!-- Main content -->
@@ -109,11 +116,11 @@ $game_type = getGameCodeById($gameID);
                             <div class="col-sm-12" style="margin-top: 10px">
 
                                 <div class="box-body">
-                                    <div class="row">
+                                    <div class="item-box">
                                         <?php
                                 foreach($item_list as $item_key=>$item){
                                         ?>
-                                        <div class="col-md-1">
+                                        <div class="item-list">
                                             <div class="input-group ">
                                                 <span class="input-group-addon <?=$item['bg_class']?>"><?=$item['name']?></span>
                                                 <span class="form-control input-group-bg" id="<?=$item['class']?>"></span>

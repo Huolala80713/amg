@@ -44,7 +44,7 @@ switch($type) {
     case "openHistory":
         $arr = array();
         $arr['success'] = true;
-        select_query("fn_open_lhc", '*', "`type` = 9 order by `next_time` desc limit 11");
+        select_query("fn_open_lhc", '*', "`type` = {$gameTypeID} order by `next_time` desc limit 11");
         while ($con = db_fetch_array()) {
             $cons[] = $con;
         }
@@ -65,6 +65,43 @@ switch($type) {
         }
         $arr['info'] = $kj_info;
         $arr['content'] = $kj_data;
+        echo json_encode($arr);
+        break;
+    case "info":
+        $arr = array();
+        $arr['success'] = true;
+        //select_query("fn_open_lhc", '*', "`type` = 9 order by `next_time` desc limit 1");
+        $kj_info = get_query_vals('fn_open_lhc', '*', "`type` = {$gameTypeID} order by `next_time` desc");
+        $kj_number = explode(',', $kj_info['code']);
+        array_push($kj_number, $kj_info['code_te']);
+        $kj_info['kj_date'] = substr($kj_info['time'], 0, 10);
+        $kj_info['code_list'] = kj_number_arr($kj_number);
+        $peizhi = get_query_vals('fn_lottery'.$gameTypeID, '*', "roomid={$roomid}");
+        //$kj_info['next_times'] = strtotime($kj_info['next_times']) - $peizhi['begin_bet_times'];
+        $begin_kaipan = intval($peizhi['begin_bet_times']) - (strtotime($kj_info['next_time']) - time());
+        $kj_info['begin_bet_times'] = $begin_kaipan > 0 ? $begin_kaipan : 0;//开奖倒计时
+        $kaipan_time_str =  "";
+        if($begin_kaipan < 0){
+            $kaipan_time_str = "未开盘";
+        }
+        if($begin_kaipan > 0){
+            $djs = intval($peizhi['begin_bet_times']) - $begin_kaipan - intval($peizhi['fengtime']);
+            $kaipan_time_str = intval($djs / (3600)).":".intval(($djs % (3600)) / 60) .":".intval($djs %  60);
+            if($djs < 0){
+                $kaipan_time_str = "已封盘";
+            }
+        }
+//        var_dump(intval($peizhi['begin_bet_times']));
+//        var_dump(strtotime($kj_info['next_time']) - time());
+//        var_dump($begin_kaipan);
+
+
+        if(time() > strtotime($kj_info['next_time'])){
+            $kaipan_time_str = "已开奖";
+        }
+        $kj_info['open_status'] = $kaipan_time_str;
+        $kj_info['fengtime'] = $peizhi['fengtime'];
+        $arr['info'] = $kj_info;
         echo json_encode($arr);
         break;
     case "order_list":

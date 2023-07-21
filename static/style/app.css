@@ -12888,7 +12888,9 @@ td.past-open-result[data-v-db6848ac] {
 .timebar h4[data-v-db6848ac] {
     color: #333;
     text-align: center;
-    font-weight: 400
+    font-weight: 700;
+    font-size: .7em;
+    margin-top: 5px;
 }
 
 .mmclotteryAward[data-v-db6848ac] {
@@ -24534,7 +24536,7 @@ hr[data-v-27b8df53] {
 
 .ch_chart_x .ch_num_box .normal-x>li>span[data-v-01736910] {
     color: red;
-    font-size: .6rem;
+    font-size: 12px;
     line-height: 1.07813rem
 }
 

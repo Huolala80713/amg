@@ -30,7 +30,7 @@
 			rel="apple-touch-icon-precomposed">
 		<title>彩票中心</title>
 		<link type="text/css" rel="stylesheet" href="/static/layui.css">
-		<link type="text/css" rel="stylesheet" href="/static/style/app.css?v=19">
+		<link type="text/css" rel="stylesheet" href="/static/style/app.css?v=20">
 		<link type="text/css" rel="stylesheet" href="/static/style/index.css?v=7">
 
 		<!-- <script type="text/javascript" src="https://gt188.cc/mobile/v1/static/js/manifest.dee5983400ddab883501.js"></script>
@@ -157,10 +157,10 @@
 										<p data-v-db6848ac="">{{kj_info.next_term}}期</p>
 										<p data-v-db6848ac="">投注截止</p><!---->
 									</div>
-									<h4 data-v-db6848ac="">{{next_kj_text}}</h4>
+									<h4 data-v-db6848ac="">{{kj_info.open_status}}</h4>
 								</div>
                                 <div class="betrecord-icon" @click="recordBoxFun()"></div>
-								<div data-v-db6848ac="" class="past-open line-white-before-" v-if="kjListBox">
+								<div data-v-db6848ac="" class="past-open line-white-before-" style="overflow: scroll;height: 550px;padding-bottom: 80px;" v-if="kjListBox">
 									<table data-v-db6848ac="" class="past-open-table">
 										<thead data-v-db6848ac="">
 											<tr data-v-db6848ac="">
@@ -432,7 +432,7 @@
                                 </ul>
                                 <ul>
                                     <li>
-                                        <a onclick="closePopBox()">取消</a>
+                                        <a onclick="orderDateBox = false">取消</a>
                                     </li>
                                 </ul>
                             </div>
@@ -524,7 +524,8 @@
 					moneyList: [],
 					curMoney: '', //单注金额
 					kj_info: {},
-					next_kj_seconds: 0, //下棋开奖倒计时
+                    next_kj_seconds: 0, //下棋开奖倒计时
+                    beigin_bet_seconds: 0, //下棋开奖倒计时
 					next_kj_text: '',
 					is_popup: false,
 					popup_txt: "温馨提示",
@@ -550,7 +551,8 @@
 				created: function() {
 					this.getWanfaList();
 					this.getKjList();
-                    this.getOrderConfigList()
+                    this.getOrderConfigList();
+                    this.auto_kaijiang();
 				},
 				// 点击菜单使用的函数
 				methods: {
@@ -781,9 +783,9 @@
 								var data = response.data;
 								if (data.success == true) {
 									that.kjList = data.content;
-									that.kj_info = data.info;
-									that.next_kj_seconds = data.info.next_times
-									that.next_time();
+//									that.kj_info = data.info;
+//									that.next_kj_seconds = data.info.next_times
+//									that.next_time();
 									console.log("this.kjList", that.kjList)
 								}
 								console.log("data", data)
@@ -793,6 +795,31 @@
 								console.log(error);
 							});
 					},
+                    //获取最近一期的开奖信息
+                    getKjInfo: function() {
+                        let that = this
+                        axios.get('/Application/ajax_lhc.php?type=info')
+                                .then(function(response) {
+                                    var data = response.data;
+                                    if (data.success == true) {
+                                        that.kj_info = data.info;
+                                        //that.next_kj_seconds = data.info.next_times
+                                        that.next_time();
+
+                                    }
+                                    console.log("data", data)
+
+                                })
+                                .catch(function(error) { // 请求失败处理
+                                    console.log(error);
+                                });
+                    },
+                    //定时开奖信息
+                    auto_kaijiang: function() {
+                        setInterval(() => {
+                            this.getKjInfo();
+                        }, 1000)
+                    },
 					// 天 时 分 秒 格式化函数
 					countDown: function() {
 						if(this.next_kj_seconds > 0){

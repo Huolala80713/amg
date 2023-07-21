@@ -523,7 +523,7 @@ function getWanfaByType($wanfa,$userid,$roomid){
 			$arr['id'] = $v;
             $arr['name'] = $v;
             $arr['class'] = bo_name_by_number($v)['name'];
-            $arr['rate'] = $user_peilv[$wanfa];
+            $arr['rate'] = sprintf("%.3f",$user_peilv[$wanfa]);//round($user_peilv[$wanfa],3);
             $arr['check'] = 0;
 			$new_arr[] = $arr;
 		}
@@ -537,7 +537,7 @@ function getWanfaByType($wanfa,$userid,$roomid){
             $arr['id'] = $key;
             $arr['name'] = $v;
             $arr['class'] = "black";
-            $arr['rate'] = $user_peilv[$wanfa."_".$key];
+            $arr['rate'] = sprintf("%.3f",$user_peilv[$wanfa."_".$key]);//$user_peilv[$wanfa."_".$key];
             $arr['check'] = 0;
             $new_arr[] = $arr;
         }
@@ -552,9 +552,9 @@ function getWanfaByType($wanfa,$userid,$roomid){
             $arr['name'] = $v;
             $arr['class'] = "black";
             if($key =='tu'){
-                $arr['rate'] = $user_peilv[$wanfa.'_tu'];
+                $arr['rate'] = sprintf("%.3f",$user_peilv[$wanfa.'_tu']);//$user_peilv[$wanfa.'_tu'];
             }else{
-                $arr['rate'] = $user_peilv[$wanfa];
+                $arr['rate'] = sprintf("%.3f",$user_peilv[$wanfa]);//$user_peilv[$wanfa];
             }
 
             $arr['check'] = 0;

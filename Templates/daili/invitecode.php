@@ -239,6 +239,9 @@ $page = getPageList($list['count'] , 5 , '/Templates/daili/invitecode.php');
         window.location.href="manageinvite.php?id=" + inivitecode_id + "&button_type="+type;
     })
     $(".delete").on('click' , function(){
+        if(!confirm("确定要删除？")){
+            return;
+        }
         $("#popBox").hide();
         $.ajax({
             url:location.href,

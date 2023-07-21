@@ -45,8 +45,11 @@ $game_type = getGameCodeById($gameID);
         height: auto !important;
     }
     .input-group-addon{
-        width: 40px !important;
-        text-align: center !important;
+        width: 30px;
+        padding-left: 0;
+        padding-right: 0;
+        font-size: 12px;
+        box-sizing: border-box;
     }
     .input-group-bg{
         background: #cccccc;
@@ -92,7 +95,7 @@ $game_type = getGameCodeById($gameID);
                             ?>
                             </div>
                         <div class="col-sm-12" style="margin-top: 5px">
-                            <div class="box-body" style="background: #e0e0e0">
+                            <div class="box-body" style="background: #eeeeee">
                                 <?php
                             foreach($son_cate as $son_key=>$posi_item){
                                 ?>

@@ -55,7 +55,7 @@ if($type == 'get'){
         $arr['data'][] = array(
 		$con['id'], 
 		$con['userid'], 
-		"<img src='{$con['headimg']}' height='30' width='30'> " . $con['username'] ,
+		"<img src='".WEB_HOST."{$con['headimg']}' height='30' width='30'> " . $con['username'] ,
 		$con['remark'], 
 		 $con['isagent'] == 'false'?'否':'是' , 
 		 $con['agent'] , 

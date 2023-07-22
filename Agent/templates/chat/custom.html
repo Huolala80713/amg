@@ -91,7 +91,7 @@
                             ?>
                                 <tr>
                                     <td><?php echo $con['id']; ?></td>
-                                    <td><img src="<?php echo $con['headimg']; ?>" alt="<?php echo $con['username']; ?>" width="35" height="35"></td>
+                                    <td><img src="<?php echo WEB_HOST . $con['headimg']; ?>" alt="<?php echo $con['username']; ?>" width="35" height="35"></td>
                                     <td><?php echo $con['username']; ?></td>
                                     <td><?php echo $con['content']; ?></td>
                                     <td><?php echo $con['status']; ?></td>
@@ -134,7 +134,7 @@
                             ?>
                                 <tr>
                                     <td><?php echo $con['id']; ?></td>
-                                    <td><img src="<?php echo $con['headimg']; ?>" alt="<?php echo $con['username']; ?>" width="35" height="35"></td>
+                                    <td><img src="<?php echo WEB_HOST . $con['headimg']; ?>" alt="<?php echo $con['username']; ?>" width="35" height="35"></td>
                                     <td><?php echo $con['username']; ?></td>
                                     <td><?php echo $con['content']; ?></td>
                                     <td><?php echo getGameTxtNameByCode($con['game']); ?></td>

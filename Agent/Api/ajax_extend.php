@@ -37,7 +37,7 @@ foreach ($list as &$value){
     $value['amount_money'] = (double)get_query_val('fn_user','sum(`money`)',"roomid = {$_SESSION['agent_room']} and jia = 'false'  and userid in ('" . implode('","', $xiaji_user_list) .  "')");
     $value['amount_money'] = round($value['amount_money'] , 4);
     $value['btn'] = '<a href="javascript:addxia(\'' .  $value['id']  . '\',\'' . $value['username'] . '\');" class="btn btn-info btn-sm">添加下线</a>';
-    $value['username_text'] = '<img src="' . $value['headimg'] . '" width="35" height="35">&nbsp;' . $value['username'];
+    $value['username_text'] = '<img src="'.WEB_HOST . $value['headimg'] . '" width="35" height="35">&nbsp;' . $value['username'];
     $value['agent'] = $value['agent']?:'<span style="color:red;">一级代理</span>';
     $value['statustime'] = date('Y-m-d H:i:s' , $value['statustime']);
     if($value['user_count']) {

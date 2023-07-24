@@ -7,7 +7,7 @@
         ?>】房间</title>
 
     <link rel="Stylesheet" type="text/css" href="/Style/newcss/common.css" />
-    <link rel="Stylesheet" type="text/css" href="/Style/newcss/gamelist.css?t=8" />
+    <link rel="Stylesheet" type="text/css" href="/Style/newcss/gamelist.css?t=10" />
     <style>
         .footer_menu2{display: flex;position: fixed;bottom: 0px;width: 100%;left: 0px;justify-content: space-between;align-items: center;padding: 0.1rem 0.2rem;box-sizing: border-box}
         .footer_menu2 li{display: flex;}

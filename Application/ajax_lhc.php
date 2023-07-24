@@ -81,6 +81,7 @@ switch($type) {
         $begin_kaipan = intval($peizhi['begin_bet_times']) - (strtotime($kj_info['next_time']) - time());
         $kj_info['begin_bet_times'] = $begin_kaipan > 0 ? $begin_kaipan : 0;//开奖倒计时
         $kaipan_time_str =  "";
+        $kj_info['is_begin_bet'] = 0;
         if($begin_kaipan < 0){
             $kaipan_time_str = "未开盘";
         }
@@ -101,6 +102,8 @@ switch($type) {
             }
             if($djs < 0){
                 $kaipan_time_str = "已封盘";
+            }else{
+                $kj_info['is_begin_bet'] = 1;
             }
         }
 //        var_dump(intval($peizhi['begin_bet_times']));

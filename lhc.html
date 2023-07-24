@@ -210,7 +210,7 @@
 										<!----> <!----> <!----> <!---->
 									</p>
 								</div> <!---->
-								<div data-v-01736910="" class="lottery lottery-wrap-1" style="margin-top: 0px;">
+								<div data-v-01736910="" class="lottery lottery-wrap-1" style="margin-top: 0px;" v-if="kj_info.is_begin_bet">
 									<div data-v-01736910="" class="lt-wrapper lt-wrapper-21">
 										<div data-v-01736910="" class="selectConentView">
 											<div data-v-01736910="" class="tab-over-lay-right show"
@@ -280,6 +280,9 @@
 										</div>
 									</div>
 								</div>
+                                <div style="text-align: center;margin-top: 20px" v-else>
+                                    {{kj_info.open_status}}
+                                </div>
 							</div>
 
 
@@ -432,7 +435,7 @@
                                 </ul>
                                 <ul>
                                     <li>
-                                        <a onclick="orderDateBox = false">取消</a>
+                                        <a @click="orderDateBox = false">取消</a>
                                     </li>
                                 </ul>
                             </div>
@@ -769,7 +772,6 @@
                         that.cur_page = 1
                         that.getOrderList();
                     },
-
 					//选择下注金额
 					checkMoney: function(money) {
 						let that = this

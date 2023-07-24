@@ -431,20 +431,49 @@ function getLhcOpenInfo($gameName , $type = 0){
         $rowsend['current_sn']=$last_open['term'];
         $rowsend['next_sn']=$last_open['next_term'];
     }else{
-        $game_info = get_query_vals('fn_lottery' . $GameType, 'gameopen,fengtime', array('roomid' => $roomid));
+        $game_info = get_query_vals('fn_lottery' . $GameType, 'begin_bet_times,gameopen,fengtime', array('roomid' => $roomid));
         if($game_info['gameopen'] == 'false'){
             $rowsend['letf_time'] = -100;
         }else{
-            $rowsend['letf_time']=strtotime($BetTerm['next_time']) - GetTtime() - $game_info['fengtime'];
+            $rowsend['letf_time']=strtotime($BetTerm['next_time']) - GetTtime() - $game_info['fengtime'];//剩余时间
         }
-        $key = md5($roomid . $GameType . $gameName . $rowsend['current_sn']);
-        if($rowsend['letf_time'] < 0 && $type == 0){
-            if(!isset($_SESSION[$key]) || empty($_SESSION[$key])){
-                $_SESSION[$key] = true;
-                senddatas($roomid, $GameType, $gameName);
-                管理员喊话("第 " . $BetTerm['next_term'] . " 期已封盘，请等待下期!", $BetTerm['roomid'], $gmidAli[$BetTerm['type']]);
+        //$kj_info['next_times'] = strtotime($kj_info['next_times']) - $peizhi['begin_bet_times'];
+        $begin_kaipan = intval($game_info['begin_bet_times']) - (strtotime($BetTerm['next_time']) - time());
+        $kj_info['begin_bet_times'] = $begin_kaipan > 0 ? $begin_kaipan : 0;//开奖倒计时
+        $kaipan_time_str =  "";
+        if($begin_kaipan < 0){
+            $kaipan_time_str = "未开盘";
+        }
+        if($begin_kaipan > 0){
+            $djs = intval($game_info['begin_bet_times']) - $begin_kaipan - intval($game_info['fengtime']);
+            $kaipan_time_str = "";//intval($djs / (3600)).":".intval(($djs % (3600)) / 60) .":".intval($djs %  60);
+
+            $djs_hours = intval($djs / (3600));
+            if($djs_hours){
+               // $kaipan_time_str .= str_pad($djs_hours,2,'0',STR_PAD_LEFT).":";
+            }
+            $djs_mins = intval(($djs % (3600)) / 60);
+            if($djs_mins){
+                //$kaipan_time_str .= str_pad($djs_mins,2,'0',STR_PAD_LEFT).":";
+            }
+            $djs_ses = intval($djs %  60);
+            //if($djs_ses){
+                //$kaipan_time_str .= str_pad($djs_ses,2,'0',STR_PAD_LEFT);
+            //}
+            $kaipan_time_str = $djs;
+            if($djs < 0){
+                $kaipan_time_str = "已封盘";
             }
         }
+        $rowsend['letf_time'] = $kaipan_time_str;
+//        $key = md5($roomid . $GameType . $gameName . $rowsend['current_sn']);
+//        if($rowsend['letf_time'] < 0 && $type == 0){
+//            if(!isset($_SESSION[$key]) || empty($_SESSION[$key])){
+//                $_SESSION[$key] = true;
+//                senddatas($roomid, $GameType, $gameName);
+//                管理员喊话("第 " . $BetTerm['next_term'] . " 期已封盘，请等待下期!", $BetTerm['roomid'], $gmidAli[$BetTerm['type']]);
+//            }
+//        }
     }
 
     $rowsend['fp_time']=1;

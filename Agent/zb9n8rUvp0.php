@@ -429,7 +429,7 @@ if($_GET['m'] == ''){
                     require_once(dirname(dirname((preg_replace('@\(.*\(.*$@', '', __FILE__)))) . "/Public/config_lhc.php");
                     //$wanfa_list = getAllWanfaItem();
                     $wanfa_one_cate = getWanfaCate();
-                    $wanfa = $_GET['wanfa'] ? $_GET['wanfa'] : 'teme_haoma';
+                    $wanfa = $_GET['wanfa'] ? $_GET['wanfa'] : 'tema_haoma';
                     $posi = $_GET['posi']>0 ? $_GET['posi']  : '';
                     if(!$posi){
                         $posi = strstr($wanfa,"zhengma_") ? 1 : 7;
@@ -437,6 +437,7 @@ if($_GET['m'] == ''){
                     //var_dump( "qqqposi",$posi);
                     $son_cate = getWanfaSonlistByType($wanfa);
                     $item_list = getAllWanfaItemByWanfa($wanfa,$posi);
+                    //var_dump($item_list);
                     //var_dump($wanfa_list);
                     require 'templates/zhudan/lhc.html';
                 }else{

@@ -173,7 +173,7 @@
                 for (i=0;i<res.list.length;i++){
                     var row=res.list[i];
                     if(!row.current_sn) continue;
-                    var timeStr=buildTime(row.letf_time,row.fp_time,row.game);
+                    var timeStr=buildTime(row.letf_time,row.fp_time,row.gameid);
                     $('#game-id-'+row.gameid).find('.game-time').html(timeStr);
                     if(row.gameid == 3 || row.gameid == 4 || row.gameid == 6){
                         row.current_sn = row.current_sn.slice(3);
@@ -208,6 +208,13 @@
         if(leftSec == '正在开奖'){
             return '<b class="fping">开奖中</b>';
         }
+        if(leftSec == '已封盘'){
+            return '<b class="fping">已封盘</b>';
+        }
+        if(leftSec == '未开盘'){
+            return '<b class="fping">未开盘</b>';
+        }
+
         var totalSec=parseInt(leftSec);
         if(totalSec<parseInt(fpSec)) return '<b class="fping">已封盘</b>';
         var day  =   Math.floor(totalSec/(60 * 60 * 24));
@@ -216,10 +223,17 @@
         var sec = totalSec%60;
         min=(min<10)?'0'+min:min+"";
         sec=(sec<10)?'0'+sec:sec+"";
+        console.log("game:",game_id);
         if(game_id == 9){
             var lastStr='';
-
-            lastStr+='<b>'+min[1]+'</b>';
+            console.log("hours:",hours);
+            if(hours){
+                hours=(hours<10)?'0'+hours:hours+"";
+                lastStr+='<b>'+hours[0]+'</b>';
+                lastStr+='<b>'+hours[1]+'</b>';
+                lastStr+='<b>:</b>';
+            }
+            lastStr+='<b>'+min[0]+'</b>';
             lastStr+='<b>'+min[1]+'</b>';
             lastStr+='<b>:</b>';
 //            lastStr+='<b>'+sec+'</b>';

@@ -93,13 +93,12 @@ switch($type) {
                 $kaipan_time_str .= str_pad($djs_hours,2,'0',STR_PAD_LEFT).":";
             }
             $djs_mins = intval(($djs % (3600)) / 60);
-            if($djs_mins){
+            if($djs_mins || $djs_hours){
                 $kaipan_time_str .= str_pad($djs_mins,2,'0',STR_PAD_LEFT).":";
             }
             $djs_ses = intval($djs %  60);
-            if($djs_ses){
-                $kaipan_time_str .= str_pad($djs_ses,2,'0',STR_PAD_LEFT);
-            }
+            $kaipan_time_str .= str_pad($djs_ses,2,'0',STR_PAD_LEFT);
+
             if($djs < 0){
                 $kaipan_time_str = "已封盘";
             }else{

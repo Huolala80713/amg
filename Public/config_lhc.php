@@ -1357,7 +1357,6 @@ function lianmaBetIsRight($order_info,$kj_info){
             $kj_num = $kj_info['code'].",".$kj_info['code_te'];
             $kj_num_arr = explode(',',$kj_num);
             $zhengma_arr = explode(',',$kj_info['code']);
-            var_dump($kj_num_arr);
             //获取投注的位置
             if($order_info['mingci']){
                 $order_wanfa_info = explode('#',$order_info['mingci']);
@@ -1390,11 +1389,11 @@ function lianmaBetIsRight($order_info,$kj_info){
                         $bet_kj_number[] = $kj_number[1]."尾";
                     }
                 }
-                var_dump("开奖结果",$bet_kj_number);
+//                var_dump("开奖结果",$bet_kj_number);
                 $contents_info = explode('#',$order_info['content']);
                 $user_bet_arr = explode(",",$contents_info[2]);
-                var_dump("投注号码",$user_bet_arr);
-                var_dump("投注方式",$wanfa_type);
+//                var_dump("投注号码",$user_bet_arr);
+//                var_dump("投注方式",$wanfa_type);
                 if($bet_kj_number && $user_bet_arr){
                     $bet_res = 2;//1 正确，2 错误
 
@@ -1405,7 +1404,7 @@ function lianmaBetIsRight($order_info,$kj_info){
                         }
                     }
                     if(($wanfa_type == 'haoma' || $wanfa_type == 'shuangmian' || $wanfa_type == 'shengxiao' || $wanfa_type == 'weishu')){//单号
-                        var_dump($bet_zj_num);
+//                        var_dump($bet_zj_num);
                         if(count($bet_kj_number) == 1 || $bet_zj_num == 1){// 中奖一个号码
                             if(count($bet_res_arr) > 0){
                                 $bet_res =  1;//正确
@@ -1414,12 +1413,12 @@ function lianmaBetIsRight($order_info,$kj_info){
                         //多号码开奖 连码
                         $bet_zj_num_arr = explode(',',$bet_zj_num);
                         //连码 单玩法
-                        var_dump($wanfa_info);
-                        var_dump("bet_zj_num",$bet_zj_num);
+//                        var_dump($wanfa_info);
+//                        var_dump("bet_zj_num",$bet_zj_num);
                         if(count($bet_zj_num_arr) == 1 && $bet_zj_num > 1){
                             $bet_res_count = count($bet_res_arr);
                             if($bet_res_count >= $bet_zj_num){
-                                var_dump("投注中".$wanfa_info['name']);
+//                                var_dump("投注中".$wanfa_info['name']);
                                 $bet_res =  1;//正确
                             }
                             //特串
@@ -1442,9 +1441,9 @@ function lianmaBetIsRight($order_info,$kj_info){
                             $bet_res_arr = array_intersect($bet_kj_number,$user_bet_arr);
                             $bet_res_count = count($bet_res_arr);
                             $son_wanfa = getWanfaSonListById($wanfa_info['id'],$order_info['user_id'],$order_info['roomid']);
-                            var_dump("bet_res_arr",$bet_res_arr);
-                            var_dump("bet_zj_num_arr",$bet_zj_num_arr);
-                            var_dump("bet_res_count",strval($bet_res_count));
+//                            var_dump("bet_res_arr",$bet_res_arr);
+//                            var_dump("bet_zj_num_arr",$bet_zj_num_arr);
+//                            var_dump("bet_res_count",strval($bet_res_count));
                             if(in_array(strval($bet_res_count),$bet_zj_num_arr)){
                                 $bet_res =  1;//正确
                                 //获取赔率
@@ -1482,7 +1481,7 @@ function lianmaBetIsRight($order_info,$kj_info){
                             }
 
                         }
-                        var_dump("user_peilv",$user_peilv);
+//                        var_dump("user_peilv",$user_peilv);
                     }
                     return $bet_res;
                 }else{

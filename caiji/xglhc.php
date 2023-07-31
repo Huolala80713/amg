@@ -33,7 +33,7 @@ function lhc_jiesuan($typeid,$term=''){
     $kj_info = get_query_vals('fn_open_lhc', '*', array('term' => $where['term'],'type'=>$typeid));
     foreach ($cons as $con) {
         //var_dump($con['id']);
-        $user_bet_res = betIsRight($con,$kj_info);
+        $user_bet_res = lianmaBetIsRight($con,$kj_info);
         if($user_bet_res){
             $user_money = 0;
             if($user_bet_res == 1){

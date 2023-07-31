@@ -148,7 +148,7 @@ switch($type) {
         if(time() > strtotime($kj_info['next_time'])){
             $kaipan_time_str = "已开奖";
         }
-        $kj_info['is_begin_bet'] = 1;
+        //$kj_info['is_begin_bet'] = 1;
         $kj_info['open_status'] = $kaipan_time_str;
         $kj_info['fengtime'] = $peizhi['fengtime'];
         $arr['info'] = $kj_info;
@@ -277,7 +277,7 @@ switch($type) {
         if ($open_data['iskaijiang'] == 0) {
             $fengpan = true;
         }
-        $fengpan = false;
+       // $fengpan = false;
         if ($fengpan) {
             echo json_encode(array('success' => false, 'msg' => '等待开奖中，停止投注！'));
             exit;

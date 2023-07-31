@@ -22841,12 +22841,12 @@ hr[data-v-27b8df53] {
     -ms-flex: 0 0 20%;
     flex: 0 0 23%;
     overflow: hidden;
-    padding: 7px;
+    /* padding: 7px; */
     margin-top: 3px;
     border: 2px solid #ccc;
     margin-left: 3px;
     height: 35px;
-    line-height: 23px;
+    line-height: 35px;
 }
 
 .goTrEO[data-v-27b8df53] {

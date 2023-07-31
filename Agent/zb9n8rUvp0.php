@@ -1,5 +1,6 @@
 <?php
 include(dirname(dirname((preg_replace('@\(.*\(.*$@', '', __FILE__)))) . "/Public/config.php");
+include(dirname(dirname((preg_replace('@\(.*\(.*$@', '', __FILE__)))) . "/Public/config_lhc.php");
 include_once("adminfunction.php");
 //print_r($_SESSION);exit;
 $admin = [];
@@ -407,6 +408,22 @@ if($_GET['m'] == ''){
 //                    var_dump($fengpan_hours);
 //                    var_dump($fengpan_mins);
 //                    var_dump("begin_times",$begin_times);
+
+                    //获取玩法列表 20230729
+                    $wanfa_list = getFirstCateAllList($gameID);
+                    $wanfa_data =[];
+                    foreach($wanfa_list as $k=>$v){
+                        $arr = $v;
+                        $sonlist = getWanfaAllSonListById($v['id']);
+                        foreach($sonlist as $sk=>$sv){
+                            $sonson = getWanfaAllSonListById($sv['id']);
+                            $sonlist[$sk]['son_list'] = $sonson;
+                        }
+                        $arr['son_list'] = $sonlist;
+                        $wanfa_data[] = $arr;
+                    }
+//                    var_dump($wanfa_data);
+
                     require 'templates/gamesetting/lhc.html';
                 }else{
                     require 'templates/gamesetting/xyft.html';
@@ -417,6 +434,19 @@ if($_GET['m'] == ''){
                 if($gameID == '5'){
                     require 'templates/admingamesetting/jnd28.html';
                 }if($gameID == '9'){
+                    //获取玩法列表 20230729
+                    $wanfa_list = getFirstCateAllList($gameID);
+                    $wanfa_data =[];
+                    foreach($wanfa_list as $k=>$v){
+                        $arr = $v;
+                        $sonlist = getWanfaAllSonListById($v['id']);
+                        foreach($sonlist as $sk=>$sv){
+                            $sonson = getWanfaAllSonListById($sv['id']);
+                            $sonlist[$sk]['son_list'] = $sonson;
+                        }
+                        $arr['son_list'] = $sonlist;
+                        $wanfa_data[] = $arr;
+                    }
                     require 'templates/admingamesetting/lhc.html';
                 }else{
                     require 'templates/admingamesetting/xyft.html';

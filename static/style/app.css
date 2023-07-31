@@ -22827,8 +22827,8 @@ hr[data-v-27b8df53] {
     justify-content: center;
     -ms-flex: 0 0 auto;
     flex: 0 0 auto;
-    padding: 8px;
-    border-bottom: 1px solid #ccc
+    /* padding: 8px; */
+    border-bottom: 1px solid #ccc;
 }
 
 .dPltvU[data-v-27b8df53],.kMbOHB[data-v-27b8df53] {
@@ -22839,13 +22839,13 @@ hr[data-v-27b8df53] {
 
 .kMbOHB[data-v-27b8df53] {
     -ms-flex: 0 0 20%;
-    flex: 0 0 31%;
+    flex: 0 0 23%;
     overflow: hidden;
-    /* padding: 3px; */
+    padding: 7px;
     margin-top: 3px;
     border: 2px solid #ccc;
     margin-left: 3px;
-    height: 35px;
+    min-height: 35px;
     line-height: 23px;
 }
 
@@ -22865,7 +22865,7 @@ hr[data-v-27b8df53] {
     -o-border-image: initial;
     border-image: initial;
     /* border: 2px solid #ccc; */
-    padding: 6px 4px
+    /* padding: 6px 4px; */
 }
 
 .iisbZM[data-v-27b8df53] {

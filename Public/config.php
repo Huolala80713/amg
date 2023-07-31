@@ -879,3 +879,17 @@ function lhctouzhufandian($userid , $money , $roomid , $gametypeid , $fromuser ,
 
     }
 }
+//二维数组 根据字段-值查询数组 20230724
+function array_where($array, $key, $value)
+{
+    $results = [];
+    if (is_array($array)) {
+        if (isset($array[$key]) && $array[$key] == $value) {
+            $results[] = $array;
+        }
+        foreach ($array as $subarray) {
+            $results = array_merge($results, array_where($subarray, $key, $value));
+        }
+    }
+    return $results;
+}

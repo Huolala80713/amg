@@ -30,8 +30,8 @@
 			rel="apple-touch-icon-precomposed">
 		<title>彩票中心</title>
 		<link type="text/css" rel="stylesheet" href="/static/layui.css">
-		<link type="text/css" rel="stylesheet" href="/static/style/app.css?v=20">
-		<link type="text/css" rel="stylesheet" href="/static/style/index.css?v=8">
+		<link type="text/css" rel="stylesheet" href="/static/style/app.css?v=24">
+		<link type="text/css" rel="stylesheet" href="/static/style/index.css?v=13">
 
 		<!-- <script type="text/javascript" src="https://gt188.cc/mobile/v1/static/js/manifest.dee5983400ddab883501.js"></script>
 		<script type="text/javascript" src="https://gt188.cc/mobile/v1/static/js/vendor.6e90662e069bb743fa68.js"></script>
@@ -78,7 +78,7 @@
 									data-v-4cb2415a="" href="/action.php?do=gamelist" class="iconfont back"></a>
 								<div data-v-4cb2415a="" class="playSort active">
 									<p data-v-4cb2415a="">玩 <br data-v-4cb2415a="">法</p> <span data-v-4cb2415a="">
-										<div @click="wanfaBoxFun()"><em>{{wanfa}}</em> <i class="iconfont"
+										<div @click="wanfaBoxFun()"><em>{{wanfa.name}}</em> <i class="iconfont"
 												style="color: #fff000;">▲</i></div>
 										<div v-if="wanfaBox == true" @click="wanfaBoxFun()">
 											<div data-v-4cb2415a="" class="playSortMore">
@@ -86,8 +86,8 @@
 													<ul data-v-4cb2415a="" class="betFilter fix">
 
 														<li data-v-4cb2415a="" @click="choseWanfa(key,wanfa)"
-															v-bind:class="{ 'curr': key == curWanfaId }"
-															v-for="(wanfa, key) in wanfaList" :key="key">{{wanfa}}</li>
+															v-bind:class="{ 'curr': wanfa == curWanfaId }"
+															v-for="(wanfa, key) in wanfaList" :key="key">{{wanfa.name}}</li>
 
 													</ul>
 													<!-- <ul data-v-4cb2415a="" class="betFilterAnd"
@@ -221,9 +221,9 @@
 														style="min-height: 100%;"><!---->
 
 														<li data-v-01736910="" @click="choseWanfa(key,wanfa)"
-															v-bind:class="{ 'cur': key == curWanfaId }"
+															v-bind:class="{ 'cur': wanfa.id == curWanfaId }"
 															v-for="(wanfa, key) in wanfaList" :key="key">
-															{{wanfa}}
+															{{wanfa.name}}
 														</li>
 
 													</ul>
@@ -237,21 +237,33 @@
 
 														<div data-v-27b8df53="" class="o5sf9p-0 dPltvU" v-if="wanfaSonList.length">
 															
-															<div data-v-27b8df53="" class="o5sf9p-1 kMbOHB" :class="{ 'box_checked': wanfa.posi == curWanfaSonId }"
+															<div data-v-27b8df53="" class="o5sf9p-1 kMbOHB" :class="{'box_checked': wanfa.id == curWanfaSonId,wanfa,'width_full':wanfa.full,'shengxiaoweishu':wanfa.parent_id == 6 }"
 															v-for="(wanfa, key) in wanfaSonList" :key="key" @click="choseSonWanfa(wanfa)">
 															<label data-v-27b8df53="" class="o5sf9p-2 iisbZM"   >
 																{{wanfa.name}}
+                                                                <div v-if="wanfa.full">
+                                                                    <div class="son-list-title" v-for="(wanfa_son, key_son) in wanfa.son_list" >
+                                                                        <span class="son-list-title-name">{{wanfa_son.name}}</span>
+                                                                        <!--<span class="son-list-title-rate">{{wanfa_son.show_rate}}</span>-->
+                                                                    </div>
+                                                                </div>
+                                                                <div v-else>
+                                                                    <!--{{wanfa.show_rate}}-->
+                                                                </div>
 															</label></div>
-															
+
 														</div>
 
+                                                        <div class="bet-panel-header" v-if="curWanfaSonId">
+                                                            <div class="btitle">{{curWanfaSonName}}</div>
+                                                        </div>
 														<div data-v-01736910="" class="ch_chart_x"><!---->
 
 															<div data-v-01736910="" class="ch_num_box">
 																<ul data-v-01736910="" class="normal-x">
 																	<li data-v-01736910="" class="cell3"
 																		v-for="(item,key) in wanfaItemList"
-																		v-if="wanfaType=='haoma'"
+																		v-if="wanfaType=='haoma' || wanfaType=='buzhong'"
 																		v-bind:class="{ 'haoma_on on': item.check == 1 }"
 																		@click="checkWanfaItem(key,item)">
 																		<div data-v-01736910="" class="lhc-ball"
@@ -259,6 +271,17 @@
 																		</div> <span
 																			data-v-01736910="">{{item.rate}}</span>
 																	</li>
+
+                                                                    <li @click="checkWanfaItem(key,item)"
+                                                                        data-v-01736910=""
+                                                                        v-bind:class="{ 'on': item.check == 1 }"
+                                                                        v-for="(item,key) in wanfaItemList"
+                                                                        v-if="wanfaType=='weishu'  || wanfaType=='temabanbo'">
+                                                                        <div data-v-01736910="" class="lhc-red">
+                                                                            {{item.name}}
+                                                                        </div>
+                                                                        <span data-v-01736910="">{{item.rate}}</span>
+                                                                    </li>
 
 																	<li @click="checkWanfaItem(key,item)"
 																		data-v-01736910=""
@@ -291,14 +314,14 @@
 									<em data-v-3ff97372="">当前选号</em> <span data-v-3ff97372=""
 										class="text-ellipsis">{{ numberChecked.join(' ')}}</span>
 								</div>
-								<div data-v-3ff97372="" class="confirmNote" v-if="numberChecked.length > 0">
+								<div data-v-3ff97372="" class="confirmNote" v-if="bet_count > 0">
 									<span data-v-3ff97372="" v-bind:class="{ 'on': item == curMoney }"
 										@click="checkMoney(item)" v-for="(item,key) in moneyList">{{item}}</span>
 
 									<span data-v-3ff97372="" @click="curMoney = ''">清空</span>
 								</div>
 
-								<div data-v-3ff97372="" class="bet-money" v-if="numberChecked.length > 0">每注金额
+								<div data-v-3ff97372="" class="bet-money" v-if="bet_count > 0">每注金额
 									<input data-v-3ff97372="" type="tel" maxlength="7" v-model="curMoney">请输入要投注的金额
 								</div>
 								<div data-v-3ff97372="" class="bet-info fix">
@@ -306,9 +329,9 @@
 											class="bet-info-clear" @click="delWanfaItem()"><i data-v-3ff97372=""
 												class="iconfont"></i>清空</a>
 										<span data-v-3ff97372="" class="bet-info-count"
-											v-if="numberChecked.length > 0">共{{numberChecked.length}}注<span
-												data-v-3ff97372="" v-if="curMoney>0 && numberChecked.length > 0">,
-												总计：{{numberChecked.length * curMoney}}</span></span>
+											v-if="bet_count > 0">共{{bet_count}}注<span
+												data-v-3ff97372="" v-if="curMoney>0 && bet_count > 0">,
+												总计：{{bet_count * curMoney}}</span></span>
 									</div>
 									<div data-v-3ff97372="" class="bet-info-right"><button data-v-3ff97372=""
 											class="bet-info-confirm" id="bet-btn" @click="betbtn()">马上投注</button></div>
@@ -453,10 +476,10 @@
 										<h3 style="border-bottom: solid 1px #ddd;">投注确认</h3>
 										<div class="layui-m-layercont" style="padding: 20px;">
 											极速六合彩: {{kj_info.next_term}}期<br>
-											投注方案: <span style="color:red">{{numberChecked.length}}注</span><br>
-											投注总额: <span style="color:red">{{numberChecked.length * curMoney}}</span><br>
+											投注方案: <span style="color:red">{{bet_count}}注</span><br>
+											投注总额: <span style="color:red">{{bet_count * curMoney}}</span><br>
 											投注内容: 
-											[{{wanfa}}]
+											[{{wanfa.name}}]
 											<block v-if="curWanfaSonName">[{{curWanfaSonName}}]</block>
 											{{ numberChecked.join(' ')}}</div>
 										<div class="layui-m-layerbtn">
@@ -508,7 +531,7 @@
 				data: {
 					active: 'home',
 					wanfaBox: false,
-					wanfa: '特码',
+					wanfa: {},
 					betBox: false,
 					rightBox: false,
 					kjListBox: false,
@@ -548,14 +571,19 @@
                     order_date_list:[],
                     orderDateBox:false,
                     cur_page:1,
-                    nomore:false
+                    nomore:false,
+
+                    wanfaSonSonList: [],//最地类
+                    bet_count:0,//号码组合数量
+                    old_numberChecked:[]
 
                 },
 				created: function() {
 					this.getWanfaList();
 					this.getKjList();
                     this.getOrderConfigList();
-                    this.auto_kaijiang();
+                    //this.auto_kaijiang();
+                    this.getKjInfo()
 				},
 				// 点击菜单使用的函数
 				methods: {
@@ -632,18 +660,38 @@
                         this.getOrderList();
                     },
 					checkWanfaItem: function(key, item) {
-						var checkd = 1;
-						var that = this;
-						if (item.check == 1) {
-							checkd = 0;
-							that.wanfaChange(that.numberChecked, item.name, 0);
-						} else {
-							checkd = 1;
-							that.wanfaChange(that.numberChecked, item.name, 1);
-						}
-						that.wanfaItemList[key].check = checkd;
-						console.log("that.wanfaItemList", that.wanfaItemList);
-						console.log(that.numberChecked);
+                        let that = this;
+                        var checkd = 1;
+                        if (item.check == 1) {
+                            checkd = 0;
+                            that.wanfaChange(that.numberChecked, item.name, 0);
+                        } else {
+                            checkd = 1;
+                            that.wanfaChange(that.numberChecked, item.name, 1);
+                        }
+                        that.wanfaItemList[key].check = checkd;
+
+                        //var check_numbers = that.numberChecked.join(',') + ','+ item.name
+                        var check_numbers = that.numberChecked.join(',')
+                        axios.get('/Application/ajax_lhc.php?type=bet_info&numbers='+check_numbers+'&wanfa_id='+ that.curWanfaId+'&wanfa_son_id='+that.curWanfaSonId)
+                                .then(function(response) {
+                                    var data = response.data;
+                                    if (data.success == true) {
+                                        that.bet_count = data.bet_count;
+                                        console.log("that.wanfaItemList", that.wanfaItemList);
+                                        console.log(that.numberChecked);
+                                    }else{
+                                        that.wanfaChange(that.numberChecked, item.name, 0);
+                                        that.wanfaItemList[key].check = 0;
+                                        alert(data.msg)
+                                        //window.location.href= data.url
+                                    }
+                                    console.log("data", data)
+
+                                })
+                                .catch(function(error) { // 请求失败处理
+                                    console.log(error);
+                                });
 					},
 					// type 1加0减
 					wanfaChange: function(arr, value, type) {
@@ -682,13 +730,14 @@
 								if (data.success == true) {
 									that.wanfaList = data.content;
 									console.log("this.wanfaList", that.wanfaList)
-									that.choseWanfa('tema_haoma', "特码")
+                                    var frist_wanfa = that.wanfaList[0];
+									that.choseWanfa(frist_wanfa.id, frist_wanfa)
 									that.moneyList = data.money_list;
                                     that.user_info = data.user;
                                     that.game_list = data.game_list;
 								}else{
                                     alert(data.msg)
-                                    window.location.href= data.url
+                                    //window.location.href= data.url
                                 }
 								console.log("data", data)
 
@@ -707,7 +756,7 @@
                                         that.user_info = data.content;
                                     }else{
                                         alert(data.msg)
-                                        window.location.href= data.url
+                                        //window.location.href= data.url
                                     }
                                     console.log("data", data)
 
@@ -725,29 +774,33 @@
 //                            behavior: 'smooth'
 //                        })
 						let that = this
-						that.curWanfaId = id;
+						that.curWanfaId = wanfa.id;
 						that.curWanfaSonId = 0;
 						that.curWanfaSonName = '';
 						that.wanfa = wanfa;
                         that.wanfaSonList = [];
-						axios.get('/Application/ajax_lhc.php?type=chosewanfa&wanfa=' + id)
+                        that.wanfaSonSonList = [];
+
+                        //清空选中的号码
+                        that.numberChecked = [];
+                        that.bet_count = 0;
+						axios.get('/Application/ajax_lhc.php?type=newchosewanfa&wanfa_id=' + that.curWanfaId)
 							.then(function(response) {
 								var data = response.data;
 								if (data.success == true) {
 									that.wanfaItemList = data.content;
 									that.wanfaType = data.wanfa_type;
-									//清空选中的号码
-									that.numberChecked = [];
 									//选择子类
 									that.wanfaSonList = data.son_list;
 									if(that.wanfaSonList.length > 0){
-										that.curWanfaSonId = that.wanfaSonList[0].posi;
+										that.curWanfaSonId = that.wanfaSonList[0].id;
 										that.curWanfaSonName = that.wanfaSonList[0].name;
+                                        var first_wanfa = that.wanfaSonList[0];
+                                        that.choseSonWanfa(first_wanfa)
 									}
 									console.log("this.wanfaItemList", that.wanfaItemList)
 								}
 								console.log("data", data)
-
 							})
 							.catch(function(error) { // 请求失败处理
 								console.log(error);
@@ -755,8 +808,28 @@
 					},
                     choseSonWanfa: function(wanfa){
                         let that = this
-                        that.curWanfaSonId = wanfa.posi
+                        that.curWanfaSonId = wanfa.id
                         that.curWanfaSonName = wanfa.name
+                        that.wanfaSonSonList = [];
+                        //清空选中的号码
+                        that.numberChecked = [];
+                        that.bet_count = 0;
+                        axios.get('/Application/ajax_lhc.php?type=newchosewanfa&wanfa_id=' + that.curWanfaSonId)
+                                .then(function(response) {
+                                    var data = response.data;
+                                    if (data.success == true) {
+                                        that.wanfaItemList = data.content;
+                                        that.wanfaType = data.wanfa_type;
+                                        //清空选中的号码
+                                        //that.numberChecked = [];
+                                        that.wanfaSonSonList = data.son_list;
+                                        console.log("this.wanfaItemList", that.wanfaItemList)
+                                    }
+                                    console.log("data", data)
+                                })
+                                .catch(function(error) { // 请求失败处理
+                                    console.log(error);
+                                });
                     },
                     choseOrderType: function(item){
                         let that = this

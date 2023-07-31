@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="plugins/iCheck/all.css">
 <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
+    <!__ Content Header (Page header) __>
     <section class="content-header">
         <h1>
             香港六合彩
@@ -13,155 +13,220 @@
         </ol>
     </section>
 
-    <!-- Main content -->
+    <!__ Main content __>
     <section class="content">
         <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
                 <?php foreach($game_arr as $key=>$v){ ?>
-                <li class="<?php if($_GET['g'] == $key){ echo 'active';} ?>"><a href="zb9n8rUvp0.php?m=admin_g_setting&g=<?=$key?>" ><?=$v?></a></li>
+                <li class="<?php if($_GET['g'] == $key){ echo 'active';} ?>"><a href="zb9n8rUvp0.php?m=g_setting&g=<?=$key?>" ><?=$v?></a></li>
                 <?php }?>
             </ul>
         </div>
         <div class="box box-warning">
             <div class="box-header with-border">
-                <h3 class="box-title">最大赔率设置</h3>
+                <h3 class="box-title">赔率设置</h3>
 
                 <div class="box-tools pull-right">
                     <button type="button" onclick="$('#form1').submit();" class="btn btn-sm btn-warning">保存</button>
                     <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
                 </div>
             </div>
-            <div class="box-body">
-                <div class="row">
-                    <form id="form1" action="Application/admingamesetting/ajax_savelhc.php?form=form1" method="post">
-                        <div class="col-md-6">
-                            <div class="box-header">
-                                <span class="box-title">特码设置</span>
-                            </div>
-                            <div class="input-group">
-                                <span class="input-group-addon">特码</span>
-                                <input name="tema_haoma" type="number" class="form-control" step="0.001" placeholder="输入赔率..." value="<?php echo get_query_val('fn_admin_lottery9','`tema_haoma`',array('roomid'=>$_SESSION['agent_room'])); ?>">
-                            </div>
-                            <br/>
-                            <div class="input-group">
-                                <span class="input-group-addon">大小</span>
-                                <input name="tema_shuangmian_daxiao" type="number" class="form-control" step="0.001" placeholder="输入赔率..." value="<?php echo get_query_val('fn_admin_lottery9','`tema_shuangmian_daxiao`',array('roomid'=>$_SESSION['agent_room'])); ?>">
-                            </div>
-                            <br/>
-                            <div class="input-group">
-                                <span class="input-group-addon">单/双</span>
-                                <input name="tema_shuangmian_danshuang" type="number" class="form-control" step="0.001" placeholder="输入赔率..." value="<?php echo get_query_val('fn_admin_lottery9','`tema_shuangmian_danshuang`',array('roomid'=>$_SESSION['agent_room'])); ?>">
-                            </div>
-                            <br/>
-                            <div class="input-group">
-                                <span class="input-group-addon">大小单双</span>
-                                <input name="tema_shuangmian_dxds" type="number" class="form-control" step="0.001" placeholder="输入赔率..." value="<?php echo get_query_val('fn_admin_lottery9','`tema_shuangmian_dxds`',array('roomid'=>$_SESSION['agent_room'])); ?>">
-                            </div>
-                            <br/>
-                            <div class="input-group">
-                                <span class="input-group-addon">红波</span>
-                                <input name="tema_shuangmian_red" type="number" class="form-control" step="0.001" placeholder="输入赔率..." value="<?php echo get_query_val('fn_admin_lottery9','`tema_shuangmian_red`',array('roomid'=>$_SESSION['agent_room'])); ?>">
-                            </div>
-                            <br/>
-                            <div class="input-group">
-                                <span class="input-group-addon">蓝波</span>
-                                <input name="tema_shuangmian_blue" type="number" class="form-control" step="0.001" placeholder="输入赔率..." value="<?php echo get_query_val('fn_admin_lottery9','`tema_shuangmian_blue`',array('roomid'=>$_SESSION['agent_room'])); ?>">
-                            </div>
-                            <br/>
-                            <div class="input-group">
-                                <span class="input-group-addon">绿波</span>
-                                <input name="tema_shuangmian_green" type="number" class="form-control" step="0.001" placeholder="输入赔率..." value="<?php echo get_query_val('fn_admin_lottery9','tema_shuangmian_green',array('roomid'=>$_SESSION['agent_room'])); ?>">
-                            </div>
-                            <br/>
-                            <div class="input-group">
-                                <span class="input-group-addon">生肖</span>
-                                <input name="tema_shengxiao" type="number" class="form-control" step="0.001" placeholder="输入赔率..." value="<?php echo get_query_val('fn_admin_lottery9','tema_shengxiao',array('roomid'=>$_SESSION['agent_room'])); ?>">
-                            </div>
-                            <br/>
-                            <div class="input-group">
-                                <span class="input-group-addon">生肖（兔）</span>
-                                <input name="tema_shengxiao_tu" type="number" class="form-control" step="0.001" placeholder="输入赔率..." value="<?php echo get_query_val('fn_admin_lottery9','tema_shengxiao_tu',array('roomid'=>$_SESSION['agent_room'])); ?>">
-                            </div>
-                            <br/>
+            <div class="box-body maxpl">
+                <div class="row peilv-box">
+                    <form id="form1" action="Application/gamesetting/ajax_savelhc.php?form=form9" method="post">
+                        <table class="table-advance">
+                            <thead>
+                            <tr>
+                            <th width="60">玩法大类</th>
+                                <th width="400" >最大赔率</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php
+                            foreach($wanfa_data as $v){
+                            ?>
+                            <tr class="t_list_tr_0" id="tr-TMDS" name="DS3-DS4" align="center" height="26">
+                                <td nowrap="">
+                                    <font class="help-inline">
+                                        <?=$v['name']?>
+                                    </font>
+                                </td>
+                                <td align="">
+                                    <?php
+                                    if(!$v['son_list']){
+                                    ?>
+                                    <input type="number" style="width: 85px; margin-bottom: 0px;" data-scale="4" name="<?=$v['id']?>__max_peilv" value="<?=$v['max_peilv']?>"
+                                           size="6" maxlength="10">
+                                    <?php
+                                    }
+                                    ?>
+                                    <?php
 
-                        </div>
-                        <div class="col-md-6">
-                            <div class="box-header">
-                                <span class="box-title">正码设置</span>
-                            </div>
-                            <div class="input-group">
-                                <span class="input-group-addon">正码</span>
-                                <input name="zhengma_haoma" type="number" class="form-control" step="0.001" placeholder="输入赔率..." value="<?php echo get_query_val('fn_admin_lottery9','`zhengma_haoma`',array('roomid'=>$_SESSION['agent_room'])); ?>">
-                            </div>
-                            <br/>
-                            <div class="input-group">
-                                <span class="input-group-addon">大小</span>
-                                <input name="zhengma_shuangmian_daxiao" type="number" class="form-control" step="0.001" placeholder="输入赔率..." value="<?php echo get_query_val('fn_admin_lottery9','`zhengma_shuangmian_daxiao`',array('roomid'=>$_SESSION['agent_room'])); ?>">
-                            </div>
-                            <br/>
-                            <div class="input-group">
-                                <span class="input-group-addon">单/双</span>
-                                <input name="zhengma_shuangmian_danshuang" type="number" class="form-control" step="0.001" placeholder="输入赔率..." value="<?php echo get_query_val('fn_admin_lottery9','`zhengma_shuangmian_danshuang`',array('roomid'=>$_SESSION['agent_room'])); ?>">
-                            </div>
-                            <br/>
-                            <div class="input-group">
-                                <span class="input-group-addon">大小单双</span>
-                                <input name="zhengma_shuangmian_dxds" type="number" class="form-control" step="0.001" placeholder="输入赔率..." value="<?php echo get_query_val('fn_admin_lottery9','`zhengma_shuangmian_dxds`',array('roomid'=>$_SESSION['agent_room'])); ?>">
-                            </div>
-                            <br/>
-                            <div class="input-group">
-                                <span class="input-group-addon">红波</span>
-                                <input name="zhengma_shuangmian_red" type="number" class="form-control" step="0.001" placeholder="输入赔率..." value="<?php echo get_query_val('fn_admin_lottery9','`zhengma_shuangmian_red`',array('roomid'=>$_SESSION['agent_room'])); ?>">
-                            </div>
-                            <br/>
-                            <div class="input-group">
-                                <span class="input-group-addon">蓝波</span>
-                                <input name="zhengma_shuangmian_blue" type="number" class="form-control" step="0.001" placeholder="输入赔率..." value="<?php echo get_query_val('fn_admin_lottery9','`zhengma_shuangmian_blue`',array('roomid'=>$_SESSION['agent_room'])); ?>">
-                            </div>
-                            <br/>
-                            <div class="input-group">
-                                <span class="input-group-addon">绿波</span>
-                                <input name="zhengma_shuangmian_green" type="number" class="form-control" step="0.001" placeholder="输入赔率..." value="<?php echo get_query_val('fn_admin_lottery9','zhengma_shuangmian_green',array('roomid'=>$_SESSION['agent_room'])); ?>">
-                            </div>
-                            <br/>
-                            <div class="input-group">
-                                <span class="input-group-addon">生肖</span>
-                                <input name="zhengma_shengxiao" type="number" class="form-control" step="0.001" placeholder="输入赔率..." value="<?php echo get_query_val('fn_admin_lottery9','zhengma_shengxiao',array('roomid'=>$_SESSION['agent_room'])); ?>">
-                            </div>
-                            <br/>
-                            <div class="input-group">
-                                <span class="input-group-addon">生肖（兔）</span>
-                                <input name="zhengma_shengxiao_tu" type="number" class="form-control" step="0.001" placeholder="输入赔率..." value="<?php echo get_query_val('fn_admin_lottery9','zhengma_shengxiao_tu',array('roomid'=>$_SESSION['agent_room'])); ?>">
-                            </div>
-                            <br/>
+                            foreach($v['son_list'] as $sv){
+                            if($sv['son_list']){
+                            echo "<div class='set-block'><span>".$sv['name'].":</span>";
+                             foreach($sv['son_list'] as $ssv){
+                            ?>
+                                    <span class="help-inline" style="margin-top:0px;"><?=$ssv['name']?></span>
+                                    <input type="number" style="width: 65px; margin-bottom: 0px;" data-scale="4" name="<?=$ssv['id']?>__max_peilv" value="<?=$ssv['max_peilv']?>"
+                                           onkeypress="digitfOnly(event)" onkeyup="isTrue(this)" size="6" maxlength="10">
+                                    <?php
+                                    }
+                                    echo "</div>";
+                            }else{
+                                    ?>
+                                    <div class='set-block'>
+                                    <span class="help-inline" style="margin-top:0px;"><?=$sv['name']?></span>
+                                    <input type="text" style="width: 65px; margin-bottom: 0px;" data-scale="4" name="<?=$sv['id']?>__max_peilv" value="<?=$sv['max_peilv']?>"
+                                           onkeypress="digitfOnly(event)" onkeyup="isTrue(this)" size="6" maxlength="10">
+                                    </div>
+                                    <?php
+                                    }
+                            }
+                            ?>
+                                </td>
 
-                        </div>
-                        <div class="col-md-12">
-                            <div class="box-header">
-                                <span class="box-title">生肖设置(所有开奖号码)</span>
-                            </div>
-                            <div class="input-group col-md-6">
-                                <span class="input-group-addon">生肖</span>
-                                <input name="shengxiao" type="number" class="form-control" step="0.001" placeholder="输入赔率..." value="<?php echo get_query_val('fn_admin_lottery9','shengxiao',array('roomid'=>$_SESSION['agent_room'])); ?>">
-                            </div>
-                            <div class="input-group col-md-6">
-                                <span class="input-group-addon">生肖（兔）</span>
-                                <input name="shengxiao_tu" type="number" class="form-control" step="0.001" placeholder="输入赔率..." value="<?php echo get_query_val('fn_admin_lottery9','shengxiao_tu',array('roomid'=>$_SESSION['agent_room'])); ?>">
-                            </div>
-                        </div>
+
+                            </tr>
+                            <?php
+                            }
+                            ?>
+                            </tbody>
+                        </table>
                     </form>
                 </div>
             </div>
+
+
+
         </div>
 
     </section>
-    <!-- /.content -->
+    <!__ /.content __>
 </div>
+<style>
+    .pl-input{
+        width: 60% !important;
+        height: 38px;
+    }
+    .maxpl .form-control{
+        width: 200px !important;
+        height: 38px;
+        display: inline-block;
+    }
+    .pl-span{
+        line-height: 38px;
+        margin-left: 10px;
+        color: red;
+        float: left;
+    }
+    .peilv-box .input-group .form-control:last-child{
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        margin-left: 200px;
+    }
+    .label-max-peilv{
+        background-color: #ed4e2a;
+        background-image: none !important;
+        text-shadow: none !important;
+        color: #fff;
+    }
+    .set-block{
+       margin-top: 5px;
+        min-height: 30px;
+    }
+    .table-advance {
+        margin-bottom: 0px !important;
+        padding: 5px;
+        margin: 10px;
+    }
+
+    .table-advance thead {
+        color: #999;
+    }
+
+    .table-advance thead tr th{
+        font-size: 14px;
+        font-weight: 600;
+        color: #5f5f5f;
+        background: #eee;
+        text-align: center;
+    }
+    .table-advance tr {
+        padding: 10px;
+        height: 35px;
+    }
+    .table-advance td{
+        border: solid 1px #eee;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        text-align: right;
+        padding-right: 10px;
+    }
+    .table-advance td:first-child{
+        text-align: center;
+    }
+
+    .table-advance div.success,
+    .table-advance div.info,
+    .table-advance div.important,
+    .table-advance div.warning,
+    .table-advance div.danger {
+        position: absolute;
+        margin-top:-5px;
+        float: left;
+        width: 2px;
+        height: 30px;
+        margin-right: 20px !important;
+    }
+
+    .table-advance tr td {
+        border-left-width: 0px;
+    }
+    /*six特殊*/
+    .table-advance tr td.ratetd {
+        border-left-width: 1px;
+    }
+    .table-advance tr td:first-child {
+        border-left-width: 1px !important;
+    }
+
+    .table-advance tr td.highlight:first-child a {
+        margin-left: 15px;
+    }
+
+    .table-advance td.highlight div.success {
+        border-left: 2px solid #66ee66;
+    }
+
+    .table-advance td.highlight div.info {
+        border-left: 2px solid #87ceeb;
+    }
+
+    .table-advance td.highlight div.important {
+        border-left: 2px solid #f02c71;
+    }
+
+    .table-advance td.highlight div.warning {
+        border-left: 2px solid #fdbb39;
+    }
+
+    .table-advance td.highlight div.danger {
+        border-left: 2px solid #e23e29;
+    }
+
+
+</style>
 <script src="plugins/iCheck/icheck.min.js"></script>
 <script>
     $('input[type="checkbox"].flat-red').iCheck({
         checkboxClass: 'icheckbox_flat-green',
         radioClass: 'iradio_flat-green'
     });
+    function digitfOnly(e){
 
+    }
+    function isTrue(e){
+
+    }
 </script>

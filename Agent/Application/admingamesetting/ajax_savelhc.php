@@ -51,5 +51,21 @@ if($_GET['form'] == 'form1'){
 
         ), array('roomid' => $_SESSION['agent_room']));
     echo '<script>alert("保存成功~感谢使用!"); window.location.href="/zb9n8rUvp0.php?m=admin_g_setting&g=9";</script>';
+}elseif($_GET['form'] == 'form9'){//20230729
+
+    $content = $_POST;
+    $wanfa = [];
+    foreach($content as $k=>$v){
+        $v_arr = explode("__",trim($k));
+        //$wanfa[trim($v_arr[0])]['id'] = $v_arr[0];
+        $wanfa[trim($v_arr[0])][$v_arr[1]] = $v;
+    }
+    if($wanfa){
+        foreach($wanfa as $wk=>$wv){
+            update_query("fn_lhc_wanfa", $wv, array("id" => $wk));
+        }
+    }
+
+    echo '<script>alert("保存成功~感谢使用!"); window.location.href="/zb9n8rUvp0.php?m=admin_g_setting&g=9";</script>';
 }
 ?>

@@ -2960,8 +2960,11 @@ html[data-v-b851e86e] {
     line-height: 1.15
 }
 
-body[data-v-b851e86e] {
-    margin: 0
+body {
+    margin: 0 ;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    touch-action: manipulation;
 }
 
 h1[data-v-b851e86e] {

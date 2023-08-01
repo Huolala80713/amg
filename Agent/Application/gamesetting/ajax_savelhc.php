@@ -88,12 +88,14 @@ if($_GET['form'] == 'form1'){
     //$fengtime = $_POST['fengtime'];
     $begin_bet_hours = (21 - $_POST['begin_bet_hours']);
     $begin_bet_min = $_POST['begin_bet_min'];
-    $begin_bet_times = ($begin_bet_hours * 3600) + ((30 - $begin_bet_min)*60);
+    $begin_bet_sec = $_POST['begin_bet_sec'];
+    $begin_bet_times = ($begin_bet_hours * 3600) + ((29 - $begin_bet_min)*60) + (60 - $begin_bet_sec);
 
     //封盘时间
     $begin_fengpan_hours = (21 - $_POST['begin_fengpan_hours']);
     $begin_fengpan_min = $_POST['begin_fengpan_min'];
-    $fengtime = ($begin_fengpan_hours * 3600) + ((30 - $begin_fengpan_min)*60);
+    $begin_fengpan_sec = $_POST['begin_fengpan_sec'];
+    $fengtime = ($begin_fengpan_hours * 3600) + ((29 - $begin_fengpan_min)*60) + (60 -$begin_fengpan_sec);
 
     var_dump($fengtime);
 //    var_dump($begin_bet_min);

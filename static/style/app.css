@@ -28909,7 +28909,7 @@ hr[data-v-01736910] {
 }
 
 .bet-info-count[data-v-3ff97372] {
-    padding-left: .5rem;
+    padding-left: .3rem;
     color: #fff;
     font-size: 15px;
 }
@@ -28925,6 +28925,7 @@ hr[data-v-01736910] {
     border-radius: .26rem;
     margin-left: 5px;
     margin-right: 5px;
+    font-size: 15px;
 }
 
 .confirmNote[data-v-3ff97372] {

@@ -401,13 +401,13 @@
 }
 
 .swiper-container-wp8-horizontal>.swiper-wrapper[data-v-b851e86e],.swiper-container-wp8-horizontal[data-v-b851e86e] {
-    -ms-touch-action: pan-y;
-    touch-action: pan-y
+    /*-ms-touch-action: pan-y;*/
+    /*touch-action: pan-y*/
 }
 
 .swiper-container-wp8-vertical>.swiper-wrapper[data-v-b851e86e],.swiper-container-wp8-vertical[data-v-b851e86e] {
-    -ms-touch-action: pan-x;
-    touch-action: pan-x
+    /*-ms-touch-action: pan-x;*/
+    /*touch-action: pan-x*/
 }
 
 .swiper-button-next[data-v-b851e86e],.swiper-button-prev[data-v-b851e86e] {
@@ -688,7 +688,7 @@ button.swiper-pagination-bullet[data-v-b851e86e] {
 .swiper-scrollbar[data-v-b851e86e] {
     border-radius: 10px;
     position: relative;
-    -ms-touch-action: none;
+    /*-ms-touch-action: none;*/
     background: rgba(0,0,0,.1)
 }
 
@@ -5286,8 +5286,6 @@ a[data-v-b851e86e]:focus,input[data-v-b851e86e]:focus {
     font-weight: 400;
     text-align: center;
     vertical-align: middle;
-    -ms-touch-action: manipulation;
-    touch-action: manipulation;
     background-image: none;
     border: 1px solid transparent;
     white-space: nowrap;

@@ -2961,10 +2961,10 @@ html[data-v-b851e86e] {
 }
 
 body {
-    margin: 0 ;
-    -webkit-text-size-adjust: 100%;
-    -ms-text-size-adjust: 100%;
-    touch-action: manipulation;
+    /*margin: 0 ;*/
+    /*-webkit-text-size-adjust: 100%;*/
+    /*-ms-text-size-adjust: 100%;*/
+    /*touch-action: manipulation;*/
 }
 
 h1[data-v-b851e86e] {

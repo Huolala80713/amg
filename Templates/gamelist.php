@@ -69,8 +69,8 @@
                             <?php
                              }else{
                             ?>
-<!--                            <li class="game-name"><img src="/Style/newimg/game_name_--><?php //echo $gm['game_id'];?><!--.png"></li>-->
-                            <li class="game-name"><span class="game-name-text"><?=$gm['game_name']?></span></li>
+                            <li class="game-name"><img src="/Style/newimg/game_name_<?php echo $gm['game_id'];?>.png"></li>
+<!--                            <li class="game-name"><span class="game-name-text">--><?//=$gm['game_name']?><!--</span></li>-->
                         <?php
                         }
                         ?>

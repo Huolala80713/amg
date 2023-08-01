@@ -526,6 +526,19 @@
 		</div>
 		<script type="text/javascript" src="/Style/pop/js/jquery.min.js"></script>
 		<script type="text/javascript" src="/Style/pop/js/popups.js"></script>
+        <script type="text/javascript">
+            let lastTouchEnd = 0;
+            document.addEventListener('touchend', (event) => {
+                const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+            }, false);
+            document.addEventListener('gesturestart', (event) => {
+                event.preventDefault();
+            });
+        </script>
 		<script>
 			// 创建一个新的 Vue 实例
 			var App = new Vue({

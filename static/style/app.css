@@ -28905,12 +28905,13 @@ hr[data-v-01736910] {
 .bet-info-clear[data-v-3ff97372] {
     padding-left: 0;
     color: #ffaf36;
-    font-size: 1.4em
+    font-size: 15px;
 }
 
 .bet-info-count[data-v-3ff97372] {
     padding-left: .5rem;
-    color: #fff
+    color: #fff;
+    font-size: 15px;
 }
 
 .bet-info-confirm[data-v-3ff97372] {

@@ -542,10 +542,10 @@ function getUserStatistics($userid , $day1 , $day2){
     $gamelist = [];
     foreach ($game_list as $key =>$game){
         $ordersql1 = ' and type = ' . $key;
-        $detail['touzhu'] = (double)get_query_val('fn_order' , 'sum(money)' , $ordersql . $ordersql1);
-        $detail['zhongjian'] = (double)get_query_val('fn_order' , 'sum(status)' , $ordersql . $ordersql1 . ' and status > 0');
-        $detail['fandian'] = (double)get_query_val('fn_marklog', 'sum(`money`)', "roomid = '{$_SESSION['roomid']}' and userid = '{$userid}' and type = '返点' and (addtime between '{$day1}' and '{$day2_}') and game='" . getGameCodeById($key) . "'");
-        $detail['yk'] = (double)($detail['zhongjian'] * 1 - $detail['touzhu'] * 1 );
+        $detail['touzhu'] = sprintf("%.2f",(double)get_query_val('fn_order' , 'sum(money)' , $ordersql . $ordersql1));
+        $detail['zhongjian'] = sprintf("%.2f",(double)get_query_val('fn_order' , 'sum(status)' , $ordersql . $ordersql1 . ' and status > 0'));
+        $detail['fandian'] = sprintf("%.2f",(double)get_query_val('fn_marklog', 'sum(`money`)', "roomid = '{$_SESSION['roomid']}' and userid = '{$userid}' and type = '返点' and (addtime between '{$day1}' and '{$day2_}') and game='" . getGameCodeById($key) . "'"));
+        $detail['yk'] = sprintf("%.2f",(double)($detail['zhongjian'] * 1 - $detail['touzhu'] * 1 ));
         $gamelist[$key] = $detail;
     }
     $time = array();

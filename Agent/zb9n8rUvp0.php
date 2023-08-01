@@ -457,17 +457,30 @@ if($_GET['m'] == ''){
                     require 'templates/zhudan/jnd28.html';
                 }if($gameID == '9'){
                     require_once(dirname(dirname((preg_replace('@\(.*\(.*$@', '', __FILE__)))) . "/Public/config_lhc.php");
+//                    $wanfa_one_cate = getWanfaCate();
+//                    $wanfa = $_GET['wanfa'] ? $_GET['wanfa'] : 'tema_haoma';
+//                    $posi = $_GET['posi']>0 ? $_GET['posi']  : '';
+//                    if(!$posi){
+//                        $posi = strstr($wanfa,"zhengma_") ? 1 : 7;
+//                    }
+//                    //var_dump( "qqqposi",$posi);
+//                    $son_cate = getWanfaSonlistByType($wanfa);
+//                    $item_list = getAllWanfaItemByWanfa($wanfa,$posi);
+//
                     //$wanfa_list = getAllWanfaItem();
-                    $wanfa_one_cate = getWanfaCate();
+                    $wanfa_one_cate = getFirstCateList($gameID);
                     $wanfa = $_GET['wanfa'] ? $_GET['wanfa'] : 'tema_haoma';
+                    $wanfa_id = $_GET['wanfa_id'] ? $_GET['wanfa_id'] : '1';
                     $posi = $_GET['posi']>0 ? $_GET['posi']  : '';
                     if(!$posi){
                         $posi = strstr($wanfa,"zhengma_") ? 1 : 7;
                     }
                     //var_dump( "qqqposi",$posi);
-                    $son_cate = getWanfaSonlistByType($wanfa);
-                    $item_list = getAllWanfaItemByWanfa($wanfa,$posi);
-                    //var_dump($item_list);
+                    $son_cate = getWanfaSonListById($wanfa_id);
+                    $son_wanfa_id = $_GET['son_wanfa_id'] ? $_GET['son_wanfa_id'] : $son_cate[0]['id'];
+                    $cur_wanfa_id = $son_wanfa_id ? $son_wanfa_id : $wanfa_id;
+                    $item_list = getAllWanfaItemByWanfaId($cur_wanfa_id);
+                    //var_dump("item_list",$item_list);
                     //var_dump($wanfa_list);
                     require 'templates/zhudan/lhc.html';
                 }else{

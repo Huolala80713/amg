@@ -612,8 +612,11 @@ function getWanfaByType($wanfa,$userid,$roomid){
 function getWanfaListByType($wanfa){
     $data = array();
     //var_dump($wanfa);
-    $wanfa_name = explode("_",$wanfa)[0];
-    $type = explode("_",$wanfa)[1];
+    if(strstr($wanfa,"_")){
+        $type = explode("_",$wanfa)[1];
+    }else{
+        $type = $wanfa;
+    }
     if($type == 'haoma'){
         $number_arr = kj_number();
         $new_arr = [];
@@ -640,6 +643,19 @@ function getWanfaListByType($wanfa){
     }
     if($type == 'shengxiao'){
         $number_arr = shengxiao_en_name_arr();
+        $new_arr = [];
+        foreach($number_arr as $key=>$v){
+            $arr = [];
+            $arr['id'] = $key;
+            $arr['name'] = $v;
+            $arr['class'] = "black";
+            $arr['check'] = 0;
+            $new_arr[] = $arr;
+        }
+        $data = $new_arr;
+    }
+    if($type == 'weishu'){
+        $number_arr = getWeishu();
         $new_arr = [];
         foreach($number_arr as $key=>$v){
             $arr = [];
@@ -1084,7 +1100,7 @@ function getWanfaSonListById($id,$userid=0,$roomid=0){
     $levels = ($peilv['fandian'] - $user_fandian) / 0.01;//返点基点数
     $sql = "parent_id = {$id} and is_show = 1";
     $order = "sort desc,id asc";
-    select_query("fn_lhc_wanfa", 'id,name,zj_num,wanfa_key,peilv,peilv_step,parent_id', $sql , $order);
+    select_query("fn_lhc_wanfa", 'id,name,zj_num,wanfa_key,bet_posi,peilv,peilv_step,parent_id', $sql , $order);
     $wanfa_list = $cons = [];
     while ($con = db_fetch_array()) {
         $cons[] = $con;
@@ -1367,7 +1383,7 @@ function lianmaBetIsRight($order_info,$kj_info){
                 $wanfa_key = $wanfa_info['wanfa_key'];
                 $bet_kj_number = [];//开奖号码
                 $bet_posi_arr = explode(',',$bet_posi);
-                var_dump("bet_posi_arr",$bet_posi_arr);
+                //var_dump("bet_posi_arr",$bet_posi_arr);
                 foreach($bet_posi_arr as $k=>$v){
                     $kj_number = $kj_num_arr[intval($v-1)];
                     if($wanfa_type == 'haoma'){
@@ -1572,6 +1588,23 @@ function getTemaBanboByNumber($bet_kj_number){
         $bet_kj_number_val[] = $number_color_name."合单";
     }
     return $bet_kj_number_val;
+}
+//后台专用
+function getAllWanfaItemByWanfaId($wanfa_id){
+    $wanfa_info = get_query_vals('fn_lhc_wanfa','*',['id'=>$wanfa_id]);
+    $item_list =  getWanfaListByType($wanfa_info['wanfa_type']);
+    //var_dump($item_list);
+    $son_item = [];
+    foreach($item_list as $wf_key=>$wf_val){
+        $item = [];
+        $item = $wf_val;
+        $item['wanfa_name'] = $wanfa_info['name'];
+        $item['mingci'] = $wanfa_info['wanfa_key']."#".$wf_val['id']."#".$wanfa_info['bet_posi'];
+        $item['class'] = $wanfa_info['wanfa_key']."-".$wf_val['id']."-". str_replace(',','_',$wanfa_info['bet_posi']);
+        $item['bg_class'] = $wf_val['class'];
+        $son_item[] = $item;
+    }
+    return $son_item;
 }
 
 ?>

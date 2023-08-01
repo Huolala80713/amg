@@ -81,12 +81,12 @@ $game_type = getGameCodeById($gameID);
                         <div class="direct-chat-messages">
                             <div class="col-sm-12">
                             <?php
-                            foreach($wanfa_one_cate as $key=>$wanfa_name){
+                            foreach($wanfa_one_cate as $key=>$wf){
                             ?>
-                            <div class="col-sm-2 box-header with-border one-cate <?php if($key == $wanfa){ echo "curr"; }?>" style="text-align: center">
+                            <div class="col-sm-2 box-header with-border one-cate <?php if($wf['id'] == $wanfa_id){ echo "curr"; }?>" style="text-align: center">
                                 <h3 class="box-title">
-                                    <a href="?m=<?=$_GET['m']?>&g=<?=$_GET['g']?>&wanfa=<?=$key?>">
-                                    <?=$wanfa_name?>
+                                    <a href="?m=<?=$_GET['m']?>&g=<?=$_GET['g']?>&wanfa_id=<?=$wf['id']?>">
+                                    <?=$wf['name']?>
                                         </a>
                                 </h3>
                             </div>
@@ -97,12 +97,12 @@ $game_type = getGameCodeById($gameID);
                         <div class="col-sm-12" style="margin-top: 5px">
                             <div class="box-body" style="background: #eeeeee">
                                 <?php
-                            foreach($son_cate as $son_key=>$posi_item){
+                            foreach($son_cate as $son_key=>$sv){
                                 ?>
-                                <div class="col-sm-2 box-header with-border one-cate <?php if($posi_item['posi'] == $posi){ echo "curr"; }?>" style="text-align: center">
+                                <div class="col-sm-2 box-header with-border one-cate <?php if($sv['id'] == $son_wanfa_id){ echo "curr"; }?>" style="text-align: center">
                                 <h3 class="box-title">
-                                    <a href="?m=<?=$_GET['m']?>&g=<?=$_GET['g']?>&wanfa=<?=$wanfa?>&posi=<?=$posi_item['posi']?>">
-                                        <?=$posi_item['name']?>
+                                    <a href="?m=<?=$_GET['m']?>&g=<?=$_GET['g']?>&wanfa_id=<?=$wanfa_id?>&son_wanfa_id=<?=$sv['id']?>">
+                                        <?=$sv['name']?>
                                     </a>
                                 </h3>
                             </div>

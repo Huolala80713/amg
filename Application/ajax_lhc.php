@@ -106,7 +106,7 @@ switch($type) {
         $arr = array();
         $arr['success'] = true;
         //select_query("fn_open_lhc", '*', "`type` = 9 order by `next_time` desc limit 1");
-        $kj_info = get_query_vals('fn_open_lhc', '*', "`type` = {$gameTypeID} order by `next_time` desc");
+        $kj_info = get_query_vals('fn_open_lhc', '*', "`type` = {$gameTypeID} order by `term` desc");
         $kj_number = explode(',', $kj_info['code']);
         array_push($kj_number, $kj_info['code_te']);
         $kj_info['kj_date'] = substr($kj_info['time'], 0, 10);
@@ -223,7 +223,8 @@ switch($type) {
          */
         $data = array();
         $data['success'] = true;
-        $kj_info = get_query_vals('fn_open_lhc', '*', array('type' => $gameTypeID));//get_query_vals("fn_open_lhc", '*', "`type` = 9");
+        //$kj_info = get_query_vals('fn_open_lhc', '*', array('type' => $gameTypeID));//get_query_vals("fn_open_lhc", '*', "`type` = 9");
+        $kj_info = get_query_vals('fn_open_lhc', '*', "`type` = {$gameTypeID} order by `term` desc");
         $bet_str = file_get_contents('php://input');
         $bet_data = $bet_str ? json_decode($bet_str, true) : [];
         $term = $bet_data['term'];
@@ -260,7 +261,7 @@ switch($type) {
             echo json_encode(array('success' => false, 'msg' => '该游戏已关闭！'));
             die();
         }
-        $open_data = get_query_vals('fn_open_lhc', 'next_term,next_time,time,iskaijiang', "type = {$gameTypeID} order by `next_time` desc limit 1");
+        $open_data = get_query_vals('fn_open_lhc', 'next_term,next_time,time,iskaijiang', "type = {$gameTypeID} order by `term` desc limit 1");
         $lottery_data = get_query_vals('fn_lottery' . $gameTypeID, '*', array('roomid' => $roomid));
         if (empty($open_data)) {
             $fengpan = true;
@@ -345,7 +346,7 @@ switch($type) {
             $order_arr['headimg'] = $user['headimg'];
             $wanfa_key = $bet_wanfa_info['wanfa_key'];
             //$bet_key = getBetKeyByItemName($wanfa, $v);
-            $order_arr['mingci'] = $wanfa_key . "#" . $bet_key . "#" . $posi."#".$zj_nun;
+            $order_arr['mingci'] = $wanfa_key . "#" . $bet_key . "#" . $posi;
 
             //var_dump($order_arr['mingci']);
             $order_arr['content'] = $content;

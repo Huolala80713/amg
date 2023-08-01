@@ -64,7 +64,10 @@ if($game){
                 if(is_numeric($con['content']) && $con['content'] < 10){
                     $con['content'] = '0' . $con['content'];
                 }
-                $list[str_replace('#','-',$con['mingci'])] = number_format($con['money'] , 2 , '.' , '');
+                $mingci_str = str_replace('#','-',$con['mingci']);
+                $mingci_str = str_replace(',','_',$mingci_str);
+
+                $list[$mingci_str] = number_format($con['money'] , 2 , '.' , '');
             }
             $touzhu_amount = get_query_val('fn_order' , 'sum(money)' , $sql);
             $paijian_amount = get_query_val('fn_order' , 'sum(status)' , $sql . ' and status > 0 and status != "未结算"');

@@ -26,7 +26,7 @@ function lhc_jiesuan($typeid,$term=''){
         $where['term'] = get_query_val('fn_open_lhc', 'term',['type'=>$typeid] , ['term desc'],'1');
     }
     $cons = [];
-    select_query("fn_order", '*', $where,'addtime asc',20);
+    select_query("fn_order", '*', $where,'addtime asc',50);
     while ($con = db_fetch_array()) {
         $cons[] = $con;
     }
@@ -65,7 +65,33 @@ function lhc_jiesuan($typeid,$term=''){
     }
 
 }
+//next_time_caiji();
+//最新开奖时间采集
+function next_time_caiji(){
+    //$contents = file_get_contents("https://bet.hkjc.com/marksix/single.aspx?lang=ch");
+    $url = "https://bet.hkjc.com/marksix/single.aspx?lang=ch";
+    //$url = 'http://www.domain.com/test.php?id=123';
+    $data = array ('foo' => 'bar');
+    $data = http_build_query($data); $opts = array (
+        'http' => array ( 'method' => 'POST', 'header'=> "Content-type: application/x-www-form-urlencoded\r\n" . "Content-Length: " . strlen($data) . "\r\n", 'content' => $data
+        )
+    );
+    $ctx = stream_context_create($opts);
+    $html = @file_get_contents($url,'',$ctx);
+    //采集下期期号
+    $next_no = preg_match_all("/next_draw = \"(.*)\"/i",$html,$next_no_arr);
+    $next_no = str_replace("/",'',$next_no_arr[1][0]);
 
+    $next_date = preg_match_all("/next_draw_date = '(.*)'/i",$html,$next_date_arr);
+    $next_date = $next_date_arr[1][0];
+    $next_date_arr = explode("/",$next_date);
+    $new_date = $next_date_arr[2].'-'.$next_date_arr[1].'-'.$next_date_arr[0] .' 21:30:30';
+    if($next_no && $new_date){
+        update_query('fn_open_lhc', array('next_time' => $new_date), array('next_term' => $next_no, 'type' => 9));//添加金额
+    }
+
+
+}
 function caiji(){
     writeLog("香港开始爬取数据" . time(),'jscc');
     $typeid = '9';

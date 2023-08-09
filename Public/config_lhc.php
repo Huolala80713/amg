@@ -1084,6 +1084,7 @@ function getFirstCateList($game_id){
 function getFirstCateAllList($game_id){
     $sql = "parent_id = 0 and admin_is_show=1 and game_id = {$game_id}";
     $order = "sort desc,id asc";
+    $sql = $sql." order by ".$order;
     select_query("fn_lhc_wanfa", 'id,name,zj_num,wanfa_key,peilv,max_peilv,bet_price_max,bet_price_min,peilv_step', $sql , $order);
     $wanfa_list = $cons = [];
     while ($con = db_fetch_array()) {
@@ -1124,6 +1125,7 @@ function getWanfaAllSonListById($id,$userid=0,$roomid=0){
     $levels = ($peilv['fandian'] - $user_fandian) / 0.01;//返点基点数
     $sql = "parent_id = {$id} and  admin_is_show = 1";
     $order = "sort desc,id asc";
+    $sql = $sql." order by ".$order;
     select_query("fn_lhc_wanfa", 'id,name,zj_num,wanfa_key,peilv,max_peilv,bet_price_max,bet_price_min,peilv_step', $sql , $order);
     $wanfa_list = $cons = [];
     while ($con = db_fetch_array()) {

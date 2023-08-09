@@ -73,7 +73,7 @@
                             ?>
                                     <span class="help-inline" style="margin-top:0px;"><?=$ssv['name']?></span>
                                     <input type="number" style="width: 65px; margin-bottom: 0px;" data-scale="4" name="<?=$ssv['id']?>__peilv" value="<?=$ssv['peilv']?>"
-                                           onkeypress="digitfOnly(event)" onkeyup="isTrue(this)" size="6" maxlength="10">
+                                           onkeypress="digitfOnly(event)" onkeyup="isTrue(this)"  oninput="if(value><?=$ssv['max_peilv']?>)value=<?=$ssv['max_peilv']?>"  size="6" maxlength="10">
                                     <?php
                                     }
                                     echo "</div>";
@@ -82,7 +82,7 @@
                                     <div class='set-block'>
                                     <span class="help-inline" style="margin-top:0px;"><?=$sv['name']?></span>
                                     <input type="text" style="width: 65px; margin-bottom: 0px;" data-scale="4" name="<?=$sv['id']?>__peilv" value="<?=$sv['peilv']?>"
-                                           onkeypress="digitfOnly(event)" onkeyup="isTrue(this)" size="6" maxlength="10">
+                                           onkeypress="digitfOnly(event)" onkeyup="isTrue(this)"  oninput="if(value><?=$sv['max_peilv']?>)value=<?=$sv['max_peilv']?>" size="6" maxlength="10">
                                     </div>
                                     <?php
                                     }

@@ -86,17 +86,18 @@ if($game_name == 5){
         'he11' => '和11',
         'tema' => '特码'
     ];
-}
-foreach ($wanfa_list as $key => $value){
-    $value = explode('/' , $value);
-    foreach ($value as $val){
-        $wanfa_list[] = [
-            'name' => $val,
-            'key' => $key
-        ];
+    foreach ($wanfa_list as $key => $value){
+        $value = explode('/' , $value);
+        foreach ($value as $val){
+            $wanfa_list[] = [
+                'name' => $val,
+                'key' => $key
+            ];
+        }
+        unset($wanfa_list[$key]);
     }
-    unset($wanfa_list[$key]);
 }
+
 $title = '返点赔率表';
 $game_list = getGameList();
 $peilv_step = $info['peilv_step'];
@@ -138,7 +139,7 @@ $default_fandian = $info['fandian'];
             position: absolute;
             left: 0;
             top: 2rem;
-            width: <?php echo $left_width;?>px;
+            width: 120px;
             text-align: center;
             background: #fff;
             z-index: 100;
@@ -151,6 +152,8 @@ $default_fandian = $info['fandian'];
         #peilv_panel .left_game_list dt:first-child{
             position: relative;
             height: 45px;
+            font-size: 14px;
+            overflow: hidden;
         }
         #peilv_panel .left_game_list dt em{
             position: absolute;
@@ -177,7 +180,7 @@ $default_fandian = $info['fandian'];
             position: absolute;
             left: -20px;
             top: -29px;
-            width: <?php echo $left_width;?>px;
+            width: 120px;
             height: 45px;
             box-sizing: border-box;
             border-bottom: 1px solid #afafaf;
@@ -186,17 +189,23 @@ $default_fandian = $info['fandian'];
             animation: slash 5s infinite ease;
         }
         #peilv_panel .left_game_list dt,#peilv_panel .left_game_list dd{
-            line-height: 25px;width: <?php echo $left_width;?>px;text-align: center;padding: 10px 0;
+            line-height: 25px;width: 120px;text-align: center;padding: 10px 0;
         }
         #peilv_panel .left_game_list dd:nth-child(2n+1){
             background: #efefef;
+            height: 45px;
+            font-size: 14px;
+            overflow: hidden;
         }
         #peilv_panel .left_game_list dd:nth-child(2n){
             background: #fff;
+            height: 45px;
+            font-size: 14px;
+            overflow: hidden;
         }
         #peilv_panel .fandian_list{
             overflow: scroll;
-            padding-left: <?php echo $left_width;?>px;
+            padding-left: 120px;
         }
         #peilv_panel .fandian_list dl{
             float: left;
@@ -206,13 +215,22 @@ $default_fandian = $info['fandian'];
             background: #efefef;
         }
         #peilv_panel .fandian_list dl dd,#peilv_panel .fandian_list dl dt{
-            line-height: 25px;width: <?php echo $left_width;?>px;text-align: center;padding: 10px 0;
+            line-height: 25px;
+            width: 120px;
+            text-align: center;
+            padding: 10px 0;
+            height: 45px;
+            font-size: 14px;
+            overflow: hidden;
         }
         #peilv_panel .left_gfandian_listame_list dd:nth-child(2n+1){
             background: #efefef;
         }
         #peilv_panel .fandian_list dd:nth-child(2n){
             background: #fff;
+            height: 45px;
+            font-size: 14px;
+            overflow: hidden;
         }
     </style>
 </head>
@@ -246,6 +264,9 @@ $default_fandian = $info['fandian'];
 <div id="peilv_panel">
     <dl class="left_game_list">
         <dt><em>玩法</em><i>返点</i></dt>
+        <?php
+        //var_dump($wanfa_list);
+        ?>
         <?php foreach($wanfa_list as $key => $value):?>
             <dd><?php echo $value['name'];?></dd>
         <?php endforeach;?>
@@ -259,7 +280,15 @@ $default_fandian = $info['fandian'];
                         <dd>
                             <?php
                             if($game_name == 9){ // ($peilv_list[$key]['peilv_step']) .":".
-                                echo "赔率" . bcsub($peilv_list[$key]['user_peilv'],bcmul($peilv_list[$key]['peilv_step'],bcsub($fandian,$i,2) * 100,3),3);
+                                $levels = bcsub($fandian,$i,2) * 100;
+                                //var_dump($value);
+                                $peilv_step_num = getWanfaPeilvStepByType($value['wanfa_type'],$levels,$value['wanfa_key']);
+//                                echo "levek:".$levels;
+//                                echo "wanfa_type:".$value['wanfa_type'];
+//                                echo "peilv_step_num:".$peilv_step_num;
+//                                echo $value['user_peilv'];
+                                //echo "ID:".$value['id'];
+                                echo "赔率" . bcsub($value['user_peilv'],bcmul($value['peilv_step'],$peilv_step_num,4),4);
                             }else{
                                 echo "赔率" . getManagePeilv($game_name, $_SESSION['roomid'], $info[$value['key']], $i, $value['key']);
                             }

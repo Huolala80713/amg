@@ -866,7 +866,7 @@ function lhctouzhufandian($userid , $money , $roomid , $gametypeid , $fromuser ,
         $agent_fandian = userFanDian($agent['agent'] , $roomid , $gametypeid);
         $levels = (($agent_fandian - $user_fandian) / 0.01);
         $peilv_step_num = getWanfaPeilvStepByType($wanfa_info['wanfa_type'],$levels,$number_key);
-        $fandian_money = round($money * ( $levels * $peilv_step * $peilv_step_num) , 4);//返点金额
+        $fandian_money = round($money * ( $peilv_step * $peilv_step_num) , 4);//返点金额
 
         $is_jia = get_query_val('fn_user' , 'jia' , ['userid'=>$agent['agent'],'roomid'=>$roomid]);
         if($fandian_money && $is_jia == 'false'){

@@ -724,6 +724,71 @@ function getAllWanfaItemByWanfa($wanfa,$posi){
 
 //获取所有玩法列表及赔率增长点 20230712
 function getWanfaPeilvStepList($type,$userid,$roomid='666777'){
+    $sql = "(parent_id = 0 and (admin_is_show=1 or id=11)) and game_id = {$type}";
+    $order = "sort desc,id asc";
+    $sql = $sql." order by ".$order;
+    select_query("fn_lhc_wanfa", 'id,name,wanfa_type,zj_num,wanfa_key,peilv,max_peilv,bet_price_max,bet_price_min,peilv_step', $sql , $order);
+    $wanfa_list = $cons = [];
+    while ($con = db_fetch_array()) {
+        $cons[] = $con;
+    }
+    foreach($cons as $v){
+        $sql1 = "(parent_id = {$v['id']} and (admin_is_show=1)) and game_id = {$type}";
+        $sql1 = $sql1." order by ".$order;
+        select_query("fn_lhc_wanfa", 'id,name,wanfa_type,zj_num,wanfa_key,peilv,max_peilv,bet_price_max,bet_price_min,peilv_step', $sql1 , $order);
+        $wanfa_son_list = [];
+        while ($con = db_fetch_array()) {
+            $wanfa_son_list[] = $con;
+        }
+        if(!$wanfa_son_list){
+            $wanfa_list[] = $v;
+        }else{
+            foreach($wanfa_son_list as $sv){
+                $son_v = $sv;
+                //获取第三季
+                $sql3 = "(parent_id = {$sv['id']} and (admin_is_show=1)) and game_id = {$type}";
+                $sql3 = $sql3." order by ".$order;
+                select_query("fn_lhc_wanfa", 'id,name,wanfa_type,zj_num,wanfa_key,peilv,max_peilv,bet_price_max,bet_price_min,peilv_step', $sql3 , $order);
+                $wanfa_son_son_list = [];
+                while ($con = db_fetch_array()) {
+                    $wanfa_son_son_list[] = $con;
+                }
+                if(!$wanfa_son_son_list){
+                    $son_v['name'] = $v['name']."(".$son_v['name'].")";
+                    $wanfa_list[] = $son_v;
+                }else{
+                    foreach($wanfa_son_son_list as $ssv){
+                        $son_son_v = $ssv;
+                        $son_son_v['name'] = $v['name']."(".$ssv['name'].")";
+                        $wanfa_list[] = $son_son_v;
+                    }
+                }
+            }
+        }
+    }
+    $lottery = get_query_vals('fn_lottery'.$type,"*",['roomid'=>$roomid]);
+    $user_fandian = userFanDian($userid,$roomid,$type);
+    $levels = ($lottery['fandian'] - $user_fandian) / 0.01;//返点基点数
+    $peilv_list = [];
+    //var_dump($wanfa_list);
+    $all_wanfa_list = [];
+    foreach($wanfa_list as $key=>$wanfa){
+        $arr = $wanfa;
+        $arr['key'] = $key;
+        $arr['name'] = $wanfa['name'];
+        $arr['value'] = $wanfa['peilv_step'];
+        $peilv_step_num = getWanfaPeilvStepByType($wanfa['wanfa_type'],$levels,$wanfa['wanfa_key']);
+        $arr['user_peilv'] = $wanfa['peilv'] -  $wanfa['peilv_step'] * $peilv_step_num;
+        $arr['peilv_step'] =  $wanfa['peilv_step'];
+        //$wanfa_list[$key] = $wanfa['peilv_step']['name'];
+        $peilv_list[] = $arr;
+        $all_wanfa_list[] = $arr;
+    }
+   // var_dump($wanfa_list);
+    return ['peilv'=>$peilv_list,'wanfa_list'=>$all_wanfa_list];
+}
+
+function getWanfaPeilvStepList_old($type,$userid,$roomid='666777'){
     $lottery = get_query_vals('fn_lottery'.$type,"*",['roomid'=>$roomid]);
     $user_fandian = userFanDian($userid,$roomid,$type);
     $levels = ($lottery['fandian'] - $user_fandian) / 0.01;//返点基点数
@@ -1161,7 +1226,7 @@ function getUserPeilvByWanfaId($id,$userid,$roomid,$number_key=''){
         //$step = ($wanfa_info['peilv'] / 10 * $wanfa_info['peilv_step']);
         $peilv_step_num = getWanfaPeilvStepByType($wanfa_info['wanfa_type'],$levels,$number_key);
         $step = ($peilv_step_num * $wanfa_info['peilv_step']);
-        $rate = round($wanfa_info['peilv'] - $step * $levels,4);
+        $rate = round($wanfa_info['peilv'] - $step,4);
 //        var_dump($step);
 //        var_dump($rate);
     }
@@ -1185,7 +1250,7 @@ function getUserPeilvByWanfaIdShuangmian($id,$userid,$roomid,$number_key){
     }
 //    var_dump($number_key);
 //    var_dump($number_wanfa);
-    $peilv_step = $levels  * $wanfa_info['peilv_step'] * $peilv_step_num;
+    $peilv_step = $wanfa_info['peilv_step'] * $peilv_step_num;
     //$rate = round($number_wanfa['peilv'] - $number_wanfa['peilv_step'] * $levels,4);
     $rate = round($number_wanfa['peilv'] - $peilv_step,4);
     // var_dump($peilv_step);
@@ -1205,7 +1270,7 @@ function getUserPeilvByWanfaIdShengxiao($id,$userid,$roomid,$number_key){
 //    }else{
 //        $rate = $wanfa_info['peilv'] - $wanfa_info['peilv_step'] * $levels;
 //    }
-    $peilv_step = $levels *  $wanfa_info['peilv_step'] * $peilv_step_num;
+    $peilv_step = $wanfa_info['peilv_step'] * $peilv_step_num;
     if($number_key == 'tu'){
         $wanfa_info_tu = get_query_vals('fn_lhc_wanfa','id,name,wanfa_type,peilv,peilv_step,game_id','parent_id = '.$wanfa_info['parent_id'].' and wanfa_key LIKE "%_tu%"');
         $rate = $wanfa_info_tu['peilv'] - $peilv_step;
@@ -1246,20 +1311,24 @@ function getUserPeilvByWanfaIdWeishu($id,$userid,$roomid,$number_key){
  * @menber_key 下注值
  */
 function getWanfaPeilvStepByType($type,$levels,$number_key){
-    $peilv_step = 1;
+    $peilv_step = $levels;
     if($type == 'shuangmian'){
         if(in_array($number_key,['red','blue','green'])){
             //红波
-            $peilv_step = 0.3;
+            $peilv_step = $levels * 0.3;
         }else{
-            $peilv_step = (intval($levels / 5) + 1);
+            if($levels > 0){
+                $peilv_step = (intval($levels / 5) + 1);
+            }else{
+                $peilv_step = 0;
+            }
         }
     }elseif($type == 'shengxiao'){
-        $peilv_step = 0.45;
+        $peilv_step = $levels * 0.45;
     }elseif($type == 'weishu'){
-        $peilv_step = 0.45;
+        $peilv_step = $levels * 0.45;
     }elseif($type == 'haoma'){
-        $peilv_step = 4.9;
+        $peilv_step = $levels * 4.9;
     }
     return $peilv_step;
 }

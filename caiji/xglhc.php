@@ -57,10 +57,11 @@ function lhc_jiesuan($typeid,$term=''){
             }elseif($user_bet_res == 2){//猜错了
                 $user_money = -$con['money'];
             }
-            //上级返点
-            lhctouzhufandian($con['userid'] , $con['money'] , $con['roomid'] , $typeid , $con['userid'] , $con['peilv_step']);
+            //上级返点 yixiao#long#1,2,3,4,5,6,7
+            $wanfa_contents = explode('#',$con['mingci']);
+            $number_key = $wanfa_contents[1];
+            lhctouzhufandian($con['userid'] , $con['money'] , $con['roomid'] , $typeid , $con['userid'] , $con['peilv_step'],$con['bet_wanfa_id'],$number_key);
             update_query('fn_order', array('status' => $user_money,'isfan'=>1), array('id' => $con['id']));//添加金额
-
         }
     }
 

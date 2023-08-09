@@ -123,7 +123,7 @@
                                     <?php
                                     if(!$v['son_list']){
                                     ?>
-                                    <input type="number" style="width: 85px; margin-bottom: 0px;" data-scale="4" name="<?=$v['id']?>__peilv_step" value="<?=$v['peilv_step']?>"
+                                    <input type="number" style="width: 105px; margin-bottom: 0px;" data-scale="4" name="<?=$v['id']?>__peilv_step" value="<?=$v['peilv_step']?>"
                                            onkeypress="digitfOnly(event)" onkeyup="isTrue(this)"  size="6" step="0.001" maxlength="10">
                                     <?php
                                     }
@@ -136,7 +136,7 @@
                                     foreach($sv['son_list'] as $ssv){
                                     ?>
                                     <span class="help-inline" style="margin-top:0px;"><?=$ssv['name']?></span>
-                                    <input type="number" style="width: 65px; margin-bottom: 0px;" data-scale="4" name="<?=$ssv['id']?>__peilv_step" value="<?=$ssv['peilv_step']?>"
+                                    <input type="number" style="width: 105px; margin-bottom: 0px;" data-scale="4" name="<?=$ssv['id']?>__peilv_step" value="<?=$ssv['peilv_step']?>"
                                            onkeypress="digitfOnly(event)" onkeyup="isTrue(this)" size="6"  step="0.001" maxlength="10">
                                     <?php
                                     }
@@ -145,7 +145,7 @@
                                     ?>
                                     <div class='set-block'>
                                         <span class="help-inline" style="margin-top:0px;"><?=$sv['name']?></span>
-                                        <input type="text" style="width: 65px; margin-bottom: 0px;" data-scale="4"  step="0.001" name="<?=$ssv['id']?>__peilv_step" value="<?=$sv['peilv_step']?>"
+                                        <input type="text" style="width: 105px; margin-bottom: 0px;" data-scale="4"  step="0.001" name="<?=$ssv['id']?>__peilv_step" value="<?=$sv['peilv_step']?>"
                                               size="6" maxlength="10">
                                     </div>
                                     <?php

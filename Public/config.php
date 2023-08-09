@@ -850,10 +850,13 @@ function getAgentUserList($userid , $type = 1){
  * @param $child_fandian 已被分出的点位
  * @return false|float|int|mixed
  */
-function lhctouzhufandian($userid , $money , $roomid , $gametypeid , $fromuser , $peilv_step = ''){
+function lhctouzhufandian($userid , $money , $roomid , $gametypeid , $fromuser , $peilv_step = '',$bet_wanfa_id=0,$number_key=''){
+
+
     if($money <= 0){
         return ;
     }
+    $wanfa_info = get_query_vals('fn_lhc_wanfa','id,name,wanfa_type,wanfa_key,peilv,peilv_step,game_id',['id'=>$bet_wanfa_id]);
     $table = 'fn_lottery' . $gametypeid;
     $game_config = get_query_vals($table , 'peilv_step,fandian' , ['roomid'=>$roomid]);
     //获取当前用户的推荐者，没有的话，不进行投注返点
@@ -861,8 +864,9 @@ function lhctouzhufandian($userid , $money , $roomid , $gametypeid , $fromuser ,
     if($agent['agent'] != null && $agent['agent'] != ''){
         $user_fandian = userFanDian($userid , $roomid , $gametypeid);
         $agent_fandian = userFanDian($agent['agent'] , $roomid , $gametypeid);
-
-        $fandian_money = round($money * ((($agent_fandian - $user_fandian) / 0.01) * $peilv_step) , 4);//返点金额
+        $levels = (($agent_fandian - $user_fandian) / 0.01);
+        $peilv_step_num = getWanfaPeilvStepByType($wanfa_info['wanfa_type'],$levels,$number_key);
+        $fandian_money = round($money * ( $levels * $peilv_step * $peilv_step_num) , 4);//返点金额
 
         $is_jia = get_query_val('fn_user' , 'jia' , ['userid'=>$agent['agent'],'roomid'=>$roomid]);
         if($fandian_money && $is_jia == 'false'){
@@ -874,7 +878,7 @@ function lhctouzhufandian($userid , $money , $roomid , $gametypeid , $fromuser ,
             update_query('fn_user', array('money' => '+=' . $fandian_money), array('userid' => $agent['agent'], 'roomid' => $roomid));//添加金额
             insert_query("fn_marklog", array("userid" => $agent['agent'], 'game'=>getGameCodeById($gametypeid)  ,'type' => '返点', 'content' =>"用户【{$fromuser}】投注{$money}元返点" . round($agent_fandian - $user_fandian , 2) . "%", 'money' => $fandian_money, 'roomid' => $roomid, 'addtime' => 'now()'));
             //lhctouzhufandian($agent['agent'] , $money , $roomid , $gametypeid , $fromuser , $peilv_step , $fandian_list);
-            lhctouzhufandian($agent['agent'] , $money , $roomid , $gametypeid , $fromuser , $peilv_step);
+            lhctouzhufandian($agent['agent'] , $money , $roomid , $gametypeid , $fromuser , $peilv_step,$bet_wanfa_id,$number_key);
         }
 
     }

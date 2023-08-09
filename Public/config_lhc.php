@@ -1149,6 +1149,8 @@ function getUserPeilvByWanfaId($id,$userid,$roomid,$number_key=''){
         $rate = getUserPeilvByWanfaIdShuangmian($id,$userid,$roomid,$number_key);
     }elseif($wanfa_info['wanfa_type'] == 'shengxiao'){
         $rate = getUserPeilvByWanfaIdShengxiao($id,$userid,$roomid,$number_key);
+    }elseif($wanfa_info['wanfa_type'] == 'weishu'){
+        $rate = getUserPeilvByWanfaIdWeishu($id,$userid,$roomid,$number_key);
     }else{
         $peilv = get_query_vals('fn_lottery'.$wanfa_info['game_id'],"*",['roomid'=>$roomid]);
         $user_fandian = userFanDian($userid,$roomid,$wanfa_info['game_id']);
@@ -1194,6 +1196,21 @@ function getUserPeilvByWanfaIdShengxiao($id,$userid,$roomid,$number_key){
     return $rate;
 }
 
+//获取生肖赔率 20230809
+function getUserPeilvByWanfaIdWeishu($id,$userid,$roomid,$number_key){
+    $wanfa_info = get_query_vals('fn_lhc_wanfa','id,name,wanfa_type,wanfa_key,peilv,peilv_step,parent_id,game_id',['id'=>$id]);
+    $peilv = get_query_vals('fn_lottery'.$wanfa_info['game_id'],"*",['roomid'=>$roomid]);
+    $user_fandian = userFanDian($userid,$roomid,$wanfa_info['game_id']);
+    $levels = ($peilv['fandian'] - $user_fandian) / 0.01;//返点基点数
+    if($number_key == '0'){
+        $wanfa_info_tu = get_query_vals('fn_lhc_wanfa','id,name,wanfa_type,peilv,peilv_step,game_id','parent_id = '.$wanfa_info['parent_id'].' and wanfa_key LIKE "%_weishu0%"');
+        $rate = $wanfa_info_tu['peilv'] - $wanfa_info_tu['peilv_step'] * $levels;
+    }else{
+        $rate = $wanfa_info['peilv'] - $wanfa_info['peilv_step'] * $levels;
+    }
+    $rate = round($rate,3);
+    return $rate;
+}
 //获取玩法类别
 function getWanfaItemById($wanfa_id,$userid,$roomid){
     $data = array();
@@ -1229,7 +1246,14 @@ function getWanfaItemById($wanfa_id,$userid,$roomid){
             $arr['id'] = $v;
             $arr['name'] = $v;
             $arr['class'] = 'black';
-            $rate = $wanfa_info['peilv'] - $wanfa_info['peilv_step'] * $levels;
+//            if($key == '0'){
+//                $wanfa_info_tu = get_query_vals('fn_lhc_wanfa','id,name,wanfa_type,peilv,peilv_step,game_id','parent_id = '.$wanfa_info['parent_id'].' and wanfa_key LIKE "%weishu0%"');
+//                $rate = $wanfa_info_tu['peilv'] - $wanfa_info_tu['peilv_step'] * $levels;
+//            }else{
+//                $rate = $wanfa_info['peilv'] - $wanfa_info['peilv_step'] * $levels;
+//            }
+            $rate = getUserPeilvByWanfaIdWeishu($wanfa_id,$userid,$roomid,$key);
+            //$rate = $wanfa_info['peilv'] - $wanfa_info['peilv_step'] * $levels;
             $arr['rate'] = sprintf("%.3f",$rate);//round($user_peilv[$wanfa],3);$peilv['tema_shuangmian_dxds'] - $peilv['tema_shuangmian_dxds_step'] * $levels
             $arr['check'] = 0;
             $new_arr[] = $arr;
@@ -1275,12 +1299,13 @@ function getWanfaItemById($wanfa_id,$userid,$roomid){
             $arr['id'] = $key;
             $arr['name'] = $v;
             $arr['class'] = "black";
-            if($key == 'tu'){
-                $wanfa_info_tu = get_query_vals('fn_lhc_wanfa','id,name,wanfa_type,peilv,peilv_step,game_id','parent_id = '.$wanfa_info['parent_id'].' and wanfa_key LIKE "%_tu%"');
-                $rate = $wanfa_info_tu['peilv'] - $wanfa_info_tu['peilv_step'] * $levels;
-            }else{
-                $rate = $wanfa_info['peilv'] - $wanfa_info['peilv_step'] * $levels;
-            }
+            $rate = getUserPeilvByWanfaIdShengxiao($wanfa_id,$userid,$roomid,$key);
+//            if($key == 'tu'){
+//                $wanfa_info_tu = get_query_vals('fn_lhc_wanfa','id,name,wanfa_type,peilv,peilv_step,game_id','parent_id = '.$wanfa_info['parent_id'].' and wanfa_key LIKE "%_tu%"');
+//                $rate = $wanfa_info_tu['peilv'] - $wanfa_info_tu['peilv_step'] * $levels;
+//            }else{
+//                $rate = $wanfa_info['peilv'] - $wanfa_info['peilv_step'] * $levels;
+//            }
 
             $arr['rate'] = sprintf("%.3f",$rate);//round($user_peilv[$wanfa],3);$peilv['tema_shuangmian_dxds'] - $peilv['tema_shuangmian_dxds_step'] * $levels
             $arr['check'] = 0;

@@ -1,5 +1,7 @@
 <?php
   $user = $_GET['user'];
+  $yaoqingma = $_GET['yaoqingma'];
+  $agent_user = $_GET['agent_user'];
 ?>
 <link rel="stylesheet" href="plugins/datepicker/datepicker3.css">
 <link rel="stylesheet" href="plugins/datatables/dataTables.bootstrap.css">
@@ -39,11 +41,21 @@
         <div class="box box-info">
           <div class="box-header with-border">
             <div class="row">
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <div class="input-group" style="width: 100%">
-                  <input id="searchuser" value="<?php echo $user; ?>" type="text" class="form-control" data-toggle="tooltip" data-title="代表任意字符" placeholder="会员ID/会员账号/会员用户名">
+                  <input id="searchuser" value="<?php echo $user; ?>" type="text" class="form-control" data-toggle="tooltip" data-title="代表任意字符" placeholder="会员ID/会员账号/会员用户名"  autocomplete="no">
                 </div>
               </div>
+                <div class="col-md-2">
+                    <div class="input-group" style="width: 100%">
+                        <input id="search_yaoqingma" value="<?php echo $yaoqingma; ?>" type="text" class="form-control" data-toggle="tooltip" data-title="代表任意字符" placeholder="邀请码" autocomplete="no">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="input-group" style="width: 100%">
+                        <input id="search_agent" value="<?php echo $agent_user; ?>" type="text" class="form-control" data-toggle="tooltip" data-title="代表任意字符" placeholder="邀请人ID" autocomplete="no">
+                    </div>
+                </div>
               <div class="col-md-1" style="width: 50px;padding: 0;">
                 <div class="box-tool">
                   <button onclick="search();" class="btn btn-info">查询</button>
@@ -425,7 +437,9 @@
         var param = {
           page: page,
           pagesize: pagesize,//这里只传了当前页和页大小，如果有其他参数，可继续封装
-          user:"<?php echo $user;?>",
+            user:"<?php echo $user;?>",
+            yaoqingma:"<?php echo $yaoqingma;?>",
+            agent_user:"<?php echo $agent_user;?>",
           type:""
         }
         $('#loading').show();
@@ -789,8 +803,10 @@
     }
   }
   function search() {
-    var user = $('#searchuser').val();
-    window.location.href="zb9n8rUvp0.php?m=user&user=" + user;
+      var user = $('#searchuser').val();
+      var yaoqingma = $('#search_yaoqingma').val();
+      var agent_user = $('#search_agent').val();
+    window.location.href="zb9n8rUvp0.php?m=user&user=" + user + "&yaoqingma=" + yaoqingma + "&agent_user=" + agent_user;
   }
   function startchat(){
     var id = $('#chat').data('id');

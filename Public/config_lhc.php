@@ -1294,7 +1294,7 @@ function getUserPeilvByWanfaIdWeishu($id,$userid,$roomid,$number_key){
 //    }else{
 //        $rate = $wanfa_info['peilv'] - $wanfa_info['peilv_step'] * $levels;
 //    }
-    $peilv_step = $levels * $wanfa_info['peilv_step'] * $peilv_step_num;
+    $peilv_step = $wanfa_info['peilv_step'] * $peilv_step_num;
     if($number_key == '0'){
         $wanfa_info_tu = get_query_vals('fn_lhc_wanfa','id,name,wanfa_type,peilv,peilv_step,game_id','parent_id = '.$wanfa_info['parent_id'].' and wanfa_key LIKE "%_weishu0%"');
         $rate = $wanfa_info_tu['peilv'] - $peilv_step;

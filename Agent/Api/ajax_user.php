@@ -14,6 +14,32 @@ if($type == 'jia'){
 if($user){
     $sql .= " and (`id` like '%{$user}%' or userid  like '%{$user}%' or username  like '%{$user}%' or uid  like '%{$user}%' or remark  like '%{$user}%')";
 }
+
+//查询邀请码
+$yaoqingma = $_GET['yaoqingma'];
+if($yaoqingma){
+    //获取用户ID
+    $yaoqingma_list = get_query_val('fn_invite_code','reg_user','invite_code = '.$yaoqingma);
+    $yaoqingma_list_arr = explode(",",$yaoqingma_list);
+    $yaoqingma_sql = [];
+    foreach($yaoqingma_list_arr as $v){
+        if($v){
+            $yaoqingma_sql[].= " `userid` = '".strval(trim($v))."'";
+        }
+    }
+    $yaoqingma_sql_str = implode(" or ",$yaoqingma_sql);
+   // var_dump($yaoqingma_sql_str);
+    if(!$yaoqingma){
+        $yaoqingma_sql_str = 'username = 0';
+    }
+    $sql .= " and (".$yaoqingma_sql_str.")";
+}
+//查询邀请人
+$agent_user= $_GET['agent_user'];
+if($agent_user){
+    $sql .= " and `agent` = '".$agent_user."'";
+}
+//var_dump($sql);
 select_query('fn_user','*',$sql,['id desc'],($page-1)*$pagesize . ',' . $pagesize);
 $list = [];
 while($con = db_fetch_array()){

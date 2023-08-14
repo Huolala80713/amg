@@ -26,7 +26,7 @@ function lhc_jiesuan($typeid,$term=''){
         $where['term'] = get_query_val('fn_open_lhc', 'term',['type'=>$typeid] , ['term desc'],'1');
     }
     $cons = [];
-    select_query("fn_order", '*', $where,'addtime asc',50);
+    select_query("fn_order", '*', $where,'addtime asc',1);
     while ($con = db_fetch_array()) {
         $cons[] = $con;
     }
@@ -34,6 +34,7 @@ function lhc_jiesuan($typeid,$term=''){
     foreach ($cons as $con) {
         //var_dump($con['id']);
         $user_bet_res = lianmaBetIsRight($con,$kj_info);
+        //var_dump($user_bet_res);
         if($user_bet_res){
             $user_money = 0;
             if($user_bet_res == 1){

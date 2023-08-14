@@ -857,6 +857,7 @@ function lhctouzhufandian($userid , $money , $roomid , $gametypeid , $fromuser ,
         return ;
     }
     $wanfa_info = get_query_vals('fn_lhc_wanfa','id,name,wanfa_type,wanfa_key,peilv,peilv_step,game_id',['id'=>$bet_wanfa_id]);
+//    var_dump($wanfa_info);
     $table = 'fn_lottery' . $gametypeid;
     $game_config = get_query_vals($table , 'peilv_step,fandian' , ['roomid'=>$roomid]);
     //获取当前用户的推荐者，没有的话，不进行投注返点
@@ -865,8 +866,12 @@ function lhctouzhufandian($userid , $money , $roomid , $gametypeid , $fromuser ,
         $user_fandian = userFanDian($userid , $roomid , $gametypeid);
         $agent_fandian = userFanDian($agent['agent'] , $roomid , $gametypeid);
         $levels = (($agent_fandian - $user_fandian) / 0.01);
-        $peilv_step_num = getWanfaPeilvStepByType($wanfa_info['wanfa_type'],$levels,$number_key);
-        $fandian_money = round($money * ( $peilv_step * $peilv_step_num) , 4);//返点金额
+        //$peilv_step_num = 0.0001;///getWanfaPeilvStepByType($wanfa_info['wanfa_type'],$levels,$number_key);
+        $fandian_money = round($money * ( 0.0001 * $levels) , 4);//返点金额
+//        var_dump("user_fandian:",$user_fandian);
+//        var_dump("agent_fandian:",$agent_fandian);
+//        var_dump("levels:",$levels);
+//        var_dump("fandian_money:",$fandian_money);
 
         $is_jia = get_query_val('fn_user' , 'jia' , ['userid'=>$agent['agent'],'roomid'=>$roomid]);
         if($fandian_money && $is_jia == 'false'){

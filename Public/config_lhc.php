@@ -1226,6 +1226,9 @@ function getUserPeilvByWanfaId($id,$userid,$roomid,$number_key=''){
         //$step = ($wanfa_info['peilv'] / 10 * $wanfa_info['peilv_step']);
         $peilv_step_num = getWanfaPeilvStepByType($wanfa_info['wanfa_type'],$levels,$number_key);
         $step = ($peilv_step_num * $wanfa_info['peilv_step']);
+//        var_dump($levels);
+//        var_dump($step);
+//        var_dump($peilv_step_num);
         $rate = round($wanfa_info['peilv'] - $step,4);
 //        var_dump($step);
 //        var_dump($rate);
@@ -1244,7 +1247,9 @@ function getUserPeilvByWanfaIdShuangmian($id,$userid,$roomid,$number_key){
     $shuangmian_list = getShuangmian();
     $number_wanfa = [];
     $number_wanfa = get_query_vals('fn_lhc_wanfa','id,name,wanfa_type,wanfa_key,peilv,peilv_step,game_id',['game_id'=>$wanfa_info['game_id'],'wanfa_key'=>$number_key]);
-
+//    if($number_key == "dan" || $number_key == "shuang"){
+//        $number_wanfa = get_query_vals('fn_lhc_wanfa','id,name,wanfa_type,wanfa_key,peilv,peilv_step,game_id',['game_id'=>$wanfa_info['game_id'],'wanfa_key'=>'dxds']);
+//    }
     if($number_key == "dadan" || $number_key == "dashuang" || $number_key == "xiaodan" || $number_key == "xiaoshuang"){
         $number_wanfa = get_query_vals('fn_lhc_wanfa','id,name,wanfa_type,wanfa_key,peilv,peilv_step,game_id',['game_id'=>$wanfa_info['game_id'],'wanfa_key'=>'dxds']);
     }
@@ -1524,6 +1529,7 @@ function lianmaBetIsRight($order_info,$kj_info){
             //获取投注的位置
             if($order_info['mingci']){
                 $order_wanfa_info = explode('#',$order_info['mingci']);
+                //var_dump("order_wanfa_info",$order_wanfa_info);
                 $wanfa_info = get_query_vals('fn_lhc_wanfa','name,id,wanfa_type,wanfa_key,bet_posi,zj_num,parent_id',['id'=>$order_info['bet_wanfa_id']]);
                 $wanfa_type = $wanfa_info['wanfa_type'];//玩法类型
                 $bet_posi = $wanfa_info['bet_posi'];
@@ -1532,6 +1538,7 @@ function lianmaBetIsRight($order_info,$kj_info){
                 $bet_kj_number = [];//开奖号码
                 $bet_posi_arr = explode(',',$bet_posi);
                 //var_dump("bet_posi_arr",$bet_posi_arr);
+                //var_dump("kj_num_arr",$kj_num_arr);
                 foreach($bet_posi_arr as $k=>$v){
                     $kj_number = $kj_num_arr[intval($v-1)];
                     if($wanfa_type == 'haoma'){
@@ -1553,10 +1560,10 @@ function lianmaBetIsRight($order_info,$kj_info){
                         $bet_kj_number[] = $kj_number[1]."尾";
                     }
                 }
-//                var_dump("开奖结果",$bet_kj_number);
+                //var_dump("开奖结果",$bet_kj_number);
                 $contents_info = explode('#',$order_info['content']);
                 $user_bet_arr = explode(",",$contents_info[2]);
-//                var_dump("投注号码",$user_bet_arr);
+//               var_dump("投注号码",$user_bet_arr);
 //                var_dump("投注方式",$wanfa_type);
                 if($bet_kj_number && $user_bet_arr){
                     $bet_res = 2;//1 正确，2 错误

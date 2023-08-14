@@ -26,7 +26,7 @@ function lhc_jiesuan($typeid,$term=''){
         $where['term'] = get_query_val('fn_open_lhc', 'term',['type'=>$typeid] , ['term desc'],'1');
     }
     $cons = [];
-    select_query("fn_order", '*', $where,'addtime asc',1);
+    select_query("fn_order", '*', $where,'addtime asc',50);
     while ($con = db_fetch_array()) {
         $cons[] = $con;
     }

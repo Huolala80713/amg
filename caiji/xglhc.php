@@ -67,7 +67,7 @@ function lhc_jiesuan($typeid,$term=''){
     }
 
 }
-//next_time_caiji();
+next_time_caiji();
 //最新开奖时间采集
 function next_time_caiji(){
     //$contents = file_get_contents("https://bet.hkjc.com/marksix/single.aspx?lang=ch");
